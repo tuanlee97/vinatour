@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class LoaiTour extends Model
 {
     public $table ='loaitour';
+    protected $fillable = [
+     'tenloai'];
 }

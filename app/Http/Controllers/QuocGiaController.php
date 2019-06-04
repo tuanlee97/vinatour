@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\QuocGia;
 use Validator;
+use App\Models\Tinh;
 class QuocGiaController extends Controller
 {
     /**
@@ -159,7 +160,9 @@ class QuocGiaController extends Controller
      */
     public function destroy($id)
     {
+
        $data = QuocGia::where('maquocgia', $id);
-        $data->delete();
+       
+    $data->delete();
     }
 }

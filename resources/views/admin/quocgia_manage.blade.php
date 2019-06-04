@@ -157,8 +157,10 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
-      $('#sample_form')[0].reset();
-      $('#dataTableCountry').DataTable().ajax.reload();
+     setTimeout(function(){
+     $('#formModal').modal('hide');
+     $('#dataTableCountry').DataTable().ajax.reload();
+    }, 1000);
      }
      $('#form_result').html(html);
     }
@@ -190,9 +192,11 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
-      $('#sample_form')[0].reset();
       $('#store_image').html('');
-      $('#dataTableCountry').DataTable().ajax.reload();
+      $ setTimeout(function(){
+     $('#formModal').modal('hide');
+     $('#dataTableCountry').DataTable().ajax.reload();
+    }, 1000);
      }
      $('#form_result').html(html);
     }

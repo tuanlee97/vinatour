@@ -11,8 +11,9 @@
 
   <title>VinaTour - Admin Page</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-     
 
+<!-- <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+ -->
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
@@ -104,13 +105,13 @@
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <h6 class="dropdown-header">Tour du lịch:</h6>
           <a class="dropdown-item" href="">Tour</a>
-          <a class="dropdown-item" href="">Loại tour</a>
+          <a class="dropdown-item" href="{{route('loaitour.index')}}">Loại tour</a>
          
           <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">Vị trí địa lí:</h6>
           <a class="dropdown-item" href="{{route('quocgia.index')}}">Quốc gia</a>
-          <a class="dropdown-item" href="">Tỉnh</a>
-          <a class="dropdown-item" href="">Địa danh</a>
+          <a class="dropdown-item" href="{{route('tinh.index')}}">Tỉnh</a>
+          <a class="dropdown-item" href="{{route('diadanh.index')}}">Địa danh</a>
 
           <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">Người dùng:</h6>
@@ -119,8 +120,8 @@
 
            <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">Dịch vụ khác:</h6>
-          <a class="dropdown-item" href="">Nhà hàng</a>
-          <a class="dropdown-item" href="">Khách sạn</a>
+          <a class="dropdown-item" href="{{route('nhahang.index')}}">Nhà hàng</a>
+          <a class="dropdown-item" href="{{route('khachsan.index')}}">Khách sạn</a>
 
         </div>
       </li>

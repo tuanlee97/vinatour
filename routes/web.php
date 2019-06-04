@@ -102,7 +102,25 @@ Route::group(['prefix'=>'admin'],function(){
     Route::post('khachhang/update', 'KhachHangController@update')->name('khachhang.update');
     Route::get('khachhang/destroy/{id}', 'KhachHangController@destroy');
 
-    
+     Route::resource('tinh', 'TinhController');
+    Route::post('tinh/update', 'TinhController@update')->name('tinh.update');
+    Route::get('tinh/destroy/{id}', 'TinhController@destroy');
+
+     Route::resource('diadanh', 'DiadanhController');
+    Route::post('diadanh/update', 'DiadanhController@update')->name('diadanh.update');
+    Route::get('diadanh/destroy/{id}', 'DiadanhController@destroy');
+
+     Route::resource('khachsan', 'KhachSanController');
+    Route::post('khachsan/update', 'KhachSanController@update')->name('khachsan.update');
+    Route::get('khachsan/destroy/{id}', 'KhachSanController@destroy');
+
+     Route::resource('nhahang', 'NhaHangController');
+    Route::post('nhahang/update', 'NhaHangController@update')->name('nhahang.update');
+    Route::get('nhahang/destroy/{id}', 'NhaHangController@destroy');
+
+    Route::resource('loaitour', 'LoaiTourController');
+    Route::post('loaitour/update', 'LoaiTourController@update')->name('loaitour.update');
+    Route::get('loaitour/destroy/{id}', 'LoaiTourController@destroy');
 });
 
 
