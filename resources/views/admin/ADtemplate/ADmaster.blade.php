@@ -12,7 +12,12 @@
   <title>VinaTour - Admin Page</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
+
   <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+
+
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script> -->
+<script src="//cdn.ckeditor.com/4.11.4/full/ckeditor.js"></script>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

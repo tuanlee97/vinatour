@@ -38,10 +38,10 @@
 
 @section('ADmodal')
 <div id="formModal" class="modal fade" role="dialog">
- <div class="modal-dialog">
+ <div class="modal-dialog" style="max-width: 1000px; margin: 1.75rem auto;">
   <div class="modal-content">
    <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           <h4 class="modal-title">Add New Record</h4>
         </div>
         <div class="modal-body">
@@ -60,6 +60,18 @@
             <div class="col-md-8">
              <input type="file" name="image" id="image" />
              <span id="store_image"></span>
+            </div>
+           </div>
+              <div class="form-group">
+            <label class="control-label col-md-4">Nội dung : </label>
+            <div class="col-md-12">
+            <textarea name="editor1" id="editor1" rows="10" cols="120">
+            </textarea>
+                 <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'editor1' );
+            </script>
             </div>
            </div>
            <br />
@@ -94,6 +106,7 @@
 @endsection
 @section('ADscript')
 <script>
+
 $(document).ready(function(){
 
  $('#dataTableCountry').DataTable({
@@ -157,10 +170,8 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
-     setTimeout(function(){
-     $('#formModal').modal('hide');
-     $('#dataTableCountry').DataTable().ajax.reload();
-    }, 1000);
+      $('#sample_form')[0].reset();
+      $('#dataTableCountry').DataTable().ajax.reload();
      }
      $('#form_result').html(html);
     }
@@ -192,11 +203,9 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
+      $('#sample_form')[0].reset();
       $('#store_image').html('');
-      $ setTimeout(function(){
-     $('#formModal').modal('hide');
-     $('#dataTableCountry').DataTable().ajax.reload();
-    }, 1000);
+      $('#dataTableCountry').DataTable().ajax.reload();
      }
      $('#form_result').html(html);
     }

@@ -39,7 +39,7 @@
  <div class="modal-dialog">
   <div class="modal-content">
    <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           <h4 class="modal-title">Sửa thông tin khách hàng</h4>
         </div>
         <div class="modal-body">
@@ -160,10 +160,9 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
-      setTimeout(function(){
-     $('#formModal').modal('hide');
-     $('#dataTableUser').DataTable().ajax.reload();
-    }, 1000);
+      $('#sample_form')[0].reset();
+      
+      $('#dataTableUser').DataTable().ajax.reload();
      }
      $('#form_result').html(html);
     }
@@ -234,3 +233,4 @@ $(document).ready(function(){
 });
 </script>
 @endsection
+

@@ -16,7 +16,12 @@ use App\Models\NoiNghi;
 class PageController extends Controller
 {
 	public function getindex(){
-		return view('page.index');
+     $diadanh=DiaDanh::all();
+    $tour = Tour::paginate(8);
+      $khachsan = KhachSan::all();
+      $tinh = Tinh::all();
+      $quocgia = QuocGia::all();
+		return view('page.index',['tour'=>$tour,'diadanh'=>$diadanh,'khachsan'=>$khachsan,'quocgia'=>$quocgia,'tinh'=>$tinh]);
 	} 
    public function gettours(){
       $tour = Tour::paginate(8);

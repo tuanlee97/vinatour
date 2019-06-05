@@ -10,7 +10,7 @@
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
 				   					<h2>by colorlib.com</h2>
-				   					<h1>Thông tin Khách Sạn</h1>
+				   					<h1>Thông tin Nhà Hàng</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -29,7 +29,7 @@
 								<div class="wrap-division">
 									<div class="col-md-12 col-md-offset-0 heading2 animate-box">
 										
-										<h2>{{$nhahang->tenhahang}}</h2>
+										<h2>{{$nhahang->tennhahang}}</h2>
 									</div>
 									<div class="row">
 										<div class="col-md-12 animate-box">

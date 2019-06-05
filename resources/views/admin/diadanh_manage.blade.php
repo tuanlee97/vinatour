@@ -91,20 +91,32 @@
                @foreach($tinh as $t)
                <option value="{{$t->matinh}}">{{$t->tentinh}}</option>
                @endforeach
-             </select>
+
             </div>
            </div>
 
            <div class="form-group">
             <label class="control-label col-md-4">Nội dung : </label>
             <div class="col-md-12">
-            <textarea name="editor1" id="editor1" rows="10" cols="120">
-            </textarea>
-                 <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-                CKEDITOR.replace( 'editor1' );
-            </script>
+          <textarea name="content" id="editor1">This is some sample content.</textarea>
+                <script>
+                        
+                                CKEDITOR.replace( 'editor1', {
+
+        filebrowserBrowseUrl: '{{ asset('admin/ckfinder/ckfinder.html') }}',
+        filebrowserImageBrowseUrl: '{{ asset('admin/ckfinder/ckfinder.html?type=Images') }}',
+        filebrowserFlashBrowseUrl: '{{ asset('admin/ckfinder/ckfinder.html?type=Flash') }}',
+        filebrowserUploadUrl: '{{ asset('admin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
+        filebrowserImageUploadUrl: '{{ asset('admin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
+        filebrowserFlashUploadUrl: '{{ asset('admin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
+    } );
+                                CKEDITOR.config.entities_latin = false;
+                                CKEDITOR.config.entities = false;
+                                CKEDITOR.config.entities_latin = false;
+                                CKEDITOR.config.entities_greek = false;
+                                CKEDITOR.config.basicEntities = false;
+                </script>
+        
             </div>
            </div>
 
@@ -132,7 +144,6 @@
 <script>
 $(document).ready(function(){
 
- 
  $('#dataTableDiadanh').DataTable({
   processing: true,
   serverSide: true,
@@ -169,16 +180,20 @@ $(document).ready(function(){
     $('#gia').val("");
     $('#noidung').val("");
     $('#tentinh').val("");
-   
+    $('#image').val(""); /////
+    CKEDITOR.instances['editor1'].setData('');///////
+    $('#form_result').html("");///////
     $('#hidden_id').val("");
 
      $('#formModal').modal('show');
+
  });
 
  $('#sample_form').on('submit', function(event){
   event.preventDefault();
+  
   if($('#action').val() == 'Add')
-  {
+  { $('#editor1').val(CKEDITOR.instances['editor1'].getData());/////////
    $.ajax({
     url:"{{ route('diadanh.store') }}",
     method:"POST",
@@ -216,7 +231,8 @@ $(document).ready(function(){
 
 
    if($('#action').val() == "Edit")
-  {
+  { $('#editor1').val(CKEDITOR.instances['editor1'].getData());/////////
+
    $.ajax({
     url:"{{ route('diadanh.update') }}",
     method:"POST",
@@ -254,13 +270,22 @@ $(document).ready(function(){
  $(document).on('click', '.edit', function(){
   var id = $(this).attr('id');
   $('#form_result').html('');
+  
+    
+   
   $.ajax({
    url:"diadanh/"+id+"/edit",
    dataType:"json",
    success:function(html){
+    
     $('#tendiadanh').val(html.data.tendiadanh);
     $('#gia').val(html.data.gia);
+<<<<<<< HEAD
     $('#cke_editable p').val(html.data.noidung);
+=======
+    CKEDITOR.instances['editor1'].setData(html.data.noidung);//////////////
+    $('#editor1').val(html.data.noidung);/////
+>>>>>>> f7b8f866eac6e11c6babb2585fcb5cf73fe9ed4f
     $('#tentinh').val(html.data.tinh);
     $('#store_image').html("<img src={{ URL::to('/') }}/images/flag/" + html.data.hinhanh + " width='200' class='img-thumbnail' />");
     $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.hinhanh+"' />");
@@ -269,6 +294,7 @@ $(document).ready(function(){
     $('#action_button').val("Edit");
     $('#action').val("Edit");
     $('#formModal').modal('show');
+    
    }
   })
  });

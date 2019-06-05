@@ -18,7 +18,6 @@ class CreateNhahangTable extends Migration
               $table->string('tennhahang');
             $table->double('gia');
             $table->string('hinhanh');
-            $table->string('noidung');
             $table->integer('tinh')->unsigned();
                 $table->foreign('tinh')
                       ->references('matinh')
