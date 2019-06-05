@@ -19,7 +19,7 @@ class CreateKhachsanTable extends Migration
             $table->double('gia');
             $table->string('hinhanh');
             $table->integer('tinh')->unsigned();
-            $table->string('noidung');
+
                 $table->foreign('tinh')
                       ->references('matinh')
                       ->on('tinh')

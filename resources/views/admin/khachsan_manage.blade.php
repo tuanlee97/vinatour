@@ -101,9 +101,21 @@
             <textarea name="noidung" id="editor1" rows="10" cols="120">
             </textarea>
                  <script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
-                CKEDITOR.replace( 'editor1' );
+                
+                                CKEDITOR.replace( 'editor1', {
+
+        filebrowserBrowseUrl: '{{ asset('admin/ckfinder/ckfinder.html') }}',
+        filebrowserImageBrowseUrl: '{{ asset('admin/ckfinder/ckfinder.html?type=Images') }}',
+        filebrowserFlashBrowseUrl: '{{ asset('admin/ckfinder/ckfinder.html?type=Flash') }}',
+        filebrowserUploadUrl: '{{ asset('admin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
+        filebrowserImageUploadUrl: '{{ asset('admin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
+        filebrowserFlashUploadUrl: '{{ asset('admin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
+    } );
+                                CKEDITOR.config.entities_latin = false;
+                                CKEDITOR.config.entities = false;
+                                CKEDITOR.config.entities_latin = false;
+                                CKEDITOR.config.entities_greek = false;
+                                CKEDITOR.config.basicEntities = false;
             </script>
             </div>
            </div>
@@ -169,7 +181,10 @@ $(document).ready(function(){
     $('#gia').val("");
     $('#noidung').val("");
     $('#tentinh').val("");
-   
+      $('#image').val("");
+    CKEDITOR.instances['editor1'].setData('');
+    $('#form_result').html("");
+    
     $('#hidden_id').val("");
 
      $('#formModal').modal('show');
@@ -178,7 +193,7 @@ $(document).ready(function(){
  $('#sample_form').on('submit', function(event){
   event.preventDefault();
   if($('#action').val() == 'Add')
-  {
+  {$('#editor1').val(CKEDITOR.instances['editor1'].getData());
    $.ajax({
     url:"{{ route('khachsan.store') }}",
     method:"POST",
@@ -214,7 +229,7 @@ $(document).ready(function(){
 
 
    if($('#action').val() == "Edit")
-  {
+  {$('#editor1').val(CKEDITOR.instances['editor1'].getData());
    $.ajax({
     url:"{{ route('khachsan.update') }}",
     method:"POST",
@@ -258,7 +273,9 @@ $(document).ready(function(){
    success:function(html){
     $('#tenkhachsan').val(html.data.tenkhachsan);
     $('#gia').val(html.data.gia);
-    $('#noidung').val(html.data.noidung);
+    CKEDITOR.instances['editor1'].setData(html.data.noidung);
+    $('#editor1').val(html.data.noidung);
+   
     $('#tentinh').val(html.data.tinh);
     $('#store_image').html("<img src={{ URL::to('/') }}/images/flag/" + html.data.hinhanh + " width='200' class='img-thumbnail' />");
     $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.hinhanh+"' />");

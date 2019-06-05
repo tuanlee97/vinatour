@@ -53,7 +53,7 @@ class DiadanhController extends Controller
            
             'tendiadanh'    =>  'required',
             'gia' => 'required',
-            'noidung' => 'required',
+            'content' => 'required',
             'image' => 'required|image|max:2048'
         );
 
@@ -72,7 +72,7 @@ class DiadanhController extends Controller
         $form_data = array(
             'tendiadanh'        =>  $request->tendiadanh,
             'gia'             =>  $request->gia,
-            'noidung'        => $request->noidung,
+            'noidung'        => $request->content,
             'tinh'          => $request->tentinh,
             'hinhanh'      => $new_name
         );
@@ -104,6 +104,7 @@ class DiadanhController extends Controller
         if(request()->ajax())
         {
             $data = DiaDanh::where('madiadanh', $id)->firstOrFail();
+           
             return response()->json(['data' => $data]);
         }
     }
@@ -116,7 +117,7 @@ class DiadanhController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id="")
-    {
+    {   
         $image_name = $request->hidden_image;
         $image = $request->file('image');
         if($image != '')
@@ -124,7 +125,7 @@ class DiadanhController extends Controller
             $rules = array(
                 'tendiadanh'    =>  'required',
             'gia' => 'required',
-            'noidung' => 'required',
+            'content' => 'required',
             'hinhanh' => 'image|max:2048'
             );
             $error = Validator::make($request->all(), $rules);
@@ -139,9 +140,9 @@ class DiadanhController extends Controller
         else
         {
             $rules = array(
-                 'tendiadanh'    =>  'required',
+            'tendiadanh'    =>  'required',
             'gia' => 'required',
-            'noidung' => 'required',
+            'content' => 'required',
             );
 
             $error = Validator::make($request->all(), $rules);
@@ -155,7 +156,7 @@ class DiadanhController extends Controller
         $form_data = array(
             'tendiadanh'        =>  $request->tendiadanh,
             'gia'             =>  $request->gia,
-            'noidung'        => $request->noidung,
+            'noidung'        => $request->content,
             'tinh'          => $request->tentinh,
             'hinhanh'            =>   $image_name
         );
