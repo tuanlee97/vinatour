@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tour;
+use App\Models\QuocGia;
+use App\Models\DiaDanh;
+use App\Models\Tinh;
+use App\Models\KhachSan;
+use App\Models\NhaHang;
 use App\Models\DiemDen;
 use App\Models\ThamQuan;
 use App\Models\NoiAnUong;
@@ -21,15 +26,31 @@ class PageController extends Controller
    }
    public function gethotels()
    {
-   	return view('page.hotels');
+      $khachsan = KhachSan::all();
+      $tinh = Tinh::all();
+      $quocgia = QuocGia::all();
+   	return view('page.hotels',['khachsan'=>$khachsan,'quocgia'=>$quocgia,'tinh'=>$tinh]);
+   }
+    public function getnhahang()
+   {
+      $nhahang = NhaHang::all();
+      $tinh = Tinh::all();
+      $quocgia = QuocGia::all();
+    return view('page.nhahang',['nhahang'=>$nhahang,'quocgia'=>$quocgia,'tinh'=>$tinh]);
    }
    public function getservices()
    {
    	return view('page.services');
    }
+
+   public function getlienhe()
+   {
+    return view('page.lienhe');
+   }
   
     public function getblog(){
-   	return view('page.blog');
+      $diadanh=DiaDanh::all();
+   	return view('page.blog',['diadanh'=>$diadanh]);
    }
    public function getabout(){
    	return view('page.about');
@@ -58,7 +79,16 @@ class PageController extends Controller
         
    	return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi'));
    }
-   public function gethotel_room(){
-   	return view('page.hotel-room');
+   public function gethotel_room(Request $req){
+    $khachsan=KhachSan::Where('makhachsan',$req->id)->first();
+   	return view('page.hotel-room',['khachsan'=>$khachsan]);
+   }
+    public function getctblog(Request $req){
+    $diadanh=DiaDanh::Where('madiadanh',$req->id)->first();
+    return view('page.ctblog',['diadanh'=>$diadanh]);
+   }
+   public function getctnhahang(Request $req){
+    $nhahang=NhaHang::Where('manhahang',$req->id)->first();
+    return view('page.ctnhahang',['nhahang'=>$nhahang]);
    }
 }

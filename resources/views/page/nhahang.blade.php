@@ -10,7 +10,7 @@
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
 				   					<h2>by colorlib.com</h2>
-				   					<h1>Find Hotel</h1>
+				   					<h1>Find RESTAURANT</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -25,23 +25,23 @@
 					<div class="col-md-9">
 						<div class="row">
 							<div class="wrap-division">
-								@foreach($khachsan as $ks)
+								@foreach($nhahang as $nh)
 								<div class="col-md-6 col-sm-6 animate-box">
 									<div class="hotel-entry">
-										<a href="{{route('hotel-room',$ks->makhachsan)}}" class="hotel-img" style="background-image: url(images/flag/{{$ks->hinhanh}});">
-											<p class="price"><span>{{$ks->gia}}</span><small> /Đêm</small></p>
+										<a href="{{route('ctnhahang',$nh->manhahang)}}" class="hotel-img" style="background-image: url(images/flag/{{$nh->hinhanh}});">
+											<p class="price"><span>{{$nh->gia}}</span><small> /Bữa ăn</small></p>
 										</a>
 										<div class="desc">
 											<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-											<h3><a href="{{route('hotel-room',$ks->makhachsan)}}">{{$ks->tenkhachsan}}</a></h3>
+											<h3><a href="{{route('ctnhahang',$nh->manhahang)}}">{{$nh->tennhahang}}</a></h3>
 											@foreach($quocgia as $c)
 											@foreach($tinh as $t)
-											@if($ks->tinh==$t->matinh && $t->quocgia==$c->maquocgia)
+											@if($nh->tinh==$t->matinh && $t->quocgia==$c->maquocgia)
 											<span class="place">{{$t->tentinh}}, {{$c->tenquocgia}}</span>
 											@endif
 											@endforeach
 											@endforeach
-											<p>{{$ks->mota}}</p>
+											<p>{{$nh->mota}}</p>
 										</div>
 									</div>
 								</div>

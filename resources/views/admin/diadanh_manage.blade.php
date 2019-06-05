@@ -260,7 +260,7 @@ $(document).ready(function(){
    success:function(html){
     $('#tendiadanh').val(html.data.tendiadanh);
     $('#gia').val(html.data.gia);
-    $('#noidung').val(html.data.noidung);
+    $('#cke_editable p').val(html.data.noidung);
     $('#tentinh').val(html.data.tinh);
     $('#store_image').html("<img src={{ URL::to('/') }}/images/flag/" + html.data.hinhanh + " width='200' class='img-thumbnail' />");
     $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.hinhanh+"' />");

@@ -117,8 +117,9 @@
 									</ul>
 								</li>
 								<li><a href="{{route('hotels')}}">Hotels</a></li>
+                                <li><a href="{{route('nhahang')}}">Restaurant</a></li>
+                                <li><a href="{{route('blog')}}">Blog</a></li>
 								<li><a href="{{route('services')}}">Services</a></li>
-								<li><a href="{{route('blog')}}">Blog</a></li>
 								<li><a href="{{route('about')}}">About</a></li>
                                 @if(Auth::guard('web')->check())
                                 <li class="has-dropdown">

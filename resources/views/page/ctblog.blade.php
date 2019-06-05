@@ -10,7 +10,7 @@
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
 				   					<h2>by colorlib.com</h2>
-				   					<h1>Find Hotel</h1>
+				   					<h1>Thông tin Khách Sạn</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -19,46 +19,34 @@
 			  	</ul>
 		  	</div>
 		</aside>
-<div class="colorlib-wrap">
-	<div class="container">
+		
+	<div class="colorlib-wrap">
+			<div class="container">
 				<div class="row">
 					<div class="col-md-9">
 						<div class="row">
-							<div class="wrap-division">
-								@foreach($khachsan as $ks)
-								<div class="col-md-6 col-sm-6 animate-box">
-									<div class="hotel-entry">
-										<a href="{{route('hotel-room',$ks->makhachsan)}}" class="hotel-img" style="background-image: url(images/flag/{{$ks->hinhanh}});">
-											<p class="price"><span>{{$ks->gia}}</span><small> /Đêm</small></p>
-										</a>
-										<div class="desc">
-											<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-											<h3><a href="{{route('hotel-room',$ks->makhachsan)}}">{{$ks->tenkhachsan}}</a></h3>
-											@foreach($quocgia as $c)
-											@foreach($tinh as $t)
-											@if($ks->tinh==$t->matinh && $t->quocgia==$c->maquocgia)
-											<span class="place">{{$t->tentinh}}, {{$c->tenquocgia}}</span>
-											@endif
-											@endforeach
-											@endforeach
-											<p>{{$ks->mota}}</p>
+							<div class="col-md-12">
+								<div class="wrap-division">
+									<div class="col-md-12 col-md-offset-0 heading2 animate-box">
+										
+										<h2>{{ $diadanh->tendiadanh}}</h2>
+									</div>
+									<div class="row">
+										<div class="col-md-12 animate-box">
+											<div class="room-wrap">
+												<div class="row">
+													<div class="col-md-6 col-sm-6">
+														<div class="room-img" style="background-image: url(images/flag/{{$diadanh->hinhanh}});"></div>
+															
+													</div>
+													
+												</div>
+											</div>
 										</div>
+
+										<div>{{$diadanh->noidung}}</div>
 									</div>
 								</div>
-
-								@endforeach
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12 text-center">
-								<ul class="pagination">
-									<li class="disabled"><a href="#">&laquo;</a></li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
 							</div>
 						</div>
 					</div>
@@ -311,4 +299,6 @@
 				</div>
 			</div>
 		</div>
-@endsection
+
+	
+		@endsection

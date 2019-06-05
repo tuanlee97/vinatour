@@ -39,15 +39,36 @@
 							</div>
 						</div>
 						<div class="col-three-forth animate-box">
-							<h2>Sứ Mệnh</h2>
+							<h2>Liên hệ</h2>
 							<div class="row">
 								<div class="col-md-12">
+									<span style="color: #000080">
+										<span style="font-family: times new roman,times">CÔNG TY TNHH DU LỊCH VINATOUR</span>
+									</span>
+									<div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+							<div class="contact_info_content">
+								<div class="contact_info_title">SĐT :</div>
+								<div class="contact_info_text">+84 395 563 446</div>
+							</div>
+						</div>
 
-									<p>Thỏa mãn giá trị đời sống tinh thần và nâng cao chất lượng cuộc sống của khách hàng là nền tảng những giá trị cốt lõi đối với VinaTour.  Những giá trị thiết thực này sẽ luôn là động lực định hướng  cho toàn bộ hoạt động đổi mới, sáng tạo và phát triển sản phẩm dịch vụ- du lịch với số lượng và chất lượng dịch vụ tốt nhất. VinaTour luôn đặt mục tiêu phấn đấu trở thành một công ty dịch vụ du lịch lữ hành có chất lượng và uy tín hàng đầu Việt Nam.</p>
+						<!-- Contact Item -->
+						<div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+							
+							<div class="contact_info_content">
+								<div class="contact_info_title">Email :</div>
+								<div class="contact_info_text">letuan30697@gmail.com</div>
+							</div>
+						</div>
 
-									<p>Nhiệm vụ: đổi mới sáng tạo và phát triển sản phẩm dịch vụ du lịch có chất lượng tốt nhằm đáp ứng nhu cầu đa dạng và phong phú của khách hàng trong nước và quốc tế.</p>
-
-									<p>Trách nhiệm: Đảm bảo những giá trị lợi ích của khách hàng cũng như thỏa mãn nhu cầu về an toàn trong ngành dịch vụ du lịch khi khách hàng sử dụng sản phẩm của VinaTour.</p>
+						<!-- Contact Item -->
+						<div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+							
+							<div class="contact_info_content">
+								<div class="contact_info_title">Địa Chỉ :</div>
+								<div class="contact_info_text">180 Cao Lo , District 8 , HCM</div>
+							</div>
+						</div>
 
 								</div>
 							</div>
