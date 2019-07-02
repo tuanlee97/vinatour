@@ -2,9 +2,9 @@
 
         <!-- DataTables Example -->
         @section('ADcontent')
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
             Danh sách Nhà hàng</div>
           <div class="card-body">
                <div align="right">
@@ -23,19 +23,19 @@
                     <th width="20%">Thao tác</th>
                   </tr>
                 </thead>
-   
+
                 <tbody>
-                 
-                 
+
+
                 </tbody>
               </table>
             </div>
           </div>
-        
+
         </div>
 
         @endsection
-        
+
 
 
 
@@ -68,7 +68,7 @@
          <span id="form_result"></span>
          <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
           @csrf
-          
+
            <div class="form-group">
             <label class="control-label col-md-4">Tên Nhà hàng : </label>
             <div class="col-md-8">
@@ -83,12 +83,12 @@
             </div>
            </div>
 
-          
+
 
             <div class="form-group">
             <label class="control-label col-md-4">Tên Tỉnh : </label>
             <div class="col-md-8">
-            
+
              <select name="tentinh" id="tentinh" title="Chọn Tỉnh">
                @foreach($tinh as $t)
                <option value="{{$t->matinh}}">{{$t->tentinh}}</option>
@@ -144,7 +144,7 @@
 <script>
 $(document).ready(function(){
 
- 
+
  $('#dataTableNH').DataTable({
   processing: true,
   serverSide: true,
@@ -158,13 +158,13 @@ $(document).ready(function(){
    { data: 'noidung'},
   {
     data: 'hinhanh',
-    
+
     render: function(data, type, full, meta)
     {
      return "<img src={{ URL::to('/') }}/images/flag/" + data + " width='200' class='img-thumbnail' />";
     }
   },
-  
+
    {
     data: 'action',
     name: 'action',
@@ -254,7 +254,7 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
-      
+
       $('#store_image').html('');
        setTimeout(function(){
      $('#formModal').modal('hide');
@@ -275,7 +275,7 @@ $(document).ready(function(){
    success:function(html){
     $('#tennhahang').val(html.data.tennhahang);
     $('#gia').val(html.data.gia);
-  
+
         CKEDITOR.instances['editor1'].setData(html.data.noidung);//////////////
     $('#editor1').val(html.data.noidung);/////
     $('#tentinh').val(html.data.tinh);

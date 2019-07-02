@@ -117,7 +117,9 @@ Route::group(['prefix'=>'admin'],function(){
      Route::resource('nhahang', 'NhaHangController');
     Route::post('nhahang/update', 'NhaHangController@update')->name('nhahang.update');
     Route::get('nhahang/destroy/{id}', 'NhaHangController@destroy');
-
+Route::resource('tour', 'TourController');
+    Route::post('tour/update', 'TourController@update')->name('tour.update');
+    Route::get('tour/destroy/{id}', 'TourController@destroy');
     Route::resource('loaitour', 'LoaiTourController');
     Route::post('loaitour/update', 'LoaiTourController@update')->name('loaitour.update');
     Route::get('loaitour/destroy/{id}', 'LoaiTourController@destroy');

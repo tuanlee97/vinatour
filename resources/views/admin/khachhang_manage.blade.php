@@ -2,9 +2,9 @@
 
         <!-- DataTables Example -->
         @section('ADcontent')
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
             Danh sách khách hàng</div>
           <div class="card-body">
 
@@ -19,18 +19,18 @@
                     <th width="20%">Thao tác</th>
                   </tr>
                 </thead>
-   
+
                 <tbody>
-                 
-                 
+
+
                 </tbody>
               </table>
             </div>
           </div>
-        
+
         </div>
         @endsection
-        
+
 
 
 
@@ -46,7 +46,7 @@
          <span id="form_result"></span>
          <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
           @csrf
-          
+
            <div class="form-group">
             <label class="control-label col-md-4">Tên đăng nhập : </label>
             <div class="col-md-8">
@@ -67,7 +67,7 @@
              </label>
             <div class="col-md-8">
              <input type="password" name="user_pass" id="user_pass" class="form-control password" />
-            </div> 
+            </div>
            </div>
 
             <div  class="form-group cfpassword">
@@ -161,7 +161,7 @@ $(document).ready(function(){
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
       $('#sample_form')[0].reset();
-      
+
       $('#dataTableUser').DataTable().ajax.reload();
      }
      $('#form_result').html(html);
@@ -200,7 +200,7 @@ $(document).ready(function(){
     $('#action').val("Edit");
 
 
-                
+
 
     $('#formModal').modal('show');
    }
@@ -233,4 +233,3 @@ $(document).ready(function(){
 });
 </script>
 @endsection
-

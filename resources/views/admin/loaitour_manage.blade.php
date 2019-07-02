@@ -2,9 +2,9 @@
 
         <!-- DataTables Example -->
         @section('ADcontent')
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
             Danh sách Loại Tour</div>
           <div class="card-body">
 
@@ -17,18 +17,18 @@
                     <th width="20%">Thao tác</th>
                   </tr>
                 </thead>
-   
+
                 <tbody>
-                 
-                 
+
+
                 </tbody>
               </table>
             </div>
           </div>
-        
+
         </div>
         @endsection
-        
+
 
 
 
@@ -44,7 +44,7 @@
          <span id="form_result"></span>
          <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
           @csrf
-          
+
            <div class="form-group">
             <label class="control-label col-md-4">Tên Loại tour : </label>
             <div class="col-md-8">
@@ -138,7 +138,7 @@ $(document).ready(function(){
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
       $('#sample_form')[0].reset();
-      
+
       $('#dataTableLT').DataTable().ajax.reload();
      }
      $('#form_result').html(html);
@@ -155,13 +155,13 @@ $(document).ready(function(){
    dataType:"json",
    success:function(html){
     $('#tenloai').val(html.data.name);
-   
+
     $('#hidden_id').val(html.data.maloai);
     $('#action_button').val("Sửa");
     $('#action').val("Edit");
 
 
-                
+
 
     $('#formModal').modal('show');
    }

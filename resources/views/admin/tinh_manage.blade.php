@@ -2,9 +2,9 @@
 
         <!-- DataTables Example -->
         @section('ADcontent')
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
             Danh sách Tỉnh</div>
           <div class="card-body">
                <div align="right">
@@ -18,21 +18,21 @@
                     <th width="10%">Quốc gia</th>
                     <th width="70%">Tên tỉnh</th>
                     <th width="20%">Thao tác</th>
-                   
+
                   </tr>
                 </thead>
-   
+
                 <tbody>
-                 
-                 
+
+
                 </tbody>
               </table>
             </div>
           </div>
-        
+
         </div>
         @endsection
-        
+
 
 
 
@@ -48,11 +48,11 @@
          <span id="form_result"></span>
          <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
           @csrf
-          
+
            <div class="form-group">
             <label class="control-label col-md-4">Tên Quốc Gia : </label>
             <div class="col-md-8">
-            
+
              <select name="country_name" id="country_name" title="Chọn quốc gia">
                @foreach($quocgia as $qg)
                <option value="{{$qg->maquocgia}}">{{$qg->tenquocgia}}</option>
@@ -64,7 +64,7 @@
             <label class="control-label col-md-4">Tên Tỉnh : </label>
             <div class="col-md-8">
              <input type="text" name="tentinh" id="tentinh" class="form-control" />
-            
+
             </div>
            </div>
            <br />
@@ -110,11 +110,11 @@ $(document).ready(function(){
   columns:[
    {
      data: 'quocgia',
-    
+
    },
    {
     data: 'tentinh',
-    
+
    },
    {
     data: 'action',
