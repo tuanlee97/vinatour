@@ -14,7 +14,7 @@ class CreateDiadanhTable extends Migration
     public function up()
     {
         Schema::create('diadanh', function (Blueprint $table) {
-            $table->increments('madiadanh');
+            $table->increments('id');
              $table->string('tendiadanh');
              $table->double('gia');
               $table->string('noidung');
@@ -25,7 +25,7 @@ class CreateDiadanhTable extends Migration
                       ->references('matinh')
                       ->on('tinh')
                       ->onDelete('cascade');
-      
+
             $table->timestamps();
         });
     }

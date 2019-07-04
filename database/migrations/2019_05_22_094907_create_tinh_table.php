@@ -14,7 +14,7 @@ class CreateTinhTable extends Migration
     public function up()
     {
         Schema::create('tinh', function (Blueprint $table) {
-            $table->increments('matinh');
+            $table->increments('id');
 
             $table->string('tentinh');
               $table->integer('quocgia')->unsigned();

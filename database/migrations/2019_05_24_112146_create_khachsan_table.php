@@ -14,7 +14,7 @@ class CreateKhachsanTable extends Migration
     public function up()
     {
         Schema::create('khachsan', function (Blueprint $table) {
-            $table->increments('makhachsan');
+            $table->increments('id');
              $table->string('tenkhachsan');
             $table->double('gia');
             $table->string('hinhanh');

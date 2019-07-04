@@ -14,7 +14,7 @@ class CreateTourTable extends Migration
     public function up()
     {
         Schema::create('tour', function (Blueprint $table) {
-            $table->increments('matour');
+            $table->increments('id');
              $table->integer('loaitour')->unsigned();
 
                 $table->foreign('loaitour')
