@@ -10,4 +10,7 @@ class Tour extends Model
      protected $fillable = [
         'matour', 'loaitour', 'tentour','songay','sodem','diemxuatphat','noidung','hinhanh'
     ];
+    public function tinhs(){
+      return $this->belongsToMany('App\Models\Tinh');
+    }
 }

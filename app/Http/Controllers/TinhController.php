@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Tinh;
 use App\Models\Quocgia;
-
+use App\Models\NhaHang;
+use App\Models\DiaDanh;
+use App\Models\KhachSan;
 use Illuminate\Http\Request;
 use Validator;
 class TinhController extends Controller
@@ -20,9 +22,9 @@ class TinhController extends Controller
         {
             return datatables()->of(Tinh::latest()->get())
                     ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->matinh.'" class="edit btn btn-primary btn-sm">Sửa</button>';
+                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Sửa</button>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->matinh.'" class="delete btn btn-danger btn-sm">Xóa</button>';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Xóa</button>';
                         return $button;
                     })
                     ->rawColumns(['action'])
@@ -48,9 +50,9 @@ class TinhController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $rules = array(
-           
+
             'tentinh'    =>  'required'
         );
 
@@ -60,7 +62,7 @@ class TinhController extends Controller
         {
             return response()->json(['errors' => $error->errors()->all()]);
         }
-        
+
         $form_data = array(
             'quocgia'        =>  $request->country_name,
             'tentinh'             =>  $request->tentinh
@@ -92,7 +94,7 @@ class TinhController extends Controller
     {
         if(request()->ajax())
         {
-            $data = Tinh::where('matinh', $id)->firstOrFail();
+            $data = Tinh::findOrFail($id);
             return response()->json(['data' => $data]);
         }
     }
@@ -120,8 +122,8 @@ class TinhController extends Controller
             'quocgia'        =>  $request->country_name,
             'tentinh'            =>   $request->tentinh
         );
-        Tinh::where('matinh', $request->hidden_id)->update($form_data);
-                 
+        Tinh::whereId($request->hidden_id)->update($form_data);
+
         return response()->json(['success' => 'Data is successfully updated']);
     }
 
@@ -133,7 +135,24 @@ class TinhController extends Controller
      */
     public function destroy($id)
     {
-        $data = Tinh::where('matinh', $id);
+      $result = 'LỖI : Tỉnh này có khai thác :'.'</br>';
+      $diadanh = DiaDanh::where('tinh',$id)->first();
+      if($diadanh) $result .= '- Địa Danh'.'</br>';
+      $nhahang = NhaHang::where('tinh',$id)->first();
+      if($nhahang) $result .= '- Nhà Hàng'.'</br>';
+      $khachsan =KhachSan::where('tinh',$id)->first();
+      if($khachsan) $result .= '- Khách Sạn '.'</br>';
+
+      if($diadanh || $nhahang || $khachsan)
+      return response()->json(['errors' => $result]);
+      else {
+        $data = Tinh::find($id);
         $data->delete();
+      }
+
+
+
+
+
     }
 }

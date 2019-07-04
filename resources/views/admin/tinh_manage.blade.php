@@ -15,7 +15,7 @@
               <table class="table table-bordered" id="dataTableTinh" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th width="10%">Quốc gia</th>
+                    <th width="10%">Mã quốc gia</th>
                     <th width="70%">Tên tỉnh</th>
                     <th width="20%">Thao tác</th>
 
@@ -53,7 +53,7 @@
             <label class="control-label col-md-4">Tên Quốc Gia : </label>
             <div class="col-md-8">
 
-             <select name="country_name" id="country_name" title="Chọn quốc gia">
+             <select class="form-control" name="country_name" id="country_name" title="Chọn quốc gia">
                @foreach($quocgia as $qg)
                <option value="{{$qg->maquocgia}}">{{$qg->tenquocgia}}</option>
                @endforeach
@@ -87,7 +87,8 @@
                 <h2 class="modal-title">Confirmation</h2>
             </div>
             <div class="modal-body">
-                <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
+                 <div id="result"></div>
+                <h4 id="confirmtext" align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
             </div>
             <div class="modal-footer">
              <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
@@ -128,6 +129,7 @@ $(document).ready(function(){
   $('.modal-title').text("Add New Record");
      $('#action_button').val("Add");
      $('#action').val("Add");
+      $('#form_result').html('');
      $('#formModal').modal('show');
  });
 
@@ -159,6 +161,7 @@ $(document).ready(function(){
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
        setTimeout(function(){
+           $('#sample_form')[0].reset();
      $('#formModal').modal('hide');
      $('#dataTableTinh').DataTable().ajax.reload();
     }, 1000);
@@ -193,6 +196,7 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
+        $('#sample_form')[0].reset();
       $('#store_image').html('');
        setTimeout(function(){
      $('#formModal').modal('hide');
@@ -214,7 +218,7 @@ $(document).ready(function(){
    success:function(html){
     $('#country_name').val(html.data.quocgia);
     $('#tentinh').val(html.data.tentinh);
-    $('#hidden_id').val(html.data.matinh);
+    $('#hidden_id').val(html.data.id);
     $('.modal-title').text("Edit New Record");
     $('#action_button').val("Edit");
     $('#action').val("Edit");
@@ -238,10 +242,26 @@ $(document).ready(function(){
    },
    success:function(data)
    {
-    setTimeout(function(){
+     if(data.errors)
+     { var html = '';
+      html = '<div class="alert alert-danger">';
+      html += '<p>' + data.errors + '</p>';
+      html += '</div>';
+      $('#confirmtext').hide();
+      $('#result').html(html);
+      setTimeout(function(){
+      $('#confirmtext').show();
+      $('#result').empty();
+      $('#confirmModal').modal('hide');
+      $('#dataTableTinh').DataTable().ajax.reload();
+   }, 3000);
+     }
+    else{
+      setTimeout(function(){
      $('#confirmModal').modal('hide');
      $('#dataTableTinh').DataTable().ajax.reload();
-    }, 1000);
+   }, 1000);
+ }
    }
   })
  });

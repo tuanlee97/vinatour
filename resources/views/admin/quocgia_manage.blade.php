@@ -79,7 +79,10 @@
                 <h2 class="modal-title">Confirmation</h2>
             </div>
             <div class="modal-body">
-                <h4 align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
+                <h4 id="confirmtext" align="center" style="margin:0;">Are you sure you want to remove this data?</h4>
+                <span id="result">
+
+                </span>
             </div>
             <div class="modal-footer">
              <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
@@ -123,7 +126,11 @@ $(document).ready(function(){
 
  $('#create_record').click(function(){
 
-     $('#formModal').modal('show');
+   $('.modal-title').text("Add New Record");
+      $('#action_button').val("Add");
+      $('#action').val("Add");
+       $('#form_result').html('');
+      $('#formModal').modal('show');
  });
 
  $('#sample_form').on('submit', function(event){
@@ -155,6 +162,11 @@ $(document).ready(function(){
       html = '<div class="alert alert-success">' + data.success + '</div>';
       $('#sample_form')[0].reset();
       $('#dataTableCountry').DataTable().ajax.reload();
+      setTimeout(function(){
+
+        $('#formModal').modal('hide');
+   }, 1000);
+
      }
      $('#form_result').html(html);
     }
@@ -188,9 +200,15 @@ $(document).ready(function(){
       html = '<div class="alert alert-success">' + data.success + '</div>';
       $('#sample_form')[0].reset();
       $('#store_image').html('');
+      $('#form_result').html(html);
       $('#dataTableCountry').DataTable().ajax.reload();
+      setTimeout(function(){
+
+        $('#formModal').modal('hide');
+   }, 1000);
      }
-     $('#form_result').html(html);
+
+
     }
    });
   }
@@ -226,14 +244,31 @@ $(document).ready(function(){
   $.ajax({
    url:"quocgia/destroy/"+user_id,
    beforeSend:function(){
-    $('#ok_button').text('Deleting...');
+    $('#ok_button').text('Delete');
    },
    success:function(data)
    {
-    setTimeout(function(){
+     if(data.errors)
+     { var html = '';
+      html = '<div class="alert alert-danger">';
+      html += '<p>' + data.errors + '</p>';
+      html += '</div>';
+      $('#confirmtext').hide();
+      $('#result').html(html);
+      setTimeout(function(){
+      $('#confirmtext').show();
+      $('#result').empty();
+      $('#confirmModal').modal('hide');
+      $('#dataTableCountry').DataTable().ajax.reload();
+   }, 1000);
+     }
+    else{
+      setTimeout(function(){
      $('#confirmModal').modal('hide');
      $('#dataTableCountry').DataTable().ajax.reload();
-    }, 1000);
+   }, 1000);
+ }
+
    }
   })
  });

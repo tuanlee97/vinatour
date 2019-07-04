@@ -85,18 +85,21 @@
 
             <div class="form-group">
             <label class="control-label col-md-4">Tên Tỉnh : </label>
-            <div class="col-md-12">
-             <select class="form-control col-md-3" name="tentinh" id="tentinh" title="Chọn Tỉnh">
+            <div class="col-md-5">
+             <select class="form-control col-md-5" name="tentinh" id="tentinh" title="Chọn Tỉnh">
                @foreach($tinh as $t)
                <option value="{{$t->matinh}}">{{$t->tentinh}}</option>
                @endforeach
-            </div>
+            </select></div>
            </div>
-           <div class="form-group">
 
+           <div class="form-group">
+            <label class="control-label col-md-4">Nội dung : </label>
+            <div class="col-md-12">
             <textarea name="editor1" id="editor1"></textarea>
 
             </div>
+           </div>
            </div>
 
             <div class="form-group">
@@ -105,7 +108,7 @@
              <input type="file" name="image" id="image" />
              <span id="store_image"></span>
             </div>
-           <br />
+
            <div class="form-group" align="center">
             <input type="hidden" name="action" id="action" />
             <input type="hidden" name="hidden_id" id="hidden_id" />

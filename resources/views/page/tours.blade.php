@@ -29,19 +29,19 @@
 								@foreach($tour as $chuongtrinh)
 								<div class="col-md-6 col-sm-6 animate-box">
 									<div class="tour" >
-										<a href="{{route('chitiettour',$chuongtrinh->matour)}}" class="tour-img" style="background-image: url(images/{{$chuongtrinh->hinhanh}});">
+										<a href="{{route('chitiettour',$chuongtrinh->id)}}" class="tour-img" style="background-image: url(images/{{$chuongtrinh->hinhanh}});">
 											<p class="price"><span>{{$chuongtrinh->songay}} Ngày</span> / {{$chuongtrinh->sodem}} Đêm</small></p>
 										</a>
 										<span class="desc">
 											<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-											<h2><a href="{{route('chitiettour',$chuongtrinh->matour)}}">{{$chuongtrinh->tentour}}</a></h2>
+											<h2><a href="{{route('chitiettour',$chuongtrinh->id)}}">{{$chuongtrinh->tentour}}</a></h2>
 											<span class="city">Xuất phát: {{$chuongtrinh->diemxuatphat}}</span>
 											<p>Tóm tắt : {{$chuongtrinh->noidung}}</p>
 										</span>
 									</div>
 								</div>
 								@endforeach
-								
+
 							</div>
 						</div>
 						<div class="row">

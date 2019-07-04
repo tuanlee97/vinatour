@@ -11,6 +11,7 @@ use App\Models\DiaDanh;
 use App\Models\NhaHang;
 use App\Models\KhachSan;
 use App\Models\Tour;
+use DB;
 class TourController extends Controller
 {
     /**
@@ -28,12 +29,12 @@ class TourController extends Controller
             $khachsan=KhachSan::all();
        if(request()->ajax())
         {
-          
+
             return datatables()->of(Tour::latest()->get())
                     ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->matour.'" class="edit btn btn-primary btn-sm">Sửa</button>';
+                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Sửa</button>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->matour.'" class="delete btn btn-danger btn-sm">Xóa</button>';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Xóa</button>';
                         return $button;
                     })
                     ->rawColumns(['action'])
@@ -49,9 +50,37 @@ class TourController extends Controller
      */
     public function getStates($id)
     {
-        $states = Tinh::where('quocgia',$id)->pluck('tentinh','matinh');
-        return json_encode($states);
-    }
+        if($id==1){
+        $states = Tinh::where('quocgia',84)->pluck('tentinh','id');
+        return json_encode($states);}
+        else {
+          $states = Tinh::where('quocgia','<>',84)->pluck('tentinh','id');
+          return json_encode($states);}
+        }
+        public function getDiadanh($id)
+        {
+
+            $diadanh = DiaDanh::where('tinh',$id)->pluck('tendiadanh','id');
+            return json_encode($diadanh);
+        }
+        public function getNhahang($id)
+        {
+
+            $nhahang = NhaHang::where('tinh',$id)->pluck('tennhahang','id');
+            return json_encode($nhahang);
+        }
+        public function getKhachsan($id)
+        {
+
+            $khachsan = KhachSan::where('tinh',$id)->pluck('tenkhachsan','id');
+            return json_encode($khachsan);
+        }
+        public function getDiemden($id)
+        {
+
+            $diemden = Tinh::where('id',$id)->pluck('tentinh','id');
+            return json_encode($diemden);
+        }
     public function create()
     {
         //
@@ -65,7 +94,90 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+     $error = Validator::make($request->all(), [
+      'tentour'    =>  'required',
+     'loaitour' => 'required',
+     'xuatphat' => ' required',
+     'diemden' => 'required',
+     'diadanh' => 'required',
+     'nhahang' => 'required',
+     'khachsan' => 'required',
+     'sodem' => 'required',
+     'songay' => 'required|greater_than_field:sodem',
+     'editor1' => 'required',
+     'image' => 'required|image|max:2048'],
+
+     [ 'tentour.required'=>'Bạn chưa nhập tên tour',
+      'loaitour.required'=>'Bạn chưa chọn loại tour',
+      'xuatphat.required'=>'Bạn chưa chọn điểm xuất phát',
+      'diemden.required'=>'Bạn chưa chọn điểm đến',
+      'diadanh.required'=>'Bạn chưa chọn địa danh',
+      'nhahang.required'=>'Bạn chưa chọn nhà hàng',
+      'khachsan.required'=>'Bạn chưa chọn khách sạn',
+      'sodem.required'=>'Bạn chưa chọn số đêm',
+      'songay.required'=>'Bạn chưa chọn số ngày',
+      'songay.greater_than_field'=>'Số ngày phải lớn hơn Số đêm',
+      'editor1.required'=>'Bạn chưa nhập nội dung',
+      'image.required'=>'Bạn chưa chọn hình ảnh',
+      'image.image'=>'Sai định dạng ảnh',
+      'image.max'=>'Ảnh tối đa 2MB',
+      ]);
+
+     if($error->fails())
+     {
+         return response()->json(['errors' => $error->errors()->all()]);
+     }
+      $image = $request->file('image');
+
+     $new_name = rand() . '.' . $image->getClientOriginalExtension();
+
+     $image->move(public_path('images/'), $new_name);
+     $form_data = array(
+          'loaitour'  => $request->loaitour,
+         'tentour'        =>  $request->tentour,
+         'songay'             =>  $request->songay,
+         'sodem'             =>  $request->sodem,
+         'diemxuatphat'          => $request->xuatphat,
+         'noidung'        => $request->editor1,
+         'hinhanh'      => $new_name
+     );
+
+      $tour =  Tour::create($form_data);
+        foreach ($request->diemden as $diemden) {
+          $tinh_tour_data = array(
+           'tour_id'  =>    $tour->id,
+           'tinh_id'  =>   (int)$diemden
+           );
+           DB::table('tinh_tour')->insert($tinh_tour_data);
+
+        }
+        foreach ($request->nhahang as $nhahang) {
+          $nhahang_tour_data = array(
+           'tour_id'  =>    $tour->id,
+           'nhahang_id'  =>   (int)$nhahang
+           );
+           DB::table('nhahang_tour')->insert($nhahang_tour_data);
+
+        }
+        foreach ($request->khachsan as $khachsan) {
+          $khachsan_tour_data = array(
+           'tour_id'  =>    $tour->id,
+           'khachsan_id'  =>   (int)$khachsan
+           );
+           DB::table('khachsan_tour')->insert($khachsan_tour_data);
+
+        }
+        foreach ($request->diadanh as $diadanh) {
+          $diadanh_tour_data = array(
+           'tour_id'  =>    $tour->id,
+           'diadanh_id'  =>   (int)$diadanh
+           );
+           DB::table('diadanh_tour')->insert($diadanh_tour_data);
+
+        }
+
+     return response()->json(['success' => 'Data Added successfully.']);
     }
 
     /**

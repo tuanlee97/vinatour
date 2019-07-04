@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuocgiaTable extends Migration
+class CreateDiadanhTourTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateQuocgiaTable extends Migration
      */
     public function up()
     {
-        Schema::create('quocgia', function (Blueprint $table) {
-            $table->increments('maquocgia');
-
-            $table->string('tenquocgia');
-              $table->string('image');
+        Schema::create('diadanh_tour', function (Blueprint $table) {
+          $table->increments('id');
+          $table->integer('tour_id');
+          $table->integer('diadanh_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateQuocgiaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quocgia');
+        Schema::dropIfExists('diadanh_tour');
     }
 }

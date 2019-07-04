@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\QuocGia;
+use App\Models\Tinh;
 use Validator;
 class QuocGiaController extends Controller
 {
@@ -46,10 +47,10 @@ class QuocGiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
+      
         $rules = array(
             'country_name'    =>  'required',
-            'editor1'    =>  'required',
             'image'    =>  'required|image|max:2048'
         );
 
@@ -148,7 +149,7 @@ class QuocGiaController extends Controller
             'image'            =>   $image_name
         );
         QuocGia::where('maquocgia', $request->hidden_id)->update($form_data);
-                 
+
         return response()->json(['success' => 'Data is successfully updated']);
     }
 
@@ -160,7 +161,13 @@ class QuocGiaController extends Controller
      */
     public function destroy($id)
     {
-       $data = QuocGia::where('maquocgia', $id);
-        $data->delete();
+        $tinhofqg = Tinh::where('quocgia',$id);
+        if($tinhofqg)
+        return response()->json(['errors' => 'LỖI : Quốc gia này có tỉnh đang được khai thác du lịch']);
+        else {
+          $data = QuocGia::where('maquocgia', $id);
+           $data->delete();
+        }
+
     }
 }

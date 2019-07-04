@@ -69,7 +69,7 @@ Route::post('dangnhap',
 );
 Auth::routes();
 
-Route::get('admin/dangxuat','UserController@getlogoutAdmin');
+Route::get('admin/dangxuat','AdminController@getlogoutAdmin');
 
     Route::group(['prefix'=>'admin'],function(){
         Route::get('dangnhap','AdminController@getloginAdmin');
@@ -78,9 +78,13 @@ Route::get('admin/dangxuat','UserController@getlogoutAdmin');
 //,'middleware'=>'adminLogin'
 Route::group(['prefix'=>'admin'],function(){
     Route::get('trangchu','AdminController@gettrangchu');
-
+Route::get('getStates/{id}','TourController@getStates');
+Route::get('getDiemden/{id}','TourController@getDiemden');
+Route::get('getDiadanh/{id}','TourController@getDiadanh');
+Route::get('getNhahang/{id}','TourController@getNhahang');
+Route::get('getKhachsan/{id}','TourController@getKhachsan');
     Route::group(['prefix'=>'tour'],function(){
-      
+
         Route::get('/','TourController@getDanhSach');
 
         Route::get('them','TourController@getThem');
@@ -93,7 +97,7 @@ Route::group(['prefix'=>'admin'],function(){
 
         Route::get('xoa/{id}','TourController@XuLyXoa');
     });
-   
+
     Route::resource('quocgia', 'QuocGiaController');
     Route::post('quocgia/update', 'QuocGiaController@update')->name('quocgia.update');
     Route::get('quocgia/destroy/{id}', 'QuocGiaController@destroy');
@@ -124,6 +128,3 @@ Route::resource('tour', 'TourController');
     Route::post('loaitour/update', 'LoaiTourController@update')->name('loaitour.update');
     Route::get('loaitour/destroy/{id}', 'LoaiTourController@destroy');
 });
-
-
-
