@@ -16,9 +16,21 @@ Route::get('tours',[
 'as'=>'tours',
 'uses'=>'PageController@gettours'
 ]);
+Route::get('quocnoi/{id}',[
+'as'=>'quocnoi',
+'uses'=>'PageController@gettoursTN'
+]);
+Route::get('quocte/{id}',[
+'as'=>'quocte',
+'uses'=>'PageController@gettoursNN'
+]);
 Route::get('hotels',[
 'as'=>'hotels',
 'uses'=>'PageController@gethotels'
+]);
+Route::get('nhahang',[
+'as'=>'nhahang',
+'uses'=>'PageController@getnhahang'
 ]);
 Route::get('services',[
 'as'=>'services',
@@ -30,12 +42,18 @@ Route::get('/',[
 'uses'=>'PageController@getindex'
 ]);
 
-
+Route::get('ctblog/{id}',[
+'as'=>'ctblog',
+'uses'=>'PageController@getctblog'
+]);
 Route::get('blog',[
 'as'=>'blog',
 'uses'=>'PageController@getblog'
 ]);
-
+Route::get('lienhe',[
+'as'=>'lienhe',
+'uses'=>'PageController@getlienhe'
+]);
 Route::get('about',[
 'as'=>'about',
 'uses'=>'PageController@getabout'
@@ -43,6 +61,10 @@ Route::get('about',[
 Route::get('chitiettour/{id}',[
 'as'=>'chitiettour',
 'uses'=>'PageController@getchitiettour'
+]);
+Route::get('ctnhahang/{id}',[
+'as'=>'ctnhahang',
+'uses'=>'PageController@getctnhahang'
 ]);
 Route::get('hotel-room',[
 'as'=>'hotel-room',
@@ -57,26 +79,28 @@ Route::get('/callbackGG', 'SocialAuthGoogleController@callback');
 Route::post('dangky',
     [
         'as'=>'dangky',
-        'uses'=>'UserController@postRegister'
+        'uses'=>'KhachHangController@postRegister'
     ]
 );
 
 Route::post('dangnhap',
     [
         'as'=>'dangnhap',
-        'uses'=>'UserController@postlogin'
+        'uses'=>'KhachHangController@postlogin'
     ]
 );
 Auth::routes();
 
-Route::get('admin/dangxuat','AdminController@getlogoutAdmin');
+
 
     Route::group(['prefix'=>'admin'],function(){
         Route::get('dangnhap','AdminController@getloginAdmin');
         Route::post('dangnhap','AdminController@postloginAdmin');
+
     });
-//,'middleware'=>'adminLogin'
-Route::group(['prefix'=>'admin'],function(){
+//
+Route::group(['prefix'=>'admin','middleware'=>'adminLogin'],function(){
+    Route::get('dangxuat','AdminController@getlogoutAdmin')->name('adlogout');
     Route::get('trangchu','AdminController@gettrangchu');
 Route::get('getStates/{id}','TourController@getStates');
 Route::get('getDiemden/{id}','TourController@getDiemden');
@@ -106,6 +130,10 @@ Route::get('getKhachsan/{id}','TourController@getKhachsan');
     Route::post('khachhang/update', 'KhachHangController@update')->name('khachhang.update');
     Route::get('khachhang/destroy/{id}', 'KhachHangController@destroy');
 
+    Route::resource('quantrivien', 'AdminController');
+    Route::post('quantrivien/update', 'AdminController@update')->name('quantrivien.update');
+    Route::get('quantrivien/destroy/{id}', 'AdminController@destroy');
+
      Route::resource('tinh', 'TinhController');
     Route::post('tinh/update', 'TinhController@update')->name('tinh.update');
     Route::get('tinh/destroy/{id}', 'TinhController@destroy');
@@ -121,10 +149,9 @@ Route::get('getKhachsan/{id}','TourController@getKhachsan');
      Route::resource('nhahang', 'NhaHangController');
     Route::post('nhahang/update', 'NhaHangController@update')->name('nhahang.update');
     Route::get('nhahang/destroy/{id}', 'NhaHangController@destroy');
-Route::resource('tour', 'TourController');
+
+    Route::resource('tour', 'TourController');
     Route::post('tour/update', 'TourController@update')->name('tour.update');
     Route::get('tour/destroy/{id}', 'TourController@destroy');
-    Route::resource('loaitour', 'LoaiTourController');
-    Route::post('loaitour/update', 'LoaiTourController@update')->name('loaitour.update');
-    Route::get('loaitour/destroy/{id}', 'LoaiTourController@destroy');
+
 });

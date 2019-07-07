@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-	<base href="{{asset('')}}">	
+	<base href="{{asset('')}}">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Vina Tour</title>
@@ -22,7 +22,7 @@
 	<meta name="twitter:card" content="" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
-	
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -38,7 +38,7 @@
 	<!-- Owl Carousel -->
 	<link rel="stylesheet" href="css/owl.carousel.min.css">
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	
+
 	<!-- Date Picker -->
 	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
 	<!-- Flaticons  -->
@@ -54,13 +54,13 @@
 	<![endif]-->
 		<!--Modal -->
 	<link href="css/login-register.css" rel="stylesheet" />
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
 
 	<script src="js/jquery-1.10.2.js" type="text/javascript"></script>
 	<script src="js/bootstrap.js" type="text/javascript"></script>
 	<script src="js/login-register.js" type="text/javascript"></script>
 	   <!-- Script Modal -->
-            <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            <script src="js/jquery-3.3.1.min.js"
                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                crossorigin="anonymous">
       </script>
@@ -83,7 +83,7 @@
                   data: {
                      email: jQuery('#email').val(),
                      password: jQuery('#password').val(),
-            
+
                   },
                   success: function(result){
                     if(result.errors)
@@ -95,8 +95,8 @@
                             jQuery('.alert-danger').append('<li>' +value+'</li>');
                         });
                     }
-                    else 
-                    {   
+                    else
+                    {
                           if(result.errorLogin)
                     {
                         jQuery('.alert-danger').html('');
@@ -108,15 +108,15 @@
                    else{
 
                     jQuery('.alert-danger').hide();
-                        jQuery('.alert-success').html('');    
+                        jQuery('.alert-success').html('');
                         jQuery('.alert-success').show();
                             jQuery('.alert-success').append('Đăng nhập thành công. Đang chuyển trang...');
                          setTimeout(function(){
                         location.reload();
                                 }, 600);
-                        
+
                    }
-                        
+
                     }
                   }});
                });
@@ -136,7 +136,7 @@
                      emailReg: jQuery('#emailReg').val(),
                      passwordReg: jQuery('#passwordReg').val(),
                      passwordReg_confirmation: jQuery('#passwordReg_confirmation').val()
-            
+
                   },
                   success: function(result){
                     if(result.errors)
@@ -148,16 +148,16 @@
                             jQuery('.alert-danger').append('<li>' +value+'</li>');
                         });
                     }
-                    else 
-                    {   
+                    else
+                    {
                   jQuery('.alert-danger').hide();
-                        jQuery('.alert-success').html('');    
+                        jQuery('.alert-success').html('');
                         jQuery('.alert-success').show();
                             jQuery('.alert-success').append('Đăng ký thành công. Đang chuyển trang...');
                          setTimeout(function(){
                         location.reload();
                                 }, 600);
-                        
+
                     }
                   }});
                });
@@ -170,12 +170,11 @@
 
 
           <!-- End Script -->
-               
 
-	
+
+
 </head>
 	<body>
 		@include('header')
 		@yield('content')
 		@include('footer')
-	

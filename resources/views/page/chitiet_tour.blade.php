@@ -133,12 +133,12 @@
 												</div>
 											</div>
 										</div>
-										
+
 									</div>
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
 
 					<!-- SIDEBAR-->
@@ -392,9 +392,9 @@
 								<table class="table table-bordered">
 					<thead>
 				      <tr>
-				       	
+
 				       	<th style="width: 16%">Nơi đến</th>
-				        <th style="width: 30%">Địa điểm</th>
+				         <th style="width: 30%">Địa điểm</th>
 				        <th style="width: 22%">Nhà hàng</th>
 				        <th style="width: 22%">Khách sạn</th>
 				        <th style="width: 10%">Thành tiền</th>
@@ -403,118 +403,105 @@
 				    <tbody>
 					<tr>
 						<td>@foreach($diemden as $dd)
-							<div>	
+							<div>
 								<input type="checkbox" name="diadiem_ngay_32" value="900000" class="1" >
 									  <span data-toggle="tooltip" data-html="true">
-									  	<a href="#">{{$dd->tendiemden}}
-									 </a>
-									 
+									  	<a href="#">{{$dd->tentinh}}</a>
 									</span>
-								
 							</div>
-							@endforeach
+								@endforeach
 						</td>
-						<td>	@foreach($diemden as $dd)
-								<div><b>{{$dd->tendiemden}}</b></div>
-									@foreach($thamquan as $tq)
-									
-										@foreach($tq as $diadanh)
-										@if($diadanh->khuvuc==$dd->id_diemden)
-								<div>
-									<input type="checkbox" name="diadiem_ngay_32" value="900000" class="1" disabled="disabled">
-									  <span data-toggle="tooltip" data-html="true">
-									  	<a href="#">
 
-									 {{$diadanh->ten_thamquan}}</a>
-									 
-									</span>
-									</div>
-									@endif
-									@endforeach
-							@endforeach
-									@endforeach						
-							</td>
-							<td>
-								@foreach($diemden as $dd)
-								<div><b>{{$dd->tendiemden}}</b></div>
-									<div><small> Ăn sáng</small></div>
-								@foreach($noianuong as $nau)
-									
-										@foreach($nau as $nhahang)
-										@if($nhahang->khuvuc==$dd->id_diemden)
-					
-															<div>
-								<input type="checkbox" name="diadiem_ngay_41" value="1350000" class="1" disabled="disabled">
-								  <span data-toggle="tooltip" data-html="true">
-								  	<a href="nha-hang-nha-hang-dia-phuong-41.html" target="_nhahang" title="1,350,000 VND">
-								 {{$nhahang->ten_noianuong}}</a>
-								 								
-								</span>
-								</div>
-								@endif
-									@endforeach
-							@endforeach
-									
-							<div><small> Ăn trưa</small></div>
-								@foreach($noianuong as $nau)
-									
-										@foreach($nau as $nhahang)
-										@if($nhahang->khuvuc==$dd->id_diemden)
-					
-															<div>
-								<input type="checkbox" name="diadiem_ngay_41" value="1350000" class="1" disabled="disabled">
-								  <span data-toggle="tooltip" data-html="true">
-								  	<a href="nha-hang-nha-hang-dia-phuong-41.html" target="_nhahang" title="1,350,000 VND">
-								 {{$nhahang->ten_noianuong}}</a>
-								 								
-								</span>
-								</div>
-								@endif
-									@endforeach
-							@endforeach<div><small> Ăn tối</small></div>
-								@foreach($noianuong as $nau)
-									
-										@foreach($nau as $nhahang)
-										@if($nhahang->khuvuc==$dd->id_diemden)
-					
-															<div>
-								<input type="checkbox" name="diadiem_ngay_41" value="1350000" class="1" disabled="disabled">
-								  <span data-toggle="tooltip" data-html="true">
-								  	<a href="nha-hang-nha-hang-dia-phuong-41.html" target="_nhahang" title="1,350,000 VND">
-								 {{$nhahang->ten_noianuong}}</a>
-								 								
-								</span>
-								</div>
-								@endif
-									@endforeach
-							@endforeach
-
-								@endforeach									
-						</td>
 						<td>
 							@foreach($diemden as $dd)
-								<div><b>{{$dd->tendiemden}}</b></div>
-									
-								@foreach($noinghi as $nn)
-									
-										@foreach($nn as $khachsan)
-										@if($khachsan->khuvuc==$dd->id_diemden)
-					
-															<div>
-								<input type="checkbox" name="diadiem_ngay_41" value="1350000" class="1" disabled="disabled">
+								<div><b>{{$dd->tentinh}}</b></div>
+								@foreach($thamquan as $tq)
+								<div>
+
+									<input type="checkbox" name="diadiem_ngay_32" value="$tq->gia" class="1" disabled="disabled">
+									  <span data-toggle="tooltip" data-html="true">
+									  	<a href="#">{{$tq->tendiadanh}}</a>
+
+									</span>
+
+									</div>
+									@endforeach
+									@endforeach
+							</td>
+
+							<td>
+									@foreach($diemden as $dd)
+								<div><b>{{$dd->tentinh}}</b></div>
+									<div><small> Ăn sáng</small></div>
+									@foreach($noianuong as $pl)
+									@if($pl->tinh==$dd->id)
+								<div>
+								<input type="checkbox" name="diadiem_ngay_41" value="$pl->gia" class="1" disabled="disabled">
 								  <span data-toggle="tooltip" data-html="true">
-								  	<a href="nha-hang-nha-hang-dia-phuong-41.html" target="_nhahang" title="1,350,000 VND">
-								 {{$khachsan->ten_noinghi}}</a>
-								 								
+								  	<a href="nha-hang-nha-hang-dia-phuong-41.html" target="_nhahang" title="{{$pl->gia}} VND">{{$pl->tennhahang}}
+								</a>
+
 								</span>
 								</div>
 								@endif
-									@endforeach
-							@endforeach
-									
-							
+								@endforeach
 
-								@endforeach								
+
+
+							<div><small> Ăn trưa</small></div>
+								@foreach($noianuong as $pl)
+									@if($pl->tinh==$dd->id)
+								<div>
+								<input type="checkbox" name="diadiem_ngay_41" value="$pl->gia" class="1" disabled="disabled">
+								  <span data-toggle="tooltip" data-html="true">
+								  	<a href="nha-hang-nha-hang-dia-phuong-41.html" target="_nhahang" title="{{$pl->gia}} VND">{{$pl->tennhahang}}
+								</a>
+
+								</span>
+								</div>
+								@endif
+								@endforeach
+
+
+
+
+							<div><small> Ăn tối</small></div>
+					@foreach($noianuong as $pl)
+									@if($pl->tinh==$dd->id)
+								<div>
+								<input type="checkbox" name="diadiem_ngay_41" value="$pl->gia" class="1" disabled="disabled">
+								  <span data-toggle="tooltip" data-html="true">
+								  	<a href="nha-hang-nha-hang-dia-phuong-41.html" target="_nhahang" title="{{$pl->gia}} VND">{{$pl->tennhahang}}
+								</a>
+
+								</span>
+								</div>
+								@endif
+								@endforeach
+
+									@endforeach
+						</td>
+						<td>
+								@foreach($diemden as $dd)
+								<div><b>{{$dd->tentinh}}</b></div>
+
+									@foreach($noinghi as $pl)
+									@if($pl->tinh==$dd->id)
+								<div>
+								<input type="checkbox" name="diadiem_ngay_41" value="$pl->gia" class="1" disabled="disabled">
+								  <span data-toggle="tooltip" data-html="true">
+								  	<a href="nha-hang-nha-hang-dia-phuong-41.html" target="_nhahang" title="{{$pl->gia}} VND">{{$pl->tenkhachsan}}
+								</a>
+
+								</span>
+								</div>
+								@endif
+								@endforeach
+
+
+
+
+									@endforeach
 						</td>
 						<td width="100">
 							<span style="width: 200px; float: right;" id="tongdukienngay_1"> 0.0 VND</span>
@@ -523,10 +510,10 @@
 
 
 				</tr>
-						
+
 								<tr> <td colspan="5">
 				<div class=" alert alert-info" role="alert">
-					Tổng dự kiến tour đã chọn: &nbsp; 
+					Tổng dự kiến tour đã chọn: &nbsp;
 					<span style="width: 400px; float: right;" id="tongdukien"> 0.0 VND</span>
 				</div>
 					<div class="col-md-12 animate-box text-center">
@@ -545,6 +532,6 @@
 		</div>
 	</div>
 
-	
-	
+
+
 @endsection

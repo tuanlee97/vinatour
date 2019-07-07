@@ -17,12 +17,12 @@ class CreateDiadanhTable extends Migration
             $table->increments('id');
              $table->string('tendiadanh');
              $table->double('gia');
-              $table->string('noidung');
+              $table->text('noidung');
                $table->string('hinhanh');
                $table->integer('tinh')->unsigned();
 
                 $table->foreign('tinh')
-                      ->references('matinh')
+                      ->references('id')
                       ->on('tinh')
                       ->onDelete('cascade');
 

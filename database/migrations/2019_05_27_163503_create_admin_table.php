@@ -19,6 +19,7 @@ class CreateAdminTable extends Migration
             $table->string('password');
             $table->string('hoten');
             $table->string('sdt');
+            $table->string('hinhanh');
             $table->rememberToken();
             $table->timestamps();
         });

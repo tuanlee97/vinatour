@@ -48,13 +48,20 @@ class QuocGiaController extends Controller
      */
     public function store(Request $request)
     {
-      
-        $rules = array(
-            'country_name'    =>  'required',
-            'image'    =>  'required|image|max:2048'
-        );
+        $error = Validator::make($request->all(), 	[
+          'country_name'    =>  'required|unique:quocgia,tenquocgia',
+          'image'    =>  'required|image|max:2048',
+          'checkbox' => 'unique:quocgia,quocnoi'
+    	],
+    	[
+    			'country_name.required'=>'Bạn chưa nhập tên quốc gia',
+          'country_name.unique'=>'Đã tồn tại quốc gia này',
+    			'checkbox.unique'=>'Đã tồn tại quốc gia quốc nội',
+          'image.required'=>'Bạn chưa nhập hình ảnh',
+          'image.image'=>'Không phải kiểu dữ liệu hình ảnh',
 
-        $error = Validator::make($request->all(), $rules);
+
+    	]);
 
         if($error->fails())
         {
@@ -66,11 +73,23 @@ class QuocGiaController extends Controller
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
 
         $image->move(public_path('images/flag'), $new_name);
+        if($request->checkbox == "on"){
+          $form_data = array(
+              'tenquocgia'        =>  $request->country_name,
+              'image'             =>  $new_name,
+              'quocnoi'            => 1
+          );
 
-        $form_data = array(
-            'tenquocgia'        =>  $request->country_name,
-            'image'             =>  $new_name
-        );
+
+        }else {
+          $form_data = array(
+              'tenquocgia'        =>  $request->country_name,
+              'image'             =>  $new_name,
+              'quocnoi'            => 0
+            );
+
+        }
+
 
         QuocGia::create($form_data);
 
@@ -117,11 +136,20 @@ class QuocGiaController extends Controller
         $image = $request->file('image');
         if($image != '')
         {
-            $rules = array(
-                'country_name'    =>  'required',
-                'image'    =>  'image|max:2048'
-            );
-            $error = Validator::make($request->all(), $rules);
+
+            $error = Validator::make($request->all(),  	[
+              'country_name'    =>  'required',
+              'image'    =>  'required|image|max:2048',
+              'checkbox' => 'unique:quocgia,quocnoi'
+        	],
+        	[
+        			'country_name.required'=>'Bạn chưa nhập tên quốc gia',
+        			'checkbox.unique'=>'Đã tồn tại quốc gia quốc nội',
+              'image.required'=>'Bạn chưa nhập hình ảnh',
+              'image.image'=>'Không phải kiểu dữ liệu hình ảnh',
+
+
+        	]);
             if($error->fails())
             {
                 return response()->json(['errors' => $error->errors()->all()]);
@@ -132,11 +160,19 @@ class QuocGiaController extends Controller
         }
         else
         {
-            $rules = array(
-                'country_name'    =>  'required',
-            );
 
-            $error = Validator::make($request->all(), $rules);
+
+            $error = Validator::make($request->all(), 	[
+              'country_name'    =>  'required',
+              'checkbox' => 'unique:quocgia,quocnoi'
+        	],
+        	[
+        			'country_name.required'=>'Bạn chưa nhập tên quốc gia',
+        			'checkbox.unique'=>'Đã tồn tại quốc gia quốc nội',
+            
+
+
+        	]);
 
             if($error->fails())
             {
@@ -144,10 +180,24 @@ class QuocGiaController extends Controller
             }
         }
 
-        $form_data = array(
+        if($request->checkbox == "on"){
+          $form_data = array(
             'tenquocgia'        =>  $request->country_name,
-            'image'            =>   $image_name
-        );
+            'image'            =>   $image_name,
+              'quocnoi'            => 1
+          );
+
+
+        }else {
+          $form_data = array(
+            'tenquocgia'        =>  $request->country_name,
+            'image'            =>   $image_name,
+              'quocnoi'            => 0
+            );
+
+        }
+
+
         QuocGia::where('maquocgia', $request->hidden_id)->update($form_data);
 
         return response()->json(['success' => 'Data is successfully updated']);
@@ -161,8 +211,9 @@ class QuocGiaController extends Controller
      */
     public function destroy($id)
     {
-        $tinhofqg = Tinh::where('quocgia',$id);
-        if($tinhofqg)
+        $tinhofqg = Tinh::where('quocgia',$id)->first();
+
+        if($tinhofqg!=null)
         return response()->json(['errors' => 'LỖI : Quốc gia này có tỉnh đang được khai thác du lịch']);
         else {
           $data = QuocGia::where('maquocgia', $id);

@@ -58,10 +58,10 @@
     </div>
 </div>
 <div id="formModal" class="modal fade" role="dialog">
- <div class="modal-dialog" style="  max-width: 1200px; margin: 1.75rem auto;">
+ <div class="modal-dialog  modal-dialog-scrollable" style="  max-width: 1200px; margin: 1.75rem auto;">
   <div class="modal-content">
    <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" id="close" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Thêm thông tin Nhà Hàng</h4>
         </div>
         <div class="modal-body">
@@ -89,9 +89,15 @@
             <label class="control-label col-md-4">Tên Tỉnh : </label>
             <div class="col-md-8">
 
-             <select name="tentinh" id="tentinh" title="Chọn Tỉnh">
-               @foreach($tinh as $t)
-               <option value="{{$t->matinh}}">{{$t->tentinh}}</option>
+             <select class="form-control col-md-3" name="tentinh" id="tentinh" title="Chọn Tỉnh">
+               @foreach($quocgia as $qg)
+               <optgroup label="{{$qg->tenquocgia}}">
+                 @foreach($tinh as $t)
+                   @if($t->quocgia == $qg->maquocgia)
+                   <option value="{{$t->id}}">{{$t->tentinh}}</option>
+                   @endif
+                 @endforeach
+               </optgroup>
                @endforeach
              </select>
             </div>
@@ -161,7 +167,7 @@ $(document).ready(function(){
 
     render: function(data, type, full, meta)
     {
-     return "<img src={{ URL::to('/') }}/images/flag/" + data + " width='200' class='img-thumbnail' />";
+     return "<img src={{ URL::to('/') }}/admin/images/nhahang/" + data + " width='300' class='img-thumbnail' />";
     }
   },
 
@@ -175,11 +181,13 @@ $(document).ready(function(){
 
  $('#create_record').click(function(){
   $('.modal-title').text("Add New Record");
+
+
      $('#action_button').val("Add");
      $('#action').val("Add");
       $('#tennhahang').val("");
     $('#gia').val("");
-    $('#store_image').val("");
+    $('#store_image').empty();
     $('#editor1').val('');
 
     $('#tentinh').val("");
@@ -219,11 +227,14 @@ $(document).ready(function(){
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
       setTimeout(function(){
+
      $('#formModal').modal('hide');
      $('#dataTableNH').DataTable().ajax.reload();
+
     }, 1000);
      }
      $('#form_result').html(html);
+
     }
    })
   }
@@ -255,10 +266,12 @@ $(document).ready(function(){
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
 
-      $('#store_image').html('');
+
        setTimeout(function(){
+
      $('#formModal').modal('hide');
      $('#dataTableNH').DataTable().ajax.reload();
+
     }, 1000);
      }
      $('#form_result').html(html);
@@ -273,15 +286,16 @@ $(document).ready(function(){
    url:"nhahang/"+id+"/edit",
    dataType:"json",
    success:function(html){
+       $('#sample_form')[0].reset();
     $('#tennhahang').val(html.data.tennhahang);
     $('#gia').val(html.data.gia);
 
         CKEDITOR.instances['editor1'].setData(html.data.noidung);//////////////
     $('#editor1').val(html.data.noidung);/////
     $('#tentinh').val(html.data.tinh);
-    $('#store_image').html("<img src={{ URL::to('/') }}/images/flag/" + html.data.hinhanh + " width='200' class='img-thumbnail' />");
-    $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.hinhanh+"' />");
-    $('#hidden_id').val(html.data.manhahang);
+    $('#store_image').html("<img src={{ URL::to('/') }}/admin/images/nhahang/" + html.data.hinhanh + " width='300' class='img-thumbnail' />");
+    $('#store_image').append("<input type='hidden' name='hidden_image' id='hidden_image' value='"+html.data.hinhanh+"' />");
+    $('#hidden_id').val(html.data.id);
     $('.modal-title').text("Edit New Record");
     $('#action_button').val("Edit");
     $('#action').val("Edit");

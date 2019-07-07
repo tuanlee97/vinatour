@@ -7,7 +7,9 @@
             <h6 class="m-0 font-weight-bold text-primary">
             Danh sách Loại Tour</div>
           <div class="card-body">
-
+            <div align="right">
+            <button type="button" name="create_record" id="create_record" class="btn btn-success btn-sm">Thêm loại tour</button>
+          </div></br>
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTableLT" width="100%" cellspacing="0">
                 <thead>
@@ -48,11 +50,7 @@
            <div class="form-group">
             <label class="control-label col-md-4">Tên Loại tour : </label>
             <div class="col-md-8">
-            <select name="tenloai" id="tenloai" title="Chọn Loại tour">
-               @foreach($loaitour as $lt)
-               <option value="{{$lt->maloai}}">{{$lt->tenloai}}</option>
-               @endforeach
-             </select>
+             <input type="text" name="tenloai" id="tenloai"class="form-control" />
             </div>
            </div>
            <br />
@@ -106,11 +104,55 @@ $(document).ready(function(){
   ]
  });
 
+ $('#create_record').click(function(){
 
+   $('.modal-title').text("Add New Record");
+   $('#tenloai').val('');
+      $('#action_button').val("Add");
+      $('#action').val("Add");
+       $('#form_result').html('');
+      $('#formModal').modal('show');
+ });
 
  $('#sample_form').on('submit', function(event){
   event.preventDefault();
+  if($('#action').val() == 'Add')
+  {
+   $.ajax({
+    url:"{{ route('loaitour.store') }}",
+    method:"POST",
+    data: new FormData(this),
+    contentType: false,
+    cache:false,
+    processData: false,
+    dataType:"json",
+    success:function(data)
+    {
+     var html = '';
+     if(data.errors)
+     {
+      html = '<div class="alert alert-danger">';
+      for(var count = 0; count < data.errors.length; count++)
+      {
+       html += '<p>' + data.errors[count] + '</p>';
+      }
+      html += '</div>';
+     }
+     if(data.success)
+     {
+      html = '<div class="alert alert-success">' + data.success + '</div>';
+      $('#sample_form')[0].reset();
+      $('#dataTableLT').DataTable().ajax.reload();
+      setTimeout(function(){
 
+        $('#formModal').modal('hide');
+   }, 1000);
+
+     }
+     $('#form_result').html(html);
+    }
+   })
+  }
 
   if($('#action').val() == "Edit")
   {
@@ -140,8 +182,12 @@ $(document).ready(function(){
       $('#sample_form')[0].reset();
 
       $('#dataTableLT').DataTable().ajax.reload();
-     }
-     $('#form_result').html(html);
+     }$('#form_result').html(html);
+     setTimeout(function(){
+
+       $('#formModal').modal('hide');
+  }, 1000);
+
     }
    });
   }
@@ -154,9 +200,10 @@ $(document).ready(function(){
    url:"loaitour/"+id+"/edit",
    dataType:"json",
    success:function(html){
-    $('#tenloai').val(html.data.name);
+    $('#tenloai').val(html.data.tenloai);
 
     $('#hidden_id').val(html.data.maloai);
+      $('.modal-title').text("Edit New Record");
     $('#action_button').val("Sửa");
     $('#action').val("Edit");
 
@@ -183,10 +230,26 @@ $(document).ready(function(){
    },
    success:function(data)
    {
-    setTimeout(function(){
+     if(data.errors)
+     { var html = '';
+      html = '<div class="alert alert-danger">';
+      html += '<p>' + data.errors + '</p>';
+      html += '</div>';
+      $('#confirmtext').hide();
+      $('#result').html(html);
+      setTimeout(function(){
+      $('#confirmtext').show();
+      $('#result').empty();
+      $('#confirmModal').modal('hide');
+      $('#dataTableLT').DataTable().ajax.reload();
+   }, 1000);
+     }
+    else{
+      setTimeout(function(){
      $('#confirmModal').modal('hide');
      $('#dataTableLT').DataTable().ajax.reload();
-    }, 1000);
+   }, 1000);
+   }
    }
   })
  });

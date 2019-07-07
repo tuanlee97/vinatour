@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLoaitourTable extends Migration
+class CreateKhachsanTourTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateLoaitourTable extends Migration
      */
     public function up()
     {
-        Schema::create('loaitour', function (Blueprint $table) {
-            $table->increments('maloai');
-            $table->string('tenloai');
+        Schema::create('khach_san_tour', function (Blueprint $table) {
+          $table->increments('id');
+          $table->integer('tour_id');
+          $table->integer('khach_san_id');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateLoaitourTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loaitour');
+        Schema::dropIfExists('khachsan_tour');
     }
 }

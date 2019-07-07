@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\QuocGia;
 use App\Models\Tinh;
 use Validator;
 use App\Models\KhachSan;
@@ -17,22 +18,23 @@ class KhachSanController extends Controller
     public function index()
     {
            $tinh=Tinh::all();
+            $quocgia=QuocGia::all();
         if(request()->ajax())
         {
-          
+
             return datatables()->of(KhachSan::latest()->get())
                     ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->makhachsan.'" class="edit btn btn-primary btn-sm">Sửa</button>';
+                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Sửa</button>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->makhachsan.'" class="delete btn btn-danger btn-sm">Xóa</button>';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Xóa</button>';
                         return $button;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('admin.khachsan_manage',['tinh'=>$tinh]);
+        return view('admin.khachsan_manage',['tinh'=>$tinh,'quocgia'=>$quocgia]);
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -53,10 +55,11 @@ class KhachSanController extends Controller
     public function store(Request $request)
     {
          $rules = array(
-           
+
             'tenkhachsan'    =>  'required',
+            'tentinh' => 'required',
             'gia' => 'required',
-            'noidung' => 'required',
+            'editor1' => 'required',
             'image' => 'required|image|max:2048'
         );
 
@@ -70,12 +73,12 @@ class KhachSanController extends Controller
 
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
 
-        $image->move(public_path('images/flag'), $new_name);
+        $image->move(public_path('admin/images/khachsan'), $new_name);
 
         $form_data = array(
             'tenkhachsan'        =>  $request->tenkhachsan,
             'gia'             =>  $request->gia,
-            'noidung'        => $request->noidung,
+            'noidung'        => $request->editor1,
             'tinh'          => $request->tentinh,
             'hinhanh'      => $new_name
         );
@@ -106,7 +109,7 @@ class KhachSanController extends Controller
     {
          if(request()->ajax())
         {
-            $data = KhachSan::where('makhachsan', $id)->firstOrFail();
+            $data = KhachSan::findOrFail($id);
             return response()->json(['data' => $data]);
         }
     }
@@ -127,7 +130,8 @@ class KhachSanController extends Controller
             $rules = array(
                 'tenkhachsan'    =>  'required',
             'gia' => 'required',
-            'noidung' => 'required',
+              'tentinh' => 'required',
+            'editor1' => 'required',
             'hinhanh' => 'image|max:2048'
             );
             $error = Validator::make($request->all(), $rules);
@@ -137,13 +141,24 @@ class KhachSanController extends Controller
             }
 
             $image_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/flag'), $image_name);
+            $image->move(public_path('admin/images/khachsan'), $image_name);
+            $form_data = array(
+                'tenkhachsan'        =>  $request->tenkhachsan,
+                'gia'             =>  $request->gia,
+                'noidung'        => $request->editor1,
+                'tinh'          => $request->tentinh,
+                'hinhanh'            =>   $image_name
+            );
+
+            KhachSan::whereId($request->hidden_id)->update($form_data);
+            return response()->json(['success' => 'Data is successfully updated']);
         }
         else
         {
             $rules = array(
                  'tenkhachsan'    =>  'required',
             'gia' => 'required',
+            'tentinh' => 'required',
             'noidung' => 'required',
             );
 
@@ -158,12 +173,12 @@ class KhachSanController extends Controller
         $form_data = array(
             'tenkhachsan'        =>  $request->tenkhachsan,
             'gia'             =>  $request->gia,
-            'noidung'        => $request->noidung,
+            'noidung'        => $request->editor1,
             'tinh'          => $request->tentinh,
-            'hinhanh'            =>   $image_name
+
         );
-        KhachSan::where('makhachsan', $request->hidden_id)->update($form_data);
-                 
+        KhachSan::whereId($request->hidden_id)->update($form_data);
+
         return response()->json(['success' => 'Data is successfully updated']);
     }
 
@@ -175,7 +190,7 @@ class KhachSanController extends Controller
      */
     public function destroy($id)
     {
-         $data = KhachSan::where('makhachsan', $id);
+         $data = KhachSan::find($id);
         $data->delete();
     }
 }

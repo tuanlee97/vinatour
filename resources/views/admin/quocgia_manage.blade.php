@@ -13,14 +13,15 @@
      <br/>
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTableCountry" width="100%" cellspacing="0">
-                <thead>
+                <thead style="text-align:center">
                   <tr>
                     <th width="10%">Quốc kì</th>
-                    <th width="70%">Tên quốc gia</th>
-                    <th width="20%">Thao tác</th>
+                    <th width="50%">Tên quốc gia</th>
+                    <th width="1%">Loại</th>
+                    <th>Thao tác</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style="text-align:center">
                 </tbody>
               </table>
             </div>
@@ -51,6 +52,12 @@
              <input type="text" name="country_name" id="country_name" class="form-control" />
             </div>
            </div>
+           <div class="form-group">
+              <label class="control-label col-md-8"><input  type="checkbox" name="checkbox" id="checkbox">
+                  <span>Là quốc gia quốc nội</span>
+              </label>
+           </div>
+
            <div class="form-group">
             <label class="control-label col-md-4">Select Profile Image : </label>
             <div class="col-md-8">
@@ -117,6 +124,10 @@ $(document).ready(function(){
 
    },
    {
+    data: 'quocnoi',
+
+   },
+   {
     data: 'action',
     name: 'action',
     orderable: false
@@ -125,7 +136,10 @@ $(document).ready(function(){
  });
 
  $('#create_record').click(function(){
-
+     $('#sample_form')[0].reset();
+     $('#checkbox').attr('checked',false);
+     $('#store_image').empty();
+       $('#country_name').val('');
    $('.modal-title').text("Add New Record");
       $('#action_button').val("Add");
       $('#action').val("Add");
@@ -160,7 +174,7 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
-      $('#sample_form')[0].reset();
+
       $('#dataTableCountry').DataTable().ajax.reload();
       setTimeout(function(){
 
@@ -198,7 +212,7 @@ $(document).ready(function(){
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
-      $('#sample_form')[0].reset();
+
       $('#store_image').html('');
       $('#form_result').html(html);
       $('#dataTableCountry').DataTable().ajax.reload();
@@ -208,7 +222,7 @@ $(document).ready(function(){
    }, 1000);
      }
 
-
+   $('#form_result').html(html);
     }
    });
   }
@@ -221,10 +235,14 @@ $(document).ready(function(){
    url:"quocgia/"+id+"/edit",
    dataType:"json",
    success:function(html){
+       $('#sample_form')[0].reset();
     $('#country_name').val(html.data.tenquocgia);
     $('#store_image').html("<img src={{ URL::to('/') }}/images/flag/" + html.data.image + " width='70' class='img-thumbnail' />");
     $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.image+"' />");
     $('#hidden_id').val(html.data.maquocgia);
+
+    if(html.data.quocnoi==1)  $('#checkbox').attr('checked',true);
+    else $('#checkbox').attr('checked',false);
     $('.modal-title').text("Edit New Record");
     $('#action_button').val("Edit");
     $('#action').val("Edit");

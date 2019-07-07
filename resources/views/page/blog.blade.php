@@ -11,7 +11,7 @@
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
 				   					<h2>by colorlib.com</h2>
-				   					<h1>Blog</h1>
+				   					<h1>Danh lam thắng cảnh</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -21,14 +21,15 @@
 		  	</div>
 		</aside>
 
-		
+
 		<div id="colorlib-blog">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8">
 						<div class="wrap-division">
+						@foreach($diadanh as $d)
 							<article class="animate-box">
-								<div class="blog-img" style="background-image: url(images/blog-1.jpg);"></div>
+								<div class="blog-img" style="background-image: url(admin/images/diadanh/{{$d->hinhanh}});"></div>
 								<div class="desc">
 									<div class="meta">
 										<p>
@@ -37,49 +38,15 @@
 											<span><a href="#">2 Comments</a></span>
 										</p>
 									</div>
-									<h2><a href="#">A Definitive Guide to the Best Dining</a></h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, qui quod ipsum harum id, minima nesciunt! Saepe soluta, vitae quas expedita voluptatem voluptates placeat numquam provident quis, atque nisi iure?</p>
+									<h2><a href="{{route('ctblog',$d->id)}}">{{$d->tendiadanh}}</a></h2>
+									<p>{{$d->mota}}</p>
 								</div>
 							</article>
-							<article class="animate-box">
-								<div class="blog-img" style="background-image: url(images/blog-2.jpg);"></div>
-								<div class="desc">
-									<div class="meta">
-										<p>
-											<span>Feb 24, 2018 </span>
-											<span>admin </span>
-											<span><a href="#">1 Comments</a></span>
-										</p>
-									</div>
-									<h2><a href="#">How These 5 People Found The Path to Their Dream Trip</a></h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, qui quod ipsum harum id, minima nesciunt! Saepe soluta, vitae quas expedita voluptatem voluptates placeat numquam provident quis, atque nisi iure?</p>
-								</div>
-							</article>
-							<article class="animate-box">
-								<div class="blog-img" style="background-image: url(images/blog-3.jpg);"></div>
-								<div class="desc">
-									<div class="meta">
-										<p>
-											<span>Feb 24, 2018 </span>
-											<span>admin </span>
-											<span><a href="#">0 Comments</a></span>
-										</p>
-									</div>
-									<h2><a href="#">Our Secret Island Boat Tour Is just for You</a></h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, qui quod ipsum harum id, minima nesciunt! Saepe soluta, vitae quas expedita voluptatem voluptates placeat numquam provident quis, atque nisi iure?</p>
-								</div>
-							</article>
+							@endforeach
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<ul class="pagination">
-									<li class="disabled"><a href="#">&laquo;</a></li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
+							{{$diadanh->links()}} 
 							</div>
 						</div>
 					</div>

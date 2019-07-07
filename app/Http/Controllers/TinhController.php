@@ -53,7 +53,8 @@ class TinhController extends Controller
     {
         $rules = array(
 
-            'tentinh'    =>  'required'
+            'tentinh'    =>  'required',
+            'quocgia'    =>  'required'
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -62,7 +63,7 @@ class TinhController extends Controller
         {
             return response()->json(['errors' => $error->errors()->all()]);
         }
-
+        // if($request->country_name== )
         $form_data = array(
             'quocgia'        =>  $request->country_name,
             'tentinh'             =>  $request->tentinh

@@ -8,6 +8,6 @@ class QuocGia extends Model
 {
 public $table ='quocgia';
  protected $fillable = [
-     'tenquocgia', 'image'
+     'tenquocgia', 'image','quocnoi'
     ];
 }

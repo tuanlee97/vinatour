@@ -17,6 +17,7 @@
                   <tr>
                     <th width="10%">Mã quốc gia</th>
                     <th width="70%">Tên tỉnh</th>
+
                     <th width="20%">Thao tác</th>
 
                   </tr>
@@ -117,6 +118,7 @@ $(document).ready(function(){
     data: 'tentinh',
 
    },
+
    {
     data: 'action',
     name: 'action',

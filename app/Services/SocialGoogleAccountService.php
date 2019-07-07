@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Services;
-use App\SocialGoogleAccount;
-use App\User;
+use App\Models\SocialGoogleAccount;
+use App\Models\User;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 
 class SocialGoogleAccountService

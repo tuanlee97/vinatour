@@ -7,11 +7,11 @@
 
 /* =======================================================
 *
-* 	Template Style 
+* 	Template Style
 *
 * ======================================================= */
 /*Modal*/
-  
+
 /*End Modal*/
 body {
   font-family: "Quicksand", Arial, sans-serif;
@@ -46,7 +46,7 @@ body {
       content: ""; }
 
 a {
-  color: #FFDD00;
+  color: #0500e8d1;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s; }

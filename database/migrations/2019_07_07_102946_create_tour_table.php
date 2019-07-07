@@ -14,20 +14,15 @@ class CreateTourTable extends Migration
     public function up()
     {
         Schema::create('tour', function (Blueprint $table) {
-            $table->increments('id');
-             $table->integer('loaitour')->unsigned();
-
-                $table->foreign('loaitour')
-                      ->references('maloai')
-                      ->on('loaitour')
-                      ->onDelete('cascade');
-            $table->string('tentour');
-            $table->integer('songay');
-            $table->integer('sodem');
-            $table->string('diemxuatphat');
-            $table->string('noidung');
-            $table->string('hinhanh');
-
+          $table->increments('id');
+          $table->boolean('in_out');
+          $table->string('tentour');
+          $table->integer('songay');
+          $table->integer('sodem');
+          $table->string('diemxuatphat');
+          $table->text('noidung');
+          $table->string('hinhanh');
+          $table->integer('review');
             $table->timestamps();
         });
     }

@@ -18,9 +18,10 @@ class CreateNhahangTable extends Migration
               $table->string('tennhahang');
             $table->double('gia');
             $table->string('hinhanh');
+            $table->text('noidung');
             $table->integer('tinh')->unsigned();
                 $table->foreign('tinh')
-                      ->references('matinh')
+                      ->references('id')
                       ->on('tinh')
                       ->onDelete('cascade');
             $table->timestamps();

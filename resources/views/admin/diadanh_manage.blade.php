@@ -87,8 +87,14 @@
             <label class="control-label col-md-4">Tên Tỉnh : </label>
             <div class="col-md-5">
              <select class="form-control col-md-5" name="tentinh" id="tentinh" title="Chọn Tỉnh">
-               @foreach($tinh as $t)
-               <option value="{{$t->matinh}}">{{$t->tentinh}}</option>
+               @foreach($quocgia as $qg)
+               <optgroup label="{{$qg->tenquocgia}}">
+                 @foreach($tinh as $t)
+                   @if($t->quocgia == $qg->maquocgia)
+                   <option value="{{$t->id}}">{{$t->tentinh}}</option>
+                   @endif
+                 @endforeach
+               </optgroup>
                @endforeach
             </select></div>
            </div>
@@ -143,7 +149,7 @@ $(document).ready(function(){
 
     render: function(data, type, full, meta)
     {
-     return "<img src={{ URL::to('/') }}/images/flag/" + data + " width='200' class='img-thumbnail' />";
+     return "<img src={{ URL::to('/') }}/admin/images/diadanh/" + data + " width='300' class='img-thumbnail' />";
     }
   },
 
@@ -157,6 +163,7 @@ $(document).ready(function(){
 
  $('#create_record').click(function(){
   $('.modal-title').text("Add New Record");
+    $('#store_image').empty();
      $('#action_button').val("Add");
      $('#action').val("Add");
       $('#tendiadanh').val("");
@@ -266,9 +273,10 @@ $(document).ready(function(){
     CKEDITOR.instances['editor1'].setData(html.data.noidung);//////////////
     $('#editor1').val(html.data.noidung);/////
     $('#tentinh').val(html.data.tinh);
-    $('#store_image').html("<img src={{ URL::to('/') }}/images/flag/" + html.data.hinhanh + " width='200' class='img-thumbnail' />");
-    $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.hinhanh+"' />");
-    $('#hidden_id').val(html.data.madiadanh);
+    $('#store_image').html("<img src={{ URL::to('/') }}/admin/images/diadanh/" + html.data.hinhanh + " width='300' class='img-thumbnail' />");
+  $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.hinhanh+"' />");
+
+    $('#hidden_id').val(html.data.id);
     $('.modal-title').text("Edit New Record");
     $('#action_button').val("Edit");
     $('#action').val("Edit");

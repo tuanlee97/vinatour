@@ -1,6 +1,6 @@
 @extends('admin.ADtemplate.ADmaster')
 
-        <!-- DataTables Example -->
+
         @section('ADcontent')
         <div class="card shadow mb-4">
           <div class="card-header py-3">
@@ -72,72 +72,78 @@
 
           <div class="row"><div class="col-md-8">
            <label>Tên Tour : </label>
-
-             <input type="text" name="tentour" id="tentour" class="form-control" />
+             <input type="text" name="tentour" id="tentour" placeholder="Nhập tên tour..." class="form-control" />
             </div>
 
             <div class="col-md-2">
               <label>Số ngày ( <code>tối đa:10</code> )</label>
-              <input type="number" name="songay" value="1" min="0" max="10" step="1"/>
+              <input type="number" name="songay"  id="songay" value="1" min="0" max="10" step="1"/>
 
             </div>
 
             <div class="col-md-2">
               <label>Số đêm ( <code>tối đa:10</code> )</label>
-              <input type="number" name="sodem" value="1" min="0" max="10" step="1"/>
+              <input type="number" name="sodem"  id="sodem" value="1" min="0" max="10" step="1"/>
 
             </div>
 
            </div>
   <br>
             <div class="row">
-              <div class="col-md-4">
-                  <label  class="control-label">Chọn loại tour : </label>
-             <select class="form-control" id="loaitour" name="loaitour"  title="Chọn loại tour" style="margin-left:15px"><option value="">Chọn loại tour</option>
-               @foreach($loaitour as $lt)
-               <option value="{{$lt->maloai}}">{{$lt->tenloai}}</option>
-               @endforeach
+              <div class="col-md-3">
+                  <label  class="control-label">Chọn khu vực : </label>
+             <select class="form-control" id="khuvuc" name="khuvuc"  title="Chọn khu vực :" style="margin-left:15px">
+               <option value="">---Chọn khu vực---</option>
+               <option value="0">Nội địa</option>
+               <option value="1">Quốc tế</option>
              </select>
           </div>
+
             <div class="col-md-3">
                 <label>Xuất phát : </label>
 
-             <select class="form-control" name="xuatphat" id="tentinh" title="Chọn điểm khởi hành">
-                <option value="">Chọn điểm khởi hành</option>
-                @foreach($tinh as $t)
-               <option value="{{$t->tentinh}}">{{$t->tentinh}}</option>
+             <select class="form-control" name="xuatphat" id="xuatphat" title="Chọn điểm xuất phát">
+                 <option value="">---Chọn điểm xuất phát---</option>
+               @foreach($quocgia as $qg)
+               <optgroup label="{{$qg->tenquocgia}}">
+                 @foreach($tinh as $t)
+                   @if($t->quocgia == $qg->maquocgia)
+                   <option value="{{$t->tentinh}}">{{$t->tentinh}}</option>
+                   @endif
+                 @endforeach
+               </optgroup>
                @endforeach
              </select>
 
 
           </div>
-            <div class="col-md-4">
+            <div id="taget0" class="col-md-3" style="display: none;" >
                 <label>Điểm đến : </label></br>
-              <select style="width:300px" name="diemden[]" class="js-example-basic-multiple" multiple="multiple" title="Chọn nơi đến">
+              <select style="width:250px" id="diemden" name="diemden[]" class="js-example-basic-multiple" multiple="multiple" title="Chọn nơi đến">
 
               </select>
 
            </div>
 </div></br>
 
-      <div class="row">
-        <div class="col-md-4">
+      <div  class="row" >
+        <div id="taget1" class="col-md-4" style="display: none;">
             <label>Địa Danh : </label></br>
-          <select style="width:350px" name="diadanh[]" class="js-example-basic-multiple" multiple="multiple" title="Chọn nơi đến">
+          <select style="width:350px"id="diadanh"  name="diadanh[]" class="js-example-basic-multiple" multiple="multiple" title="Chọn nơi đến">
 
           </select>
 
        </div>
-       <div class="col-md-4">
+       <div id="taget2" class="col-md-4" style="display: none;">
            <label>Nhà hàng : </label></br>
-         <select style="width:350px" name="nhahang[]" class="js-example-basic-multiple" multiple="multiple" title="Chọn nơi đến">
+         <select style="width:350px"id="nhahang"  name="nhahang[]" class="js-example-basic-multiple" multiple="multiple" title="Chọn nơi đến">
 
          </select>
 
       </div>
-      <div class="col-md-4">
+      <div id="taget3" class="col-md-4" style="display: none;">
           <label>Khách Sạn : </label></br>
-        <select style="width:350px" name="khachsan[]" class="js-example-basic-multiple" multiple="multiple" title="Chọn nơi đến">
+        <select style="width:350px"id="khachsan"  name="khachsan[]" class="js-example-basic-multiple" multiple="multiple" title="Chọn nơi đến">
 
         </select>
 
@@ -207,7 +213,7 @@ $(document).ready(function(){
 
     render: function(data, type, full, meta)
     {
-     return "<img src={{ URL::to('/') }}/images/" + data + " width='200' class='img-thumbnail' />";
+     return "<img src={{ URL::to('/') }}/admin/images/tour/" + data + " width='300' class='img-thumbnail' />";
     }
   },
 
@@ -220,16 +226,26 @@ $(document).ready(function(){
  });
 
  $('#create_record').click(function(){
-  $('.modal-title').text("Add New Record");
-     $('#action_button').val("Add");
-     $('#action').val("Add");
-      $('#tennhahang').val("");
-    $('#gia').val("");
-    $('#store_image').val("");
-    $('#editor1').val('');
 
-    $('#tentinh').val("");
-       $('#image').val(""); /////
+    $('select[name="diemden[]"]').empty();
+    $('select[name="diadanh[]"]').empty();
+    $('select[name="khachsan[]"]').empty();
+    $('select[name="nhahang[]"]').empty();
+    for (var i = 0; i < 4; i++) {
+      var idtaget = '#taget'+i;
+      $(idtaget).attr('style',"display: none;");
+    }
+  $('.modal-title').text("Add New Record");
+  $('#action_button').val("Add");
+  $('#action').val("Add");
+  $('#tentour').val("");
+  $('#loaitour').val("");
+  $('#songay').val("1");
+  $('#sodem').val("1");
+  $('#xuatphat').val("");
+  $('#store_image').val("");
+  $('#editor1').val('');
+    $('#image').val(""); /////
     CKEDITOR.instances['editor1'].setData('');///////
     $('#form_result').html("");///////
     $('#hidden_id').val("");
@@ -243,7 +259,8 @@ $(document).ready(function(){
  $('#sample_form').on('submit', function(event){
   event.preventDefault();
   if($('#action').val() == 'Add')
-  {$('#editor1').val(CKEDITOR.instances['editor1'].getData());/////////
+  {
+    $('#editor1').val(CKEDITOR.instances['editor1'].getData());/////////
    $.ajax({
     url:"{{ route('tour.store') }}",
     method:"POST",
@@ -281,7 +298,7 @@ $(document).ready(function(){
    if($('#action').val() == "Edit")
   {$('#editor1').val(CKEDITOR.instances['editor1'].getData());/////////
    $.ajax({
-    url:"{{ route('nhahang.update') }}",
+    url:"{{ route('tour.update') }}",
     method:"POST",
     data:new FormData(this),
     contentType: false,
@@ -307,7 +324,7 @@ $(document).ready(function(){
       $('#store_image').html('');
        setTimeout(function(){
      $('#formModal').modal('hide');
-     $('#dataTableNH').DataTable().ajax.reload();
+     $('#dataTableTour').DataTable().ajax.reload();
     }, 1000);
      }
      $('#form_result').html(html);
@@ -319,18 +336,43 @@ $(document).ready(function(){
   var id = $(this).attr('id');
   $('#form_result').html('');
   $.ajax({
-   url:"nhahang/"+id+"/edit",
+   url:"tour/"+id+"/edit",
    dataType:"json",
    success:function(html){
-    $('#tennhahang').val(html.data.tennhahang);
-    $('#gia').val(html.data.gia);
 
+      $('#sample_form')[0].reset();
+
+      $('#tentour').val(html.data.tentour);
+      $('#songay').val(html.data.songay);
+      $('#sodem').val(html.data.sodem);
+      $('#khuvuc').val(html.data.in_out);
+      $('#xuatphat').val(html.data.diemxuatphat);
+    for (var i = 0; i < 4; i++) {
+      var idtaget = '#taget'+i;
+      $(idtaget).attr('style',"display: block;");
+    }
+    $('select[name="diemden[]"]').empty();
+    $('select[name="diadanh[]"]').empty();
+    $('select[name="khachsan[]"]').empty();
+    $('select[name="nhahang[]"]').empty();
+    $.each(html.dichden,function(key,value){
+$('#diemden').append('<option selected="selected" value="'+value.id+'">'+value.tentinh+'</option>');
+    });
+    $.each(html.thamquan,function(key,value){
+  $('#diadanh').append('<option selected="selected" value="'+value.id+'">'+value.tendiadanh+'</option>');
+    });
+    $.each(html.noianuong,function(key,value){
+  $('#nhahang').append('<option selected="selected" value="'+value.id+'">'+value.tennhahang+'</option>');
+    });
+    $.each(html.noinghi,function(key,value){
+  $('#khachsan').append('<option selected="selected" value="'+value.id+'">'+value.tenkhachsan+'</option>');
+    });
         CKEDITOR.instances['editor1'].setData(html.data.noidung);//////////////
     $('#editor1').val(html.data.noidung);/////
-    $('#tentinh').val(html.data.tinh);
-    $('#store_image').html("<img src={{ URL::to('/') }}/images/" + html.data.hinhanh + " width='200' class='img-thumbnail' />");
+    $('#loaitour').val(html.data.loaitour);
+    $('#store_image').html("<img src={{ URL::to('/') }}/admin/images/tour/" + html.data.hinhanh + " width='300' class='img-thumbnail' />");
     $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.hinhanh+"' />");
-    $('#hidden_id').val(html.data.manhahang);
+    $('#hidden_id').val(html.data.id);
     $('.modal-title').text("Edit New Record");
     $('#action_button').val("Edit");
     $('#action').val("Edit");
@@ -339,37 +381,54 @@ $(document).ready(function(){
   })
  });
 
-var user_id;
+ var user_id;
 
- $(document).on('click', '.delete', function(){
-  user_id = $(this).attr('id');
-  $('#confirmModal').modal('show');
- });
+  $(document).on('click', '.delete', function(){
+   user_id = $(this).attr('id');
 
- $('#ok_button').click(function(){
-  $.ajax({
-   url:"nhahang/destroy/"+user_id,
-   beforeSend:function(){
-    $('#ok_button').text('Deleting...');
-   },
-   success:function(data)
-   {
-    setTimeout(function(){
-     $('#confirmModal').modal('hide');
-     $('#dataTableNH').DataTable().ajax.reload();
-    }, 1000);
+   $('#confirmModal').modal('show');
+  });
+
+  $('#ok_button').click(function(){
+   $.ajax({
+    url:"tour/destroy/"+user_id,
+    beforeSend:function(){
+     $('#ok_button').text('Deleting...');
+    },
+    success:function(data)
+    {
+     setTimeout(function(){
+      $('#confirmModal').modal('hide');
+      $('#dataTableTour').DataTable().ajax.reload();
+     }, 1000);
+    }
+   })
+  });
+
+$('#songay').on('change',function(){
+  var ngay = $('#songay').val();
+  var dem = $('#sodem').val();
+  var chenhlech = ngay - dem ;
+if(chenhlech>1) $('#sodem').val(ngay-1);
+if(chenhlech<0) $('#sodem').val(1);
+});
+
+
+
+ $('select[name="khuvuc"]').on('change',function(){
+   for (var i = 0; i < 4; i++) {
+     var idtaget = '#taget'+i;
+     $(idtaget).attr('style',"display: block;");
    }
-  })
- });
 
- $('select[name="loaitour"]').on('change',function(){
    $('select[name="diadanh[]"]').empty();
    $('select[name="khachsan[]"]').empty();
    $('select[name="nhahang[]"]').empty();
-   var kieutour = $(this).val();
-   if(kieutour){
+   var khuvuc = $(this).val();
+
+   if(khuvuc){
      $.ajax({
-       url: 'getStates/'+kieutour,
+       url: 'getStates/'+khuvuc,
        type: 'GET',
        dataType : 'json',
        success: function(data){

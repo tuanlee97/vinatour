@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tinh;
 use App\Models\QuocGia;
 use Validator;
-use App\Models\LoaiTour;
+// use App\Models\LoaiTour;
 use App\Models\DiaDanh;
 use App\Models\NhaHang;
 use App\Models\KhachSan;
@@ -22,8 +22,8 @@ class TourController extends Controller
     public function index()
 
     {       $quocgia=QuocGia::all();
-            $tinh=Tinh::where('quocgia',84)->get();
-            $loaitour=LoaiTour::all();
+            $tinh=Tinh::all();
+            // $loaitour=LoaiTour::all();
             $diadanh=DiaDanh::all();
             $nhahang=NhaHang::all();
             $khachsan=KhachSan::all();
@@ -40,7 +40,7 @@ class TourController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('admin.tour_manage',['quocgia'=>$quocgia,'loaitour'=>$loaitour,'tinh'=>$tinh,'diadanh'=>$diadanh,'nhahang'=>$nhahang,'khachsan'=>$khachsan]);
+        return view('admin.tour_manage',['quocgia'=>$quocgia,'tinh'=>$tinh,'diadanh'=>$diadanh,'nhahang'=>$nhahang,'khachsan'=>$khachsan]);
     }
 
     /**
@@ -50,13 +50,20 @@ class TourController extends Controller
      */
     public function getStates($id)
     {
-        if($id==1){
-        $states = Tinh::where('quocgia',84)->pluck('tentinh','id');
+
+      $idQuocNoi= null;
+      $quocnoi = QuocGia::where('quocnoi',1)->get();
+      foreach ($quocnoi as  $value) {
+        $idQuocNoi=$value->maquocgia;
+      }
+
+      if($id==0){
+      $states = Tinh::where('quocgia',$idQuocNoi)->pluck('tentinh','id');
+      return json_encode($states);}
+      else {
+        $states = Tinh::where('quocgia','<>',$idQuocNoi)->pluck('tentinh','id');
         return json_encode($states);}
-        else {
-          $states = Tinh::where('quocgia','<>',84)->pluck('tentinh','id');
-          return json_encode($states);}
-        }
+      }
         public function getDiadanh($id)
         {
 
@@ -95,21 +102,24 @@ class TourController extends Controller
     public function store(Request $request)
     {
 
+
      $error = Validator::make($request->all(), [
       'tentour'    =>  'required',
-     'loaitour' => 'required',
      'xuatphat' => ' required',
      'diemden' => 'required',
      'diadanh' => 'required',
      'nhahang' => 'required',
+     'nhahang' => 'required',
      'khachsan' => 'required',
      'sodem' => 'required',
-     'songay' => 'required|greater_than_field:sodem',
+     'songay' => 'required',
      'editor1' => 'required',
+     'khuvuc' => 'required',
      'image' => 'required|image|max:2048'],
 
-     [ 'tentour.required'=>'Bạn chưa nhập tên tour',
-      'loaitour.required'=>'Bạn chưa chọn loại tour',
+     [
+      'tentour.required'=>'Bạn chưa nhập tên tour',
+      'khuvuc.required'=>'Bạn chưa chọn khu vực',
       'xuatphat.required'=>'Bạn chưa chọn điểm xuất phát',
       'diemden.required'=>'Bạn chưa chọn điểm đến',
       'diadanh.required'=>'Bạn chưa chọn địa danh',
@@ -117,7 +127,6 @@ class TourController extends Controller
       'khachsan.required'=>'Bạn chưa chọn khách sạn',
       'sodem.required'=>'Bạn chưa chọn số đêm',
       'songay.required'=>'Bạn chưa chọn số ngày',
-      'songay.greater_than_field'=>'Số ngày phải lớn hơn Số đêm',
       'editor1.required'=>'Bạn chưa nhập nội dung',
       'image.required'=>'Bạn chưa chọn hình ảnh',
       'image.image'=>'Sai định dạng ảnh',
@@ -132,15 +141,16 @@ class TourController extends Controller
 
      $new_name = rand() . '.' . $image->getClientOriginalExtension();
 
-     $image->move(public_path('images/'), $new_name);
+     $image->move(public_path('admin/images/tour'), $new_name);
      $form_data = array(
-          'loaitour'  => $request->loaitour,
+          'in_out'  => $request->khuvuc,
          'tentour'        =>  $request->tentour,
          'songay'             =>  $request->songay,
          'sodem'             =>  $request->sodem,
          'diemxuatphat'          => $request->xuatphat,
          'noidung'        => $request->editor1,
-         'hinhanh'      => $new_name
+         'hinhanh'      => $new_name,
+         'review' => 0
      );
 
       $tour =  Tour::create($form_data);
@@ -155,25 +165,25 @@ class TourController extends Controller
         foreach ($request->nhahang as $nhahang) {
           $nhahang_tour_data = array(
            'tour_id'  =>    $tour->id,
-           'nhahang_id'  =>   (int)$nhahang
+           'nha_hang_id'  =>   (int)$nhahang
            );
-           DB::table('nhahang_tour')->insert($nhahang_tour_data);
+           DB::table('nha_hang_tour')->insert($nhahang_tour_data);
 
         }
         foreach ($request->khachsan as $khachsan) {
           $khachsan_tour_data = array(
            'tour_id'  =>    $tour->id,
-           'khachsan_id'  =>   (int)$khachsan
+           'khach_san_id'  =>   (int)$khachsan
            );
-           DB::table('khachsan_tour')->insert($khachsan_tour_data);
+           DB::table('khach_san_tour')->insert($khachsan_tour_data);
 
         }
         foreach ($request->diadanh as $diadanh) {
           $diadanh_tour_data = array(
            'tour_id'  =>    $tour->id,
-           'diadanh_id'  =>   (int)$diadanh
+           'dia_danh_id'  =>   (int)$diadanh
            );
-           DB::table('diadanh_tour')->insert($diadanh_tour_data);
+           DB::table('dia_danh_tour')->insert($diadanh_tour_data);
 
         }
 
@@ -199,7 +209,206 @@ class TourController extends Controller
      */
     public function edit($id)
     {
-        //
+      if(request()->ajax())
+      {
+          $data = Tour::findOrFail($id);
+
+          $dichden = Tour::find($id)->tinhs;
+          $thamquan = Tour::find($id)->diadanhs;
+          $noianuong = Tour::find($id)->nhahangs;
+          $noinghi = Tour::find($id)->khachsans;
+          return response()->json(['data' => $data,'dichden'=>$dichden,'thamquan'=>$thamquan,'noianuong'=>$noianuong,'noinghi'=>$noinghi]);
+      }
+  }
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id="")
+  {
+
+
+      $image_name = $request->hidden_image;
+      $image = $request->file('image');
+      if($image != '')
+      {
+
+
+          $error = Validator::make($request->all(), [
+           'tentour'    =>  'required',
+          'khuvuc' => 'required',
+          'xuatphat' => ' required',
+          'diemden' => 'required',
+          'diadanh' => 'required',
+          'nhahang' => 'required',
+          'khachsan' => 'required',
+          'sodem' => 'required',
+          'songay' => 'required',
+          'editor1' => 'required',
+          'image' => 'required|image|max:2048'],
+
+          [ 'tentour.required'=>'Bạn chưa nhập tên tour',
+           'khuvuc.required'=>'Bạn chưa chọn khu vực',
+           'xuatphat.required'=>'Bạn chưa chọn điểm xuất phát',
+           'diemden.required'=>'Bạn chưa chọn điểm đến',
+           'diadanh.required'=>'Bạn chưa chọn địa danh',
+           'nhahang.required'=>'Bạn chưa chọn nhà hàng',
+           'khachsan.required'=>'Bạn chưa chọn khách sạn',
+           'sodem.required'=>'Bạn chưa chọn số đêm',
+           'songay.required'=>'Bạn chưa chọn số ngày',
+           'editor1.required'=>'Bạn chưa nhập nội dung',
+           'image.required'=>'Bạn chưa chọn hình ảnh',
+           'image.image'=>'Sai định dạng ảnh',
+           'image.max'=>'Ảnh tối đa 2MB',
+           ]);
+          if($error->fails())
+          {
+              return response()->json(['errors' => $error->errors()->all()]);
+          }
+
+          $image_name = rand() . '.' . $image->getClientOriginalExtension();
+          $image->move(public_path('admin/images/tour'), $image_name);
+          $form_data = array(
+            'in_out'  => $request->khuvuc,
+           'tentour'        =>  $request->tentour,
+           'songay'             =>  $request->songay,
+           'sodem'             =>  $request->sodem,
+           'diemxuatphat'          => $request->xuatphat,
+           'noidung'        => $request->editor1,
+            'hinhanh'            =>   $image_name
+          );
+          Tour::whereId($request->hidden_id)->update($form_data);
+          $tour=Tour::findOrFail($request->hidden_id)->id;
+          DB::table('tinh_tour')->where('tour_id',$tour)->delete();
+          foreach ($request->diemden as $diemden) {
+            $tinh_tour_data = array(
+              'tour_id' => $tour,
+             'tinh_id'  =>   (int)$diemden,
+             );
+             DB::table('tinh_tour')->insert($tinh_tour_data);
+
+          }
+          DB::table('nha_hang_tour')->where('tour_id',$tour)->delete();
+          foreach ($request->nhahang as $nhahang) {
+            $nhahang_tour_data = array(
+                'tour_id' => $tour,
+             'nha_hang_id'  =>   (int)$nhahang,
+             );
+          DB::table('nha_hang_tour')->insert($nhahang_tour_data);
+
+          }
+            DB::table('khach_san_tour')->where('tour_id',$tour)->delete();
+          foreach ($request->khachsan as $khachsan) {
+            $khachsan_tour_data = array(
+                  'tour_id' => $tour,
+             'khach_san_id'  =>   (int)$khachsan,
+             );
+             DB::table('khach_san_tour')->insert($khachsan_tour_data);
+
+          }
+            DB::table('dia_danh_tour')->where('tour_id',$tour)->delete();
+          foreach ($request->diadanh as $diadanh) {
+            $diadanh_tour_data = array(
+                  'tour_id' => $tour,
+             'dia_danh_id'  =>   (int)$diadanh,
+             );
+             DB::table('dia_danh_tour')->insert($diadanh_tour_data);
+
+          }
+          return response()->json(['success' => 'Data is successfully updated']);
+      }
+      else
+      {
+
+
+          $error = Validator::make($request->all(), [
+           'tentour'    =>  'required',
+          'khuvuc' => 'required',
+          'xuatphat' => ' required',
+          'diemden' => 'required',
+          'diadanh' => 'required',
+          'nhahang' => 'required',
+          'khachsan' => 'required',
+          'sodem' => 'required',
+          'songay' => 'required',
+          'editor1' => 'required',
+          ],
+
+          [ 'tentour.required'=>'Bạn chưa nhập tên tour',
+           'khuvuc.required'=>'Bạn chưa chọn khu vuc',
+           'xuatphat.required'=>'Bạn chưa chọn điểm xuất phát',
+           'diemden.required'=>'Bạn chưa chọn điểm đến',
+           'diadanh.required'=>'Bạn chưa chọn địa danh',
+           'nhahang.required'=>'Bạn chưa chọn nhà hàng',
+           'khachsan.required'=>'Bạn chưa chọn khách sạn',
+           'sodem.required'=>'Bạn chưa chọn số đêm',
+           'songay.required'=>'Bạn chưa chọn số ngày',
+
+           'editor1.required'=>'Bạn chưa nhập nội dung',
+
+           ]);
+
+          if($error->fails())
+          {
+              return response()->json(['errors' => $error->errors()->all()]);
+          }
+          $form_data = array(
+            'in_out'  => $request->khuvuc,
+           'tentour'        =>  $request->tentour,
+           'songay'             =>  $request->songay,
+           'sodem'             =>  $request->sodem,
+           'diemxuatphat'          => $request->xuatphat,
+           'noidung'        => $request->editor1,
+
+
+          );
+          Tour::whereId($request->hidden_id)->update($form_data);
+          $tour=Tour::findOrFail($request->hidden_id)->id;
+          DB::table('tinh_tour')->where('tour_id',$tour)->delete();
+          foreach ($request->diemden as $diemden) {
+            $tinh_tour_data = array(
+              'tour_id' => $tour,
+             'tinh_id'  =>   (int)$diemden,
+             );
+             DB::table('tinh_tour')->insert($tinh_tour_data);
+
+          }
+          DB::table('nha_hang_tour')->where('tour_id',$tour)->delete();
+          foreach ($request->nhahang as $nhahang) {
+            $nhahang_tour_data = array(
+                'tour_id' => $tour,
+             'nha_hang_id'  =>   (int)$nhahang,
+             );
+          DB::table('nha_hang_tour')->insert($nhahang_tour_data);
+
+          }
+            DB::table('khach_san_tour')->where('tour_id',$tour)->delete();
+          foreach ($request->khachsan as $khachsan) {
+            $khachsan_tour_data = array(
+                  'tour_id' => $tour,
+             'khach_san_id'  =>   (int)$khachsan,
+             );
+             DB::table('khach_san_tour')->insert($khachsan_tour_data);
+
+          }
+            DB::table('dia_danh_tour')->where('tour_id',$tour)->delete();
+          foreach ($request->diadanh as $diadanh) {
+            $diadanh_tour_data = array(
+                  'tour_id' => $tour,
+             'dia_danh_id'  =>   (int)$diadanh,
+             );
+             DB::table('dia_danh_tour')->insert($diadanh_tour_data);
+
+          }
+          return response()->json(['success' => 'Data is successfully updated']);
+      }
+
+
+
     }
 
     /**
@@ -209,10 +418,7 @@ class TourController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -222,6 +428,11 @@ class TourController extends Controller
      */
     public function destroy($id)
     {
-        //
+          $data = Tour::find($id);
+          DB::table('tinh_tour')->where('tour_id',$id)->delete();
+          DB::table('dia_danh_tour')->where('tour_id',$id)->delete();
+          DB::table('nha_hang_tour')->where('tour_id',$id)->delete();
+          DB::table('khach_san_tour')->where('tour_id',$id)->delete();
+          $data->delete();
     }
 }

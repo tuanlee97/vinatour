@@ -17,11 +17,12 @@ class CreateKhachsanTable extends Migration
             $table->increments('id');
              $table->string('tenkhachsan');
             $table->double('gia');
+            $table->text('noidung');
             $table->string('hinhanh');
             $table->integer('tinh')->unsigned();
 
                 $table->foreign('tinh')
-                      ->references('matinh')
+                      ->references('id')
                       ->on('tinh')
                       ->onDelete('cascade');
 

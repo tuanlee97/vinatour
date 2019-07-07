@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKhachsanTourTable extends Migration
+class CreateNhahangTourTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateKhachsanTourTable extends Migration
      */
     public function up()
     {
-        Schema::create('khachsan_tour', function (Blueprint $table) {
+        Schema::create('nha_hang_tour', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('tour_id');
-          $table->integer('khachsan_id');
+          $table->integer('nha_hang_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateKhachsanTourTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('khachsan_tour');
+        Schema::dropIfExists('nhahang_tour');
     }
 }

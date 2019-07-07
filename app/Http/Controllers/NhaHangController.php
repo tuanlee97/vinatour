@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tinh;
+use App\Models\QuocGia;
 use Validator;
 use App\Models\NhaHang;
 
@@ -17,22 +18,23 @@ class NhaHangController extends Controller
     public function index()
     {
            $tinh=Tinh::all();
+           $quocgia=QuocGia::all();
         if(request()->ajax())
         {
-          
+
             return datatables()->of(NhaHang::latest()->get())
                     ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->manhahang.'" class="edit btn btn-primary btn-sm">Sửa</button>';
+                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Sửa</button>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->manhahang.'" class="delete btn btn-danger btn-sm">Xóa</button>';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Xóa</button>';
                         return $button;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('admin.nhahang_manage',['tinh'=>$tinh]);
+        return view('admin.nhahang_manage',['tinh'=>$tinh,'quocgia'=>$quocgia]);
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -52,11 +54,12 @@ class NhaHangController extends Controller
      */
     public function store(Request $request)
     {
-        
+
          $rules = array(
-           
+
             'tennhahang'    =>  'required',
             'gia' => 'required',
+            'tentinh'=>'required',
             'editor1' => 'required',
             'image' => 'required|image|max:2048'
         );
@@ -71,7 +74,7 @@ class NhaHangController extends Controller
 
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
 
-        $image->move(public_path('images/flag'), $new_name);
+        $image->move(public_path('admin/images/nhahang'), $new_name);
 
         $form_data = array(
             'tennhahang'        =>  $request->tennhahang,
@@ -107,7 +110,7 @@ class NhaHangController extends Controller
     {
         if(request()->ajax())
         {
-            $data = NhaHang::where('manhahang', $id)->firstOrFail();
+            $data = NhaHang::findOrFail($id);
             return response()->json(['data' => $data]);
         }
     }
@@ -128,6 +131,7 @@ class NhaHangController extends Controller
             $rules = array(
                 'tennhahang'    =>  'required',
             'gia' => 'required',
+              'tentinh' => 'required',
             'editor1' => 'required',
             'hinhanh' => 'image|max:2048'
             );
@@ -138,13 +142,24 @@ class NhaHangController extends Controller
             }
 
             $image_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/flag'), $image_name);
+            $image->move(public_path('admin/images/nhahang'), $image_name);
+            $form_data = array(
+                'tennhahang'        =>  $request->tennhahang,
+                'gia'             =>  $request->gia,
+                'noidung'        => $request->editor1,
+                'tinh'          => $request->tentinh,
+                'hinhanh'            =>   $image_name
+            );
+            NhaHang::whereId($request->hidden_id)->update($form_data);
+
+            return response()->json(['success' => 'Data is successfully updated']);
         }
         else
         {
             $rules = array(
                  'tennhahang'    =>  'required',
             'gia' => 'required',
+            'tentinh' => 'required',
             'editor1' => 'required',
             );
 
@@ -161,10 +176,10 @@ class NhaHangController extends Controller
             'gia'             =>  $request->gia,
             'noidung'        => $request->editor1,
             'tinh'          => $request->tentinh,
-            'hinhanh'            =>   $image_name
+
         );
-        NhaHang::where('manhahang', $request->hidden_id)->update($form_data);
-                 
+        NhaHang::whereId($request->hidden_id)->update($form_data);
+
         return response()->json(['success' => 'Data is successfully updated']);
     }
 
@@ -176,7 +191,7 @@ class NhaHangController extends Controller
      */
     public function destroy($id)
     {
-        $data = NhaHang::where('manhahang', $id);
+        $data = NhaHang::find($id);
         $data->delete();
     }
 }

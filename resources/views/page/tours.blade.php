@@ -29,7 +29,7 @@
 								@foreach($tour as $chuongtrinh)
 								<div class="col-md-6 col-sm-6 animate-box">
 									<div class="tour" >
-										<a href="{{route('chitiettour',$chuongtrinh->id)}}" class="tour-img" style="background-image: url(images/{{$chuongtrinh->hinhanh}});">
+										<a href="{{route('chitiettour',$chuongtrinh->id)}}" class="tour-img" style="background-image: url(admin/images/tour/{{$chuongtrinh->hinhanh}});">
 											<p class="price"><span>{{$chuongtrinh->songay}} Ngày</span> / {{$chuongtrinh->sodem}} Đêm</small></p>
 										</a>
 										<span class="desc">
@@ -46,14 +46,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12 text-center">
-								<ul class="pagination">
-									<li class="disabled"><a href="#">&laquo;</a></li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
+								{{$tour->links()}} 
 							</div>
 						</div>
 					</div>

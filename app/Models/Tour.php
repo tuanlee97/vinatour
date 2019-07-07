@@ -8,9 +8,18 @@ class Tour extends Model
 {
     public $table ='tour';
      protected $fillable = [
-        'matour', 'loaitour', 'tentour','songay','sodem','diemxuatphat','noidung','hinhanh'
+       'in_out', 'tentour','songay','sodem','diemxuatphat','noidung','hinhanh','review'
     ];
     public function tinhs(){
       return $this->belongsToMany('App\Models\Tinh');
+    }
+    public function diadanhs(){
+      return $this->belongsToMany('App\Models\DiaDanh');
+    }
+    public function nhahangs(){
+      return $this->belongsToMany('App\Models\NhaHang');
+    }
+    public function khachsans(){
+      return $this->belongsToMany('App\Models\KhachSan');
     }
 }

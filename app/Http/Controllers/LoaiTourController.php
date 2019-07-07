@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\LoaiTour;
+use App\Models\Tour;
 use Validator;
 
 class LoaiTourController extends Controller
@@ -15,10 +16,10 @@ class LoaiTourController extends Controller
      */
     public function index()
     {
-         $loaitour = LoaiTour::all();
+
          if(request()->ajax())
         {
-           
+
             return datatables()->of(LoaiTour::latest()->get())
                     ->addColumn('action', function($data){
                         $button = '<button type="button" name="edit" id="'.$data->maloai.'" class="edit btn btn-primary btn-sm">Sửa</button>';
@@ -29,7 +30,7 @@ class LoaiTourController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('admin.loaitour_manage',['loaitour'=>$loaitour]);
+        return view('admin.loaitour_manage');
     }
 
     /**
@@ -50,7 +51,28 @@ class LoaiTourController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $rules = array(
+          'tenloai'    =>  'required',
+
+      );
+
+      $error = Validator::make($request->all(), $rules);
+
+      if($error->fails())
+      {
+          return response()->json(['errors' => $error->errors()->all()]);
+      }
+
+
+
+      $form_data = array(
+          'tenloai'        =>  $request->tenloai,
+
+      );
+
+      LoaiTour::create($form_data);
+
+      return response()->json(['success' => 'Data Added successfully.']);
     }
 
     /**
@@ -98,14 +120,14 @@ class LoaiTourController extends Controller
             {
                 return response()->json(['errors' => $error->errors()->all()]);
             }
-        
+
 
         $form_data = array(
             'tenloai'        =>  $request->tenloai
-            
+
         );
         LoaiTour::where('maloai', $request->hidden_id)->update($form_data);
-                 
+
         return response()->json(['success' => 'Data is successfully updated']);
     }
 
@@ -117,6 +139,12 @@ class LoaiTourController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $tour = Tour::where('loaitour',$id);
+      if($tour)
+      return response()->json(['errors' => 'LỖI : Loại tour này đang được khai thác']);
+      else {
+        $data = LoaiTour::find($id);
+         $data->delete();
+      }
     }
 }

@@ -3,10 +3,77 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 class KhachHangController extends Controller
 {
+
+
+
+
+  public function postRegister(Request $request){
+     $validator = \Validator::make($request->all(), [
+     'username' => 'required|min:5',
+     'emailReg'=>'required|email|unique:users,email',
+     'passwordReg'=>'required|min:6|max:20',
+     'passwordReg_confirmation'=>'required|same:passwordReg',
+   ],
+    [
+     'username.required'=>'Bạn chưa nhập tên',
+     'username.min'=>'Tên người dùng phải có ít nhất 5 kí tự',
+     'emailReg.required'=>'Bạn chưa nhập email',
+     'emailReg.unique'=>'Email đã tồn tại',
+     'emailReg.email' => 'Email không đúng định dạng',
+     'passwordReg.required'=>'Bạn chưa nhập mật khẩu',
+     'passwordReg.min'=>'Mật khẩu phải có ít nhất 6 kí tự',
+     'passwordReg.max'=>'Mật khẩu phải chỉ tối đa 20 kí tự',
+     'passwordReg_confirmation.required'=>'Vui lòng nhập lại mật khẩu',
+     'passwordReg_confirmation.same'=>'Mật khẩu không trùng khớp',
+
+      ]);
+
+      if ($validator->fails()){
+          return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+      else{
+             $khachhang = new User;
+             $khachhang->name = $request->username;
+             $khachhang->email = $request->emailReg;
+             $khachhang->password = bcrypt($request->passwordReg);
+             $khachhang->save();
+             return response()->json(['success'=>'Data is successfully added']);
+        }
+  }
+
+
+public function postlogin(Request $request){
+$validator = \Validator::make($request->all(), [
+         'email'=>'required|email',
+     'password'=>'required|min:6|max:20',
+   ],
+     [
+    'email.required'=>'Bạn chưa nhập Email',
+    'email.email' => 'Email không đúng định dạng',
+    'password.required'=>'Bạn chưa nhập mật khẩu',
+    'password.min'=>'Mật khẩu không được nhỏ hơn 6 kí tự',
+    'password.max'=>'Mật khẩu không được lớn hơn 20 kí tự'
+
+      ]);
+
+      if ($validator->fails()){
+          return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+      else{
+            $login=['email'=>$request->email,'password'=>$request->password];
+              if(Auth::attempt($login))
+                return response()->json(['success'=>'Đăng nhập thành công']);
+              else{
+                $errors = 'Email hoặc mật khẩu không đúng';
+                return response()->json(['errorLogin'=>$errors]);
+        }
+  }
+}
     /**
      * Display a listing of the resource.
      *
@@ -84,20 +151,20 @@ class KhachHangController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id="")
-    {       
+    {
            if($request->changepass == "on"){
                  $rules = array(
                 'user_name'    =>  'required',
                 'user_email'    =>  'required',
                 'user_pass'    =>  'required',
-                'user_cfpass'    =>  'required|same:user_pass'   
+                'user_cfpass'    =>  'required|same:user_pass'
                     );
                 }
             else
             $rules = array(
                 'user_name'    =>  'required',
                 'user_email'    =>  'required',
-                
+
             );
 
             $error = Validator::make($request->all(), $rules);
@@ -117,10 +184,10 @@ class KhachHangController extends Controller
         $form_data = array(
             'name'         =>  $request->user_name,
             'email'        =>  $request->user_email,
-            
+
         );
         User::whereId($request->hidden_id)->update($form_data);
-                 
+
         return response()->json(['success' => 'Data is successfully updated']);
     }
 

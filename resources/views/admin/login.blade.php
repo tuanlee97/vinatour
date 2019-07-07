@@ -8,8 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
-  <title>SB Admin 2 - Login</title>
+	<meta name="_token" content="{{csrf_token()}}" />
+  <title>VinaTour Admin - Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,38 +37,46 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">WELCOME BACK !</h1>
+                    <hr>
+                    <h5>Đăng nhập quản trị</h5>
+                    <br>
+
                   </div>
-                  <form class="user">
+                  <div class="alert alert-danger" style="display:none"></div>
+                   <div class="alert alert-success" style="display:none"></div>
+                   @if (session('success'))
+                    <div class="alert alert-warning" role="alert" >
+                        {{ session('success') }}
+                      </div>
+                      <script>
+                      setTimeout(function(){
+                        jQuery('.alert-warning').hide();
+                      }, 1500);
+                      </script>
+                      @endif
+                  <form class="user" method="POST" enctype="multipart/form-data"  action="{{url('admin/dangnhap')}}">
+                      @csrf
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email đăng nhập...">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Mật khẩu">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                        <label class="custom-control-label" for="customCheck">Ghi nhớ tài khoản ?</label>
                       </div>
                     </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
-                      Login
-                    </a>
-                    <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Login with Google
-                    </a>
-                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
+                      <button  class="btn btn-primary btn-user btn-block"  id="ajaxAdminSubmit">Đăng nhập</button>
                   </form>
-                  <hr>
+
                   <div class="text-center">
-                    <a class="small" href="forgot-password.html">Forgot Password?</a>
+
                   </div>
                   <div class="text-center">
-                    <a class="small" href="register.html">Create an Account!</a>
+
                   </div>
                 </div>
               </div>
@@ -95,3 +103,64 @@
 </body>
 
 </html>
+<script>
+
+   jQuery(document).ready(function(){
+      // ĐĂNG NHẬP
+      jQuery('#ajaxAdminSubmit').click(function(e){
+         e.preventDefault();
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+         jQuery.ajax({
+            url: "{{ url('admin/dangnhap') }}",
+            method: 'post',
+            data: {
+               email: jQuery('#exampleInputEmail').val(),
+               password: jQuery('#exampleInputPassword').val(),
+
+            },
+            success: function(result){
+              if(result.errors)
+              {
+                  jQuery('.alert-danger').html('');
+
+                  jQuery.each(result.errors, function(key, value){
+                      jQuery('.alert-danger').show();
+                      jQuery('.alert-danger').append('<li>' +value+'</li>');
+                  });
+              }
+              else
+              {
+                    if(result.errorLogin)
+              {
+                  jQuery('.alert-danger').html('');
+
+                jQuery('.alert-danger').show();
+                      jQuery('.alert-danger').append('Email hoặc mật khẩu không đúng');
+              }
+
+             else{
+
+              jQuery('.alert-danger').hide();
+                  jQuery('.alert-success').html('');
+                  jQuery('.alert-success').show();
+                      jQuery('.alert-success').append('Đăng nhập thành công. Đang chuyển trang...');
+                   setTimeout(function(){
+                   window.location.href = "{{URL::to('admin/trangchu')}}"
+                          }, 600);
+
+             }
+
+              }
+            }});
+         });
+
+
+
+
+
+      });
+</script>
