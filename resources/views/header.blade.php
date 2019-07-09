@@ -102,7 +102,7 @@
         <div class="row">
 
           <div class="col-xs-1">
-            <div id="colorlib-logo"><a href="{{route('index')}}">Tour</a></div>
+            <div id="colorlib-logo"><a href="{{route('index')}}">VinaTour</a></div>
           </div>
           <div class="col-xs-11 text-right menu-1">
             <ul>
@@ -116,9 +116,9 @@
               </li>
               <li><a href="{{route('hotels')}}">Khách Sạn</a></li>
                               <li><a href="{{route('nhahang')}}">Nhà Hàng</a></li>
-                              <li><a href="{{route('blog')}}">Địa Danh</a></li>
+                              <li><a href="{{route('diadanh')}}">Địa Danh</a></li>
               <li><a href="{{route('services')}}">Services</a></li>
-              <li><a href="{{route('blog')}}">Blog</a></li>
+              
               <li><a href="{{route('about')}}">About</a></li>
                               @if(Auth::guard('web')->check())
                               <li class="has-dropdown">

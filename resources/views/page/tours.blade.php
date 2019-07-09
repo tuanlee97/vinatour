@@ -36,7 +36,7 @@
 											<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
 											<h2><a href="{{route('chitiettour',$chuongtrinh->id)}}">{{$chuongtrinh->tentour}}</a></h2>
 											<span class="city">Xuất phát: {{$chuongtrinh->diemxuatphat}}</span>
-											<p>Tóm tắt : {{$chuongtrinh->noidung}}</p>
+											
 										</span>
 									</div>
 								</div>

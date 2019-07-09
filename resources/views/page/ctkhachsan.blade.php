@@ -36,7 +36,7 @@
 											<div class="room-wrap">
 												<div class="row">
 													<div class="col-md-6 col-sm-6">
-														<div class="room-img" style="background-image: url(images/flag/{{$khachsan->hinhanh}});"></div>
+														<div class="room-img" style="background-image: url(admin/images/khachsan/{{$khachsan->hinhanh}});"></div>
 
 													</div>
 
@@ -44,7 +44,7 @@
 											</div>
 										</div>
 
-										<div>{{$khachsan->noidung}}</div>
+										<div><?php echo ($khachsan->noidung); ?></div>
 									</div>
 								</div>
 							</div>

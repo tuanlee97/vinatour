@@ -41,14 +41,17 @@ Route::get('/',[
 'as'=>'index',
 'uses'=>'PageController@getindex'
 ]);
-
-Route::get('ctblog/{id}',[
-'as'=>'ctblog',
-'uses'=>'PageController@getctblog'
+Route::post('dattour',[
+'as'=>'dattour',
+'uses'=>'DatTourController@postorder'
 ]);
-Route::get('blog',[
-'as'=>'blog',
-'uses'=>'PageController@getblog'
+Route::get('ctdiadanh/{id}',[
+'as'=>'ctdiadanh',
+'uses'=>'PageController@getctdiadanh'
+]);
+Route::get('diadanh',[
+'as'=>'diadanh',
+'uses'=>'PageController@getDiadanh'
 ]);
 Route::get('lienhe',[
 'as'=>'lienhe',
@@ -66,9 +69,9 @@ Route::get('ctnhahang/{id}',[
 'as'=>'ctnhahang',
 'uses'=>'PageController@getctnhahang'
 ]);
-Route::get('hotel-room',[
-'as'=>'hotel-room',
-'uses'=>'PageController@gethotel_room'
+Route::get('ctkhachsan/{id}',[
+'as'=>'ctkhachsan',
+'uses'=>'PageController@getctkhachsan'
 ]);
 Route::get('/redirectFB', 'SocialAuthFacebookController@redirect');
 Route::get('/callbackFB', 'SocialAuthFacebookController@callback');

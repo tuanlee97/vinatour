@@ -28,12 +28,12 @@
 								@foreach($khachsan as $ks)
 								<div class="col-md-6 col-sm-6 animate-box">
 									<div class="hotel-entry">
-										<a href="{{route('hotel-room',$ks->id)}}" class="hotel-img" style="background-image: url(admin/images/khachsan/{{$ks->hinhanh}});">
+										<a href="{{route('ctkhachsan',$ks->id)}}" class="hotel-img" style="background-image: url(admin/images/khachsan/{{$ks->hinhanh}});">
 											<p class="price"><span>{{$ks->gia}}</span><small> /Đêm</small></p>
 										</a>
 										<div class="desc">
 											<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-											<h3><a href="{{route('hotel-room',$ks->id)}}">{{$ks->tenkhachsan}}</a></h3>
+											<h3><a href="{{route('ctkhachsan',$ks->id)}}">{{$ks->tenkhachsan}}</a></h3>
 											@foreach($quocgia as $c)
 											@foreach($tinh as $t)
 											@if($ks->tinh==$t->id && $t->quocgia==$c->maquocgia)

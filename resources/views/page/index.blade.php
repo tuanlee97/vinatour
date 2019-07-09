@@ -125,7 +125,7 @@
 						<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
 						<h2>{{$chuongtrinh->tentour}}</h2>
 						<span class="city">Xuất phát: {{$chuongtrinh->diemxuatphat}}</span>
-						<span class="price">$450</span>
+						<span class="price"></span>
 					</span>
 				</a>
 		@endforeach
@@ -148,46 +148,22 @@
 					</div>
 					<div class="blog-entry aside-stretch-right">
 						<div class="row">
-
+							@foreach($diadanh as $dd)
 							<!--Item-->
 							<div class="col-md-12 animate-box">
-								<a href="blog.html" class="blog-post">
-									<span class="img" style="background-image: url(images/blog-4.jpg);"></span>
+								<a href="{{route('ctdiadanh',$dd->id)}}" class="blog-post">
+									<span class="img" style="background-image: url(admin/images/diadanh/{{$dd->hinhanh}});"></span>
 									<div class="desc">
-										<span class="date">ngay viét</span>
-										<h3>tieu de</h3>
+										<span class="date">{{$dd->updated_at}}</span>
+										<h3>{{$dd->tendiadanh}}</h3>
 										<span class="cat ">Xem thêm </span>
 									</div>
 
 								</a>
 							</div>
-							<!--Item-->
-							<div class="col-md-12 animate-box">
-								<a href="blog.html" class="blog-post">
-									<span class="img" style="background-image: url(images/blog-4.jpg);"></span>
-									<div class="desc">
-										<span class="date">ngay viét</span>
-										<h3>tieu de</h3>
-										<span class="cat glyphicon glyphicon-hand-right">Xem thêm </span>
-									</div>
-
-								</a>
-							</div>
-							<!--Item-->
-							<div class="col-md-12 animate-box">
-								<a href="blog.html" class="blog-post">
-									<span class="img" style="background-image: url(images/blog-4.jpg);"></span>
-									<div class="desc">
-										<span class="date">ngay viét</span>
-										<h3>tieu de</h3>
-										<span class="cat">Xem thêm </span>
-									</div>
-
-								</a>
-							</div>
-
-
+					@endforeach
 						</div>
+						<a href="{{route('diadanh')}}" class="btn btn-primary" >Xem nhiều hơn</a>
 					</div>
 				</div>
 			</div>
@@ -212,8 +188,8 @@
 								</div>
 								<div class="text-rights">
 									<h3 class="title">Nhanh chân thì còn chậm chân thì hết!</h3>
-									<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-									<p><a href="#" class="btn btn-primary">Book Now</a> <a href="#" class="btn btn-primary btn-outline">Read more</a></p>
+									<p></p>
+									<p><a href="{{route('tours')}}" class="btn btn-primary">Tìm tour ngay</a> <a href="{{route('about')}}" class="btn btn-primary btn-outline">Giới thiệu về công ty</a></p>
 								</div>
 							</div>
 						</div>
@@ -251,7 +227,7 @@
 									</a>
 									<div class="desc">
 										<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-										<h3><a href="{{route('hotel-room',$ks->makhachsan)}}">{{$ks->tenkhachsan}}</a></h3>
+										<h3><a href="{{route('ctkhachsan',$ks->id)}}">{{$ks->tenkhachsan}}</a></h3>
 
 										@foreach($quocgia as $c)
 											@foreach($tinh as $t)
@@ -277,8 +253,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-						<h2>Our Satisfied Guests says</h2>
-						<p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						<h2>Khách hàng nói gì về chúng tôi</h2>
+						<p></p>
 					</div>
 				</div>
 				<div class="row">
@@ -287,30 +263,30 @@
 							<div class="item">
 								<div class="testimony text-center">
 									<span class="img-user" style="background-image: url(images/person1.jpg);"></span>
-									<span class="user">Alysha Myers</span>
-									<small>Miami Florida, USA</small>
+									<span class="user">Hot girl quận Cam</span>
+									<small>Quận  Cam, Sài Gòn</small>
 									<blockquote>
-										<p>" A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+										<p>" Dịch vụ tuyệt vời. Tôi đã có những giây phút thư giãn trong tour vừa rồi."</p>
 									</blockquote>
 								</div>
 							</div>
 							<div class="item">
 								<div class="testimony text-center">
 									<span class="img-user" style="background-image: url(images/person2.jpg);"></span>
-									<span class="user">James Fisher</span>
-									<small>New York, USA</small>
+									<span class="user">Lê Văn Đạt</span>
+									<small>Quận Quýt, Sài Gòn</small>
 									<blockquote>
-										<p>One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+										<p>"Công ty chuyên nghiệp, chu đáo. Tôi sẽ tiếp tục là khách hàng trong chuyến đi kế tiếp."</p>
 									</blockquote>
 								</div>
 							</div>
 							<div class="item">
 								<div class="testimony text-center">
 									<span class="img-user" style="background-image: url(images/person3.jpg);"></span>
-									<span class="user">Jacob Webb</span>
-									<small>Athens, Greece</small>
+									<span class="user">Chị Đẹp</span>
+									<small>Quận 8, Sài Gòn</small>
 									<blockquote>
-										<p>Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
+										<p>"Chương trình tour hấp dẫn , hoạt động tổ chức sôi nổi. Tôi thực sự thích nó."</p>
 									</blockquote>
 								</div>
 							</div>

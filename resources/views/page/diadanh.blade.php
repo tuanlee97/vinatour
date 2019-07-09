@@ -35,10 +35,10 @@
 										<p>
 											<span>Feb 24, 2018 </span>
 											<span>admin </span>
-											<span><a href="#">2 Comments</a></span>
+											<span></span>
 										</p>
 									</div>
-									<h2><a href="{{route('ctblog',$d->id)}}">{{$d->tendiadanh}}</a></h2>
+									<h2><a href="{{route('ctdiadanh',$d->id)}}">{{$d->tendiadanh}}</a></h2>
 									<p>{{$d->mota}}</p>
 								</div>
 							</article>

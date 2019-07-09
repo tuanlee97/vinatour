@@ -10,7 +10,7 @@
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
 				   					<h2>by colorlib.com</h2>
-				   					<h1>Thông tin Khách Sạn</h1>
+				   					<h1>Thông tin Địa danh</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -36,7 +36,7 @@
 											<div class="room-wrap">
 												<div class="row">
 													<div class="col-md-6 col-sm-6">
-														<div class="room-img" style="background-image: url(images/flag/{{$diadanh->hinhanh}});"></div>
+														<div class="room-img" style="background-image: url(admin/images/diadanh/{{$diadanh->hinhanh}});"></div>
 
 													</div>
 
@@ -44,7 +44,8 @@
 											</div>
 										</div>
 
-										<div>{{$diadanh->noidung}}</div>
+										<div><?php echo ($diadanh->noidung); ?></div>
+
 									</div>
 								</div>
 							</div>

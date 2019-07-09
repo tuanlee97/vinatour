@@ -20,7 +20,7 @@ class PageController extends Controller
      $diadanh=DiaDanh::take(3)
  							->orderBy('updated_at', 'desc')
  							->get();
-							
+
     $tour = Tour::take(8)
 							->orderBy('review', 'desc')
 							->get();
@@ -70,10 +70,10 @@ class PageController extends Controller
    	return view('page.services');
    }
 
-    public function getblog(){
+    public function getDiadanh(){
 
        $diadanh=DiaDanh::paginate(8);
-   	return view('page.blog',compact('diadanh'));
+   	return view('page.diadanh',compact('diadanh'));
    }
    public function getabout(){
 
@@ -82,6 +82,7 @@ class PageController extends Controller
 
    public function getlienhe()
    {
+
 
     return view('page.lienhe');
    }
@@ -92,15 +93,24 @@ class PageController extends Controller
          $noianuong=Tour::find($tour->id)->nhahangs;
          $noinghi=Tour::find($tour->id)->khachsans;
 
-
-   	return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi'));
+   	return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','dem'));
  }
-   public function gethotel_room(){
-   	return view('page.hotel-room');
-   }
-   public function getctblog(Request $req){
+   public function getctkhachsan(Request $req){
 
-    $diadanh=DiaDanh::Where('madiadanh',$req->id)->first();
-    return view('page.ctblog',['diadanh'=>$diadanh]);
+    $khachsan=KhachSan::Where('id',$req->id)->first();
+
+    return view('page.ctkhachsan',['khachsan'=>$khachsan]);
+   }
+   public function getctdiadanh(Request $req){
+
+    $diadanh=DiaDanh::Where('id',$req->id)->first();
+
+    return view('page.ctdiadanh',['diadanh'=>$diadanh]);
+   }
+     public function getctnhahang(Request $req){
+
+    $nhahang=NhaHang::Where('id',$req->id)->first();
+
+    return view('page.ctnhahang',['nhahang'=>$nhahang]);
    }
 }

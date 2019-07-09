@@ -46,7 +46,7 @@ body {
       content: ""; }
 
 a {
-  color: #0500e8d1;
+  color: #1e00ff;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s; }
@@ -1575,7 +1575,7 @@ input[type="text"] {
 
 .gototop {
   position: fixed;
-  bottom: 20px;
+  bottom: 90px;
   right: 20px;
   z-index: 999;
   opacity: 0;

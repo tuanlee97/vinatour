@@ -44,7 +44,7 @@
 											</div>
 										</div>
 
-										<div>{{$nhahang->noidung}}</div>
+										<div><?php echo ($nhahang->noidung); ?></div>
 									</div>
 								</div>
 							</div>
