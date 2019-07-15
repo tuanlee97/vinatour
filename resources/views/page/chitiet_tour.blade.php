@@ -24,7 +24,7 @@
 <div class="colorlib-wrap">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-9">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="wrap-division">
@@ -35,7 +35,10 @@
 										<div class="col-md-12 animate-box">
 											<div class="room-wrap">
 												<div class="row">
+												
 													<?php echo ($tour->noidung); ?>
+													
+												
 												</div>
 											</div>
 										</div>
@@ -48,8 +51,54 @@
 
 					</div>
 
-		<!--  -->
-					<div class="row">
+		<!-- 		 SIDEBAR-->
+					<div class="col-md-3">
+						<div class="sidebar-wrap">
+							
+					
+							<div class="side animate-box">
+								<div class="row">
+									<div class="col-md-12">
+										<h3 class="sidebar-heading">Review Rating</h3>
+										<form method="post" class="colorlib-form-2">
+										   <div class="form-check">
+												<input type="checkbox" class="form-check-input" id="exampleCheck1">
+												<label class="form-check-label" for="exampleCheck1">
+													<p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+												</label>
+										   </div>
+										   <div class="form-check">
+										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+										      <label class="form-check-label" for="exampleCheck1">
+										    	   <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+										      </label>
+										   </div>
+										   <div class="form-check">
+										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+										      <label class="form-check-label" for="exampleCheck1">
+										      	<p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+										     </label>
+										   </div>
+										   <div class="form-check">
+										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+										      <label class="form-check-label" for="exampleCheck1">
+										      	<p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+										     </label>
+										   </div>
+										   <div class="form-check">
+										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+										      <label class="form-check-label" for="exampleCheck1">
+										      	<p class="rate"><span><i class="icon-star-full"></i></span></p>
+										     </label>
+										   </div>
+										</form>
+									</div>
+								</div>
+							</div>
+						
+						</div>
+					</div> 
+					<div class="col-md-12">
 							<!-- START Bảng tính giá tour-->
 						<div class="col-sm-12 col-md-12 thumbnail " id="tinhgiatour">
 								<table class="table table-bordered">

@@ -32,7 +32,7 @@
 									<ul>
 										<li><a href="{{route('about')}}">Sứ Mệnh</a></li>
 										<li><a href="{{route('lienhe')}}">Connect with us</a></li>
-										<li><a href="#">Faqs</a></li>
+										<li><a href="{{route('about')}}">Faqs</a></li>
 										<li><a href="#">Career</a></li>
 									</ul>
 								</div>
@@ -57,7 +57,7 @@
 			</div>
 		</div>
 
-		<div id="colorlib-testimony" class="colorlib-light-grey">
+		<!-- <div id="colorlib-testimony" class="colorlib-light-grey">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
@@ -102,7 +102,115 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
+<hr>
+	<div class="container">
+    <h1 class="page-header ">Bình Luận</h1>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+    <div class="row">
+        <div class="col-md-9 ">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form id="postForm">
+                    	@csrf
+                        <textarea class="form-control" name="post" id="post" placeholder="Hãy viết ra suy nghĩ của bạn!!"></textarea>
+                        <button type="button" id="postBtn" class="btn btn-primary" style="margin-top:5px;"> Đăng</button>
+                    </form>
+                </div>
+            </div>
+            <div id="postList"></div>
+        </div>
+    </div>
+</div>
+ <script type="text/javascript">
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            showPost();
+
+            $('#postBtn').click(function(){
+                var post = $('#post').val();
+                if(post==''){
+                    alert('Xin hãy nhập bình luận vào!');
+                    $('#post').focus();
+                }
+
+                else{
+                    var postForm = $('#postForm').serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'post',
+                        data: postForm,
+                        dataType: 'json',
+                        success: function(){
+                            showPost();
+                            $('#postForm')[0].reset();
+                        },
+                    });
+                }
+            });
+
+            $(document).on('click', '.comment', function(){
+                var id = $(this).val();
+                if($('#commentField_'+id).is(':visible')){
+                    $('#commentField_'+id).slideUp();
+                }
+                else{
+                    $('#commentField_'+id).slideDown();
+                    getComment(id);
+                }
+            });
+
+            $(document).on('click', '.submitComment', function(){
+                var id = $(this).val();
+                var post=$('commenttext').val();
+                if($('#commenttext').val()==''){
+                    alert('Please write a Comment First!');
+                }
+                else{
+                    var commentForm = $('#commentForm_'+id).serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'writecomment',
+                        data: commentForm,
+                        success: function(){
+                            getComment(id);
+                            $('#commentForm_'+id)[0].reset();
+                        },
+                    });
+                }
+                    
+            });
+         
+        });
+
+        function showPost(){
+            $.ajax({
+                url: 'show',
+                success: function(data){
+                    $('#postList').html(data); 
+                },
+            });
+        }
+
+        function getComment(id){
+            $.ajax({
+                url: 'getcomment',
+                data: {id:id},
+                success: function(data){
+                    $('#comment_'+id).html(data); 
+                }
+            });
+        }
+    </script>
 
 		@endsection

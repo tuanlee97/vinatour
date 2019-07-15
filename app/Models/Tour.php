@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tour extends Model
 {
-    public $table ='tour';
+   public $table ='tour';
+
      protected $fillable = [
-       'in_out', 'tentour','songay','sodem','diemxuatphat','noidung','hinhanh','review'
+       'in_out', 'tentour','songay','sodem','diemxuatphat','noidung','hinhanh',
     ];
     public function tinhs(){
       return $this->belongsToMany('App\Models\Tinh');
@@ -22,4 +23,5 @@ class Tour extends Model
     public function khachsans(){
       return $this->belongsToMany('App\Models\KhachSan');
     }
+
 }

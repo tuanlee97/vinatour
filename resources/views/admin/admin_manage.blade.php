@@ -63,7 +63,12 @@
              <input type="text" name="admin_email" id="admin_email" class="form-control" />
             </div>
            </div>
-
+            <div class="form-group">
+            <label class="control-label col-md-4">Select Profile Image : </label>
+            <div class="col-md-8">
+             <input type="file" name="image" id="image" />
+             <span id="store_image"></span>
+            </div></div>
             <div class="form-group">
 
             <label class="control-label col-md-4 adpass">Mật khẩu :
@@ -186,8 +191,11 @@ $(document).ready(function(){
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
       $('#sample_form')[0].reset();
-
-      $('#dataTableAdmin').DataTable().ajax.reload();
+  setTimeout(function(){
+     $('#formModal').modal('hide');
+     $('#dataTableAdmin').DataTable().ajax.reload();
+    }, 1000);
+     
      }
      $('#form_result').html(html);
     }
@@ -205,6 +213,8 @@ $(document).ready(function(){
      $('.modal-title').text("Edit New Record");
     $('#admin_name').val(html.data.hoten);
     $('#admin_email').val(html.data.email);
+     $('#store_image').html("<img src={{ URL::to('/') }}/admin/images/admin/" + html.data.hinhanh + " width='300' class='img-thumbnail' />");
+    $('#store_image').append("<input type='hidden' name='hidden_image' id='hidden_image' value='"+html.data.hinhanh+"' />");
     $('#admin_pass').val("");
     $('#hidden_id').val(html.data.id);
     $('#changepass').show();

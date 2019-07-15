@@ -1,3 +1,21 @@
+<!--  Modal HDV -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Xác nhận đề nghị</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"> X </span>
+          </button>
+        </div>
+        <div class="modal-body">Bạn chắc chắn muốn cấp quyền hướng dẫn viên ?</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+           <button class="btn btn-primary" id="ajaxHDV" type="button" data-dismiss="modal">Chắc chắn</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <!--Modal -->
              <div class="modal fade login" id="loginModal">
         <div class="modal-dialog login animated">
@@ -58,9 +76,13 @@
                   </div>
                   <div class="modal-footer">
                       <div class="forgot login-footer">
+                         
+                               <a href="{{route('get.reset.password')}}">Quên mật khẩu ?</a>
+                          <br>
                           <span>Bạn chưa có tài khoản ?
                                <a href="javascript: showRegisterForm();">ĐĂNG KÍ NGAY</a>
                           </span>
+
                       </div>
                       <div class="forgot register-footer" style="display:none">
                            <span>Bạn đã có tài khoản ?</span>
@@ -120,13 +142,28 @@
               <li><a href="{{route('services')}}">Services</a></li>
               
               <li><a href="{{route('about')}}">About</a></li>
+
                               @if(Auth::guard('web')->check())
                               <li class="has-dropdown">
                                   <a><img src="images/login.png">{{ Auth::user()->name }} <span class="caret"></span></a>
                                   <ul class="dropdown">
-                                      <li>  <a class="btn btn-danger"  class="dropdown-item " href="{{ route('logout') }}"
+
+                                      <li>
+                                        <a class="dropdown-item" href="{{route('profile')}}">
+                                            <i class="fa fa-info"></i>&nbsp;Tài khoản
+                                        </a>
+                                      </li><hr>           
+                @if(Auth::user()->role == 1)
+                                        <li>
+                                          <a class="dropdown-item" href="{{route('inhaiquan')}}">
+                                            <i class="fa fa-print"></i>&nbsp;In hải quan
+                                            </a>
+                                        </li><hr>      
+                                         @endif
+
+                                      <li>  <a   class="dropdown-item " href="{{ route('logout') }}"
                                      onclick="event.preventDefault();
-                                                   document.getElementById('logout-form').submit();">
+                                                   document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i>
                                       {{ __('Đăng xuất') }}
                                   </a>
                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

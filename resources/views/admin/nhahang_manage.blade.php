@@ -131,7 +131,7 @@
             <div class="col-md-8">
              <input type="file" name="image" id="image" />
              <span id="store_image"></span>
-            </div>
+            </div></div>
            <br />
            <div class="form-group" align="center">
             <input type="hidden" name="action" id="action" />

@@ -3,6 +3,7 @@
 
 <head>
   <base href="{{asset('')}}admin/">
+    <meta name="_token" content="{{csrf_token()}}" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -116,6 +117,19 @@
 
             <a class="collapse-item" href="{{route('nhahang.index')}}">Nhà hàng</a>
             <a class="collapse-item" href="{{route('khachsan.index')}}">Khách sạn</a>
+          </div>
+        </div>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseyc" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Yêu cầu và ý kiến : </span><span id ="unreadtotal" ></span>
+        </a>
+        <div id="collapseyc" class="collapse" aria-labelledby="headingothers" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+
+            <a class="collapse-item" href="{{route('yeucau.index')}}">Yêu cầu <span id ="unread1" ></span></a>
+            <a class="collapse-item" href="{{route('ykien.index')}}">Ý kiến khách hàng <span id ="unread2" ></span></a>
           </div>
         </div>
       </li>
@@ -235,54 +249,18 @@
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
+                <span class="badge badge-danger badge-counter count"></span>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+              <div  class=" dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown" >
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                  <div id="thongbao" style="overflow-y:scroll; height:120px;">
+                  <!--Thông báo ở đẩy-->
+                  
+                </div>
+                <a class="dropdown-item text-center small text-gray-500" href="yeucau">Read More Messages</a>
               </div>
             </li>
 
@@ -384,6 +362,53 @@
   <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
   <!-- Page level custom scripts -->
 <script src="js/select2.min.js"></script>
+
+<script>
+$(document).ready(function(){
+ 
+ function load_unseen_notification()
+ {     $('#unreadtotal').empty();
+ $('#unread1').empty();
+      $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                  }
+              });
+  $.ajax({
+   url:"{{ route('load') }}",
+   method:"POST",
+   dataType:"json",
+   success:function(data)
+   {
+   
+    $('#thongbao').html(data.notification);
+    if(data.unseen_notification > 0)
+    {
+      $('#unreadtotal').append('<i class="fas fa-circle text-danger"></i>');
+      $('#unread1').append('<i class="fas fa-circle text-danger"></i>');
+     $('.count').html(data.unseen_notification);
+    }
+    else $('.count').empty();
+   }
+  });
+ }
+ 
+ load_unseen_notification();
+ //
+
+ $(document).on('click', '#messagesDropdown', function(){
+  $('.count').html('');
+ 
+ });
+
+
+  setInterval(function(){ 
+  load_unseen_notification();
+ }, 5000);
+});
+</script>
+
+
   @yield('ADscript')
 
 </body>

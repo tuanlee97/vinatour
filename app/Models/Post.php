@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DatTour extends Model
+
+class Post extends Model
 {
-    public $table ='dattour';
+   
 }

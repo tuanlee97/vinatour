@@ -21,7 +21,7 @@
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
 
 	<!-- Animate.css -->
@@ -55,7 +55,7 @@
 	<![endif]-->
 		<!--Modal -->
 	<link href="css/login-register.css" rel="stylesheet" />
-	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 
 	<script src="js/jquery-1.10.2.js" type="text/javascript"></script>
 	<script src="js/bootstrap.js" type="text/javascript"></script>
@@ -65,6 +65,8 @@
                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                crossorigin="anonymous">
       </script>
+      
+      <link href="admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
       <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
       <script>
@@ -176,6 +178,10 @@
 
 </head>
 	<body>
-		@include('header')
+    
+    @include('header')
 		@yield('content')
+      @include('sweetalert::alert')
 		@include('footer')
+  
+

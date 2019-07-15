@@ -12,8 +12,11 @@ use App\Models\DiemDen;
 use App\Models\ThamQuan;
 use App\Models\NoiAnUong;
 use App\Models\NoiNghi;
-
+use App\Models\Notification;
 use App\Models\DiaDanh;
+
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 class PageController extends Controller
 {
 	public function getindex(){
@@ -34,6 +37,14 @@ class PageController extends Controller
 
       $tour = Tour::paginate(8);
    	return view('page.tours',compact('tour'));
+   }
+   public function getProfile(){
+
+     $user = Auth::user();
+    $isSended = Notification::where('user_id',$user->id)->first();
+   
+    $isHDV = $user->role;
+    return view('user.profile',compact('isSended','isHDV'));
    }
       public function gettoursTN(Request $req){
       $tour = Tour::where('in_out', $req->id)->paginate(8);
@@ -69,7 +80,11 @@ class PageController extends Controller
 
    	return view('page.services');
    }
+   public function inhaiquan()
+   {
 
+    return view('huongdanvien.inhaiquan');
+   }
     public function getDiadanh(){
 
        $diadanh=DiaDanh::paginate(8);

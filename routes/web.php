@@ -10,7 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Comment
+Route::post('post', 'PostController@post');
 
+Route::get('show', 'PostController@getPost');
+
+Route::get('getcomment', 'PostController@getComment');
+
+Route::post('writecomment', 'PostController@makeComment');
+
+//
 
 Route::get('tours',[
 'as'=>'tours',
@@ -36,7 +45,10 @@ Route::get('services',[
 'as'=>'services',
 'uses'=>'PageController@getservices'
 ]);
-
+Route::get('profile',[
+'as'=>'profile',
+'uses'=>'PageController@getProfile'
+])->middleware('userLogin');;
 Route::get('/',[
 'as'=>'index',
 'uses'=>'PageController@getindex'
@@ -92,8 +104,41 @@ Route::post('dangnhap',
         'uses'=>'KhachHangController@postlogin'
     ]
 );
+Route::post('changeprofile',
+    [
+        'as'=>'changeprofile',
+        'uses'=>'KhachHangController@postchangepass'
+    ]
+);
+Route::post('changepass',
+    [
+        'as'=>'changepass',
+        'uses'=>'KhachHangController@postchangepass'
+    ]
+);
+Route::post('dangkihdv',
+    [
+        'as'=>'dangkihdv',
+        'uses'=>'KhachHangController@postdangkihdv'
+    ]
+);
+Route::post('load',
+    [
+        'as'=>'load',
+        'uses'=>'AdminController@postLoadNotification'
+    ]
+);
+Route::get('inhaiquan',[
+'as'=>'inhaiquan',
+'uses'=>'PageController@inhaiquan'
+]);
+Route::get('lay-lay-mat-khau','Auth\ForgotPasswordController@getFormResetPassword')->name('get.reset.password');
+Route::post('sendlink','Auth\ForgotPasswordController@sendlinkreset')->name('post.reset.password');
+Route::get('passwordreset','Auth\ForgotPasswordController@resetPassword')->name('get.link.reset.password');
 Auth::routes();
-
+ Route::resource('huongdanvien', 'HuongDanVienController');
+    Route::post('huongdanvien/update', 'HuongDanVienController@update')->name('huongdanvien.update');
+    Route::get('huongdanvien/destroy/{id}', 'HuongDanVienController@destroy');
 
 
     Route::group(['prefix'=>'admin'],function(){
@@ -156,5 +201,13 @@ Route::get('getKhachsan/{id}','TourController@getKhachsan');
     Route::resource('tour', 'TourController');
     Route::post('tour/update', 'TourController@update')->name('tour.update');
     Route::get('tour/destroy/{id}', 'TourController@destroy');
+
+    Route::resource('yeucau', 'YeuCauController');
+    Route::get('yeucau/update/{id}', 'YeuCauController@update');
+    Route::get('yeucau/destroy/{id}', 'YeuCauController@destroy');
+       Route::resource('ykien', 'YKienController');
+    Route::get('ykien/update', 'YKienController@update')->name('ykien.update');
+    Route::get('ykien/destroy/{id}', 'YKienController@destroy');
+
 
 });

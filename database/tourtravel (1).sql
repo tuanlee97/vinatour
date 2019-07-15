@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 07, 2019 lúc 11:23 AM
+-- Thời gian đã tạo: Th7 15, 2019 lúc 05:37 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.1.27
 
@@ -45,7 +45,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `email`, `password`, `hoten`, `sdt`, `hinhanh`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin@vinatour', '$2y$10$QO0ykr68xKsuCl0Ct7WOeuon8O4L3Lh/TPztotm1DWZFkCz0kjUJe', 'Lê Tuân', '0395563446', 'tuan.jpg', NULL, NULL, NULL);
+(1, 'admin@vinatour', '$2y$10$KczJdacESdlU.flaZFBhH.hFkm8WT9sXpO2tBxMN0c4BNKEIy.M2y', 'Lê Tuân', '0395563446', '62919136.jpg', NULL, NULL, '2019-07-14 19:27:44');
 
 -- --------------------------------------------------------
 
@@ -62,6 +62,50 @@ CREATE TABLE `chitietdattour` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `postid` int(11) NOT NULL,
+  `comment` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `comments`
+--
+
+INSERT INTO `comments` (`id`, `userid`, `postid`, `comment`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, 'tuanlee1', '2019-07-15 15:14:03', '2019-07-15 15:14:03'),
+(2, 2, 1, 'tuanlee2', '2019-07-15 15:14:10', '2019-07-15 15:14:10');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `danhsachin`
+--
+
+CREATE TABLE `danhsachin` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `lastname` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `birthday` datetime NOT NULL,
+  `country` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `city` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `purpose` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `option1` tinyint(1) NOT NULL,
+  `option2` tinyint(1) NOT NULL,
+  `option3` tinyint(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -230,7 +274,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2019_07_04_190756_create_dia_danh_tour_table', 2),
 (14, '2019_07_04_190939_create_nha_hang_tour_table', 2),
 (15, '2019_07_04_190953_create_khach_san_tour_table', 2),
-(16, '2019_07_04_211053_create_tinh_tour_table', 2);
+(16, '2019_07_04_211053_create_tinh_tour_table', 2),
+(17, '2019_07_14_044502_create_ratings_table', 3);
 
 -- --------------------------------------------------------
 
@@ -295,6 +340,50 @@ INSERT INTO `nha_hang_tour` (`id`, `tour_id`, `nha_hang_id`, `created_at`, `upda
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `notification`
+--
+
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `noidung` text COLLATE utf8_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `notification`
+--
+
+INSERT INTO `notification` (`id`, `user_id`, `noidung`, `status`, `created_at`, `updated_at`) VALUES
+(10, 2, 'efffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffsdf', 1, '2019-07-14 19:28:04', '2019-07-14 19:28:04'),
+(11, 1, 'fjghl;mljfkujlkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 1, '2019-07-14 18:55:57', '2019-07-14 18:55:57');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `post` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `posts`
+--
+
+INSERT INTO `posts` (`id`, `userid`, `post`, `created_at`, `updated_at`) VALUES
+(1, 2, 'tuanlee', '2019-07-15 15:13:55', '2019-07-15 15:13:55');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `quocgia`
 --
 
@@ -337,7 +426,7 @@ CREATE TABLE `social_facebook_accounts` (
 
 INSERT INTO `social_facebook_accounts` (`id`, `user_id`, `provider_user_id`, `provider`, `created_at`, `updated_at`) VALUES
 (1, 1, '1048957781960191', 'facebook', '2019-07-06 09:14:03', '2019-07-06 09:14:03'),
-(2, 3, '1549074201898758', 'facebook', '2019-07-06 09:17:55', '2019-07-06 09:17:55');
+(3, 4, '1549074201898758', 'facebook', '2019-07-13 21:25:09', '2019-07-13 21:25:09');
 
 -- --------------------------------------------------------
 
@@ -359,7 +448,25 @@ CREATE TABLE `social_google_accounts` (
 --
 
 INSERT INTO `social_google_accounts` (`id`, `user_id`, `provider_user_id`, `provider`, `created_at`, `updated_at`) VALUES
-(1, 1, '105971733798964988822', 'google', '2019-07-06 08:51:38', '2019-07-06 08:51:38');
+(1, 1, '105971733798964988822', 'google', '2019-07-06 08:51:38', '2019-07-06 08:51:38'),
+(2, 2, '102243045333632596412', 'google', '2019-07-13 11:47:54', '2019-07-13 11:47:54');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `thongtinchung`
+--
+
+CREATE TABLE `thongtinchung` (
+  `id` int(11) NOT NULL,
+  `fightno` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `day` int(11) NOT NULL,
+  `adress` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -437,7 +544,7 @@ CREATE TABLE `tour` (
 --
 
 INSERT INTO `tour` (`id`, `in_out`, `tentour`, `songay`, `sodem`, `diemxuatphat`, `noidung`, `hinhanh`, `created_at`, `updated_at`, `review`) VALUES
-(1, 0, 'Tour 1', 1, 1, 'Hồ Chí Minh', '<p>Nội dung tour 1</p>', '848966898.jpg', '2019-07-07 04:03:42', '2019-07-07 04:03:42', 100),
+(1, 0, 'Tour 1', 3, 2, 'Hồ Chí Minh', '<p>Nội dung tour 1</p>', '848966898.jpg', '2019-07-07 04:03:42', '2019-07-07 04:03:42', 100),
 (2, 1, 'Tour 2', 1, 1, 'Hồ Chí Minh', '<p>Nội dung tour 2</p>', '1007148662.jpg', '2019-07-07 04:06:10', '2019-07-07 04:06:10', 150),
 (3, 0, 'Tour 3', 1, 1, 'Đà Lạt', '<p>Nội dung tour 3</p>', '312372700.jpg', '2019-07-07 08:42:18', '2019-07-07 08:44:13', 35);
 
@@ -453,6 +560,7 @@ CREATE TABLE `users` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` tinyint(1) NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -462,10 +570,10 @@ CREATE TABLE `users` (
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Tuân Lê', 'mr.tuan.cb@gmail.com', NULL, 'd4df7b6239c425d8cc897411ef11abe7', NULL, '2019-07-06 08:51:38', '2019-07-06 08:51:38'),
-(2, 'tuanlee', 'tuan@gmail', NULL, '$2y$10$QO0ykr68xKsuCl0Ct7WOeuon8O4L3Lh/TPztotm1DWZFkCz0kjUJe', NULL, '2019-07-06 08:57:17', '2019-07-06 08:57:17'),
-(3, 'Tuan Kel', 'bestboy_likegirl18@yahoo.com', NULL, '0314c9b108b8c39f1cf878ed93fdd5ae', NULL, '2019-07-06 09:17:55', '2019-07-06 09:17:55');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Tuân Lê', 'mr.tuan.cb@gmail.com', NULL, '$2y$10$cnGPFynXPE8jpMkZyMLnw.7stLv2lQinieJDPlEcgLo71MIlDUtmy', 1, NULL, '2019-07-06 08:51:38', '2019-07-14 18:55:57'),
+(2, 'tuanlee', 'letuan30697@gmail.com', NULL, '$2y$10$QO0ykr68xKsuCl0Ct7WOeuon8O4L3Lh/TPztotm1DWZFkCz0kjUJe', 1, NULL, '2019-07-06 08:57:17', '2019-07-14 19:28:04'),
+(4, 'Tuan Kel', 'bestboy_likegirl18@yahoo.com', NULL, '07a96b1f61097ccb54be14d6a47439b0', 0, NULL, '2019-07-13 21:25:09', '2019-07-13 21:25:09');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -484,6 +592,18 @@ ALTER TABLE `admin`
 ALTER TABLE `chitietdattour`
   ADD PRIMARY KEY (`ma_ctt`),
   ADD KEY `chitietdattour_madattour_foreign` (`madattour`);
+
+--
+-- Chỉ mục cho bảng `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `danhsachin`
+--
+ALTER TABLE `danhsachin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `dattour`
@@ -538,6 +658,18 @@ ALTER TABLE `nha_hang_tour`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `quocgia`
 --
 ALTER TABLE `quocgia`
@@ -556,6 +688,12 @@ ALTER TABLE `social_facebook_accounts`
 ALTER TABLE `social_google_accounts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `social_google_accounts_user_id_foreign` (`user_id`);
+
+--
+-- Chỉ mục cho bảng `thongtinchung`
+--
+ALTER TABLE `thongtinchung`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `tinh`
@@ -600,6 +738,18 @@ ALTER TABLE `chitietdattour`
   MODIFY `ma_ctt` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT cho bảng `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `danhsachin`
+--
+ALTER TABLE `danhsachin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `dattour`
 --
 ALTER TABLE `dattour`
@@ -633,7 +783,7 @@ ALTER TABLE `khach_san_tour`
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT cho bảng `nhahang`
@@ -646,6 +796,18 @@ ALTER TABLE `nhahang`
 --
 ALTER TABLE `nha_hang_tour`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT cho bảng `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT cho bảng `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `quocgia`
@@ -663,7 +825,13 @@ ALTER TABLE `social_facebook_accounts`
 -- AUTO_INCREMENT cho bảng `social_google_accounts`
 --
 ALTER TABLE `social_google_accounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `thongtinchung`
+--
+ALTER TABLE `thongtinchung`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `tinh`

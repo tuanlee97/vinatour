@@ -152,6 +152,7 @@ $(document).ready(function(){
   if($('#action').val() == 'Add')
   {
    $.ajax({
+    
     url:"{{ route('quocgia.store') }}",
     method:"POST",
     data: new FormData(this),

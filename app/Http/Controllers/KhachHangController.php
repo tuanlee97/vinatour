@@ -4,13 +4,129 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Notification;
 use Validator;
+use Hash;
 use Illuminate\Support\Facades\Auth;
 class KhachHangController extends Controller
 {
+    public function postdangkihdv(Request $request){
+            $user = Auth::user();
+       
+     $validator = \Validator::make($request->all(), [
+     'lydo' => 'required|min:20',
+     
+   ],
+    [
+     'lydo.required'=>'Bạn chưa nhập lý do',
+     'lydo.min'=>'Lý do phải có ít nhất 20 kí tự',
+     
+
+      ]);
+
+      if ($validator->fails()){
+          return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+    
+      else{
+                
+                $form_data = array(
+            'user_id'         =>  $user->id,
+            'noidung'        =>  $request->lydo,
+            'status'        => 0
+                );
+
+
+             Notification::create($form_data);
+            
+             return response()->json(['success'=>'Data is successfully added']);
+        }
+}
+
+public function postchangeprofile(Request $request){
+  
+        $user = Auth::user();
+        $otheruser = User::where('email','<>',$user->email)->get();
+     $validator = \Validator::make($request->all(), [
+     'name' => 'required|min:5',
+     'email'=>'required|email',
+   ],
+    [
+     'name.required'=>'Bạn chưa nhập tên',
+     'name.min'=>'Tên người dùng phải có ít nhất 5 kí tự',
+     'email.required'=>'Bạn chưa nhập email',
+     'email.email' => 'Email không đúng định dạng',
+
+      ]);
+
+      if ($validator->fails()){
+          return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+    
+      else{
+                foreach ($otheruser as  $khachhang) {
+                   if($request->email==$khachhang->email)
+             
+                    return response()->json(['trungemail'=>'Email này đã có người đăng kí !']);
+                   
+                    
+                }
 
 
 
+                $form_data = array(
+            'name'         =>  $request->name,
+            'email'        =>  $request->email,
+            
+                );
+
+
+             User::whereId($user->id)->update($form_data);
+            
+             return response()->json(['success'=>'Data is successfully added']);
+        }
+}
+public function postchangepass(Request $request){
+   
+        $user = Auth::user();
+         
+        if((Hash::check($request->old,$user->password))==false)
+         //So sanh mat khau    
+         return response()->json(['wrong'=>'Mật khẩu cũ không đúng !']);
+     $validator = \Validator::make($request->all(), [
+     'old' => 'required',
+     'new'=>'required|min:6',
+     'new_cf'=>'required|same:new'
+   ],
+    [
+     'old.required'=>'Vui lòng nhập mật khẩu cũ',
+     'new.required'=>'Vui lòng nhập mật khẩu mới',
+     'new_cf.required'=>'Vui lòng xác nhận lại mật khẩu mới',
+     'new.min'=>'Mật khẩu phải có ít nhất 6 kí tự',
+     'new_cf.same'=>'Xác nhận lại mật khẩu không chính xác',
+    
+      ]);
+
+      if ($validator->fails()){
+          return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+    
+      else{
+        
+
+            $form_data = array(
+            'password'         =>  bcrypt($request->new)
+                );
+
+
+             User::whereId($user->id)->update($form_data);
+            
+             return response()->json(['success'=>'Data is successfully added']);
+        }
+}
 
   public function postRegister(Request $request){
      $validator = \Validator::make($request->all(), [
@@ -41,6 +157,8 @@ class KhachHangController extends Controller
              $khachhang->name = $request->username;
              $khachhang->email = $request->emailReg;
              $khachhang->password = bcrypt($request->passwordReg);
+             $khachhang->role = 0;
+             
              $khachhang->save();
              return response()->json(['success'=>'Data is successfully added']);
         }
@@ -156,6 +274,7 @@ $validator = \Validator::make($request->all(), [
                  $rules = array(
                 'user_name'    =>  'required',
                 'user_email'    =>  'required',
+                'quyen'    =>  'required',
                 'user_pass'    =>  'required',
                 'user_cfpass'    =>  'required|same:user_pass'
                     );
@@ -164,7 +283,7 @@ $validator = \Validator::make($request->all(), [
             $rules = array(
                 'user_name'    =>  'required',
                 'user_email'    =>  'required',
-
+                    'quyen'    =>  'required',
             );
 
             $error = Validator::make($request->all(), $rules);
@@ -177,13 +296,15 @@ $validator = \Validator::make($request->all(), [
         $form_data = array(
             'name'         =>  $request->user_name,
             'email'        =>  $request->user_email,
-            'password'     =>  bcrypt($request->user_pass)
+            'password'     =>  bcrypt($request->user_pass),
+            'role'    =>  $request->quyen,
         );
                 }
          else
         $form_data = array(
             'name'         =>  $request->user_name,
             'email'        =>  $request->user_email,
+             'role'    =>  $request->quyen,
 
         );
         User::whereId($request->hidden_id)->update($form_data);

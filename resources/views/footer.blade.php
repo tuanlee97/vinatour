@@ -116,7 +116,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/bootstrap-datepicker.js"></script>
 	<!-- Stellar Parallax -->
 	<script src="js/jquery.stellar.min.js"></script>
-
+	
+  <script src="admin/vendor/datatables/jquery.dataTables.js"></script>
 	<!-- Main -->
 	<script src="js/main.js"></script>
 

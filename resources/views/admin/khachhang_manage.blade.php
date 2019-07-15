@@ -13,9 +13,10 @@
                 <thead>
                   <tr>
                     <th width="10%">Mã KH</th>
-                    <th width="20%">Tên đăng nhập</th>
+                    <th width="10%">Tên đăng nhập</th>
                     <th width="20%">Email</th>
-                    <th width="30%">Mật khẩu</th>
+                    <th width="20%">Mật khẩu</th>
+                    <th width="10%">Quyền</th>
                     <th width="20%">Thao tác</th>
                   </tr>
                 </thead>
@@ -58,6 +59,16 @@
             <label class="control-label col-md-4">Email : </label>
             <div class="col-md-8">
              <input type="text" name="user_email" id="user_email" class="form-control" />
+            </div>
+           </div>
+           <div class="form-group">
+            <label class="control-label col-md-4">Quyền : </label>
+            <div class="col-md-8">
+                <select class="form-control" name="quyen" id="quyen" title="Quyền">
+              
+               <option value="0">0 - User bình thường</option>
+               <option value="1">1 - Hướng dẫn viên</option>
+             </select>
             </div>
            </div>
 
@@ -121,6 +132,7 @@ $(document).ready(function(){
    { data: 'name'},
    { data: 'email'},
    { data: 'password'},
+    { data: 'role'},
    {
     data: 'action',
     name: 'action',
@@ -162,7 +174,11 @@ $(document).ready(function(){
       html = '<div class="alert alert-success">' + data.success + '</div>';
       $('#sample_form')[0].reset();
 
-      $('#dataTableUser').DataTable().ajax.reload();
+    
+        setTimeout(function(){
+     $('#formModal').modal('hide');
+     $('#dataTableUser').DataTable().ajax.reload();
+    }, 1000);
      }
      $('#form_result').html(html);
     }
@@ -179,6 +195,7 @@ $(document).ready(function(){
    success:function(html){
     $('#user_name').val(html.data.name);
     $('#user_email').val(html.data.email);
+    $('#quyen').val(html.data.role);
     $('#user_pass').val("");
     $('#hidden_id').val(html.data.id);
      $('.cfpassword').hide();
