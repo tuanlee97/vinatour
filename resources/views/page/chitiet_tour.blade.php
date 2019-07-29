@@ -1,6 +1,12 @@
 @extends('master')
 @section('content')
+
+
+
+<link href="css/preview.css" rel="stylesheet">
+<script src="https://unpkg.com/vue"></script>
 	<aside id="colorlib-hero">
+
 			<div class="flexslider">
 				<ul class="slides">
 			   	<li style="background-image: url(images/cover-img-3.jpg);">
@@ -9,8 +15,8 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-				   					<h2>by colorlib.com</h2>
-				   					<h1>Tour Overview</h1>
+				   					<h2>VINATOUR</h2>
+				   					<h1>Chi tiết tour</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -30,15 +36,16 @@
 								<div class="wrap-division">
 									<div class="col-md-12 col-md-offset-0 heading2 animate-box">
 										<h2>{{$tour->tentour}}</h2>
+										 <input type="hidden" name="idtour" id="idtour"  value="{{ $tour->id }}">
 									</div>
 									<div class="row">
 										<div class="col-md-12 animate-box">
 											<div class="room-wrap">
 												<div class="row">
-												
+
 													<?php echo ($tour->noidung); ?>
-													
-												
+
+
 												</div>
 											</div>
 										</div>
@@ -51,213 +58,251 @@
 
 					</div>
 
-		<!-- 		 SIDEBAR-->
-					<div class="col-md-3">
-						<div class="sidebar-wrap">
-							
-					
-							<div class="side animate-box">
-								<div class="row">
-									<div class="col-md-12">
-										<h3 class="sidebar-heading">Review Rating</h3>
-										<form method="post" class="colorlib-form-2">
-										   <div class="form-check">
-												<input type="checkbox" class="form-check-input" id="exampleCheck1">
-												<label class="form-check-label" for="exampleCheck1">
-													<p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
-												</label>
-										   </div>
-										   <div class="form-check">
-										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-										      <label class="form-check-label" for="exampleCheck1">
-										    	   <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
-										      </label>
-										   </div>
-										   <div class="form-check">
-										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-										      <label class="form-check-label" for="exampleCheck1">
-										      	<p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
-										     </label>
-										   </div>
-										   <div class="form-check">
-										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-										      <label class="form-check-label" for="exampleCheck1">
-										      	<p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
-										     </label>
-										   </div>
-										   <div class="form-check">
-										      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-										      <label class="form-check-label" for="exampleCheck1">
-										      	<p class="rate"><span><i class="icon-star-full"></i></span></p>
-										     </label>
-										   </div>
-										</form>
-									</div>
-								</div>
-							</div>
-						
-						</div>
-					</div> 
-					<div class="col-md-12">
-							<!-- START Bảng tính giá tour-->
-						<div class="col-sm-12 col-md-12 thumbnail " id="tinhgiatour">
-								<table class="table table-bordered">
-					<thead>
-				      <tr>
 
-				       <th style="width: 10%">Ngày</th>
-				       	<th style="width: 10%">Tỉnh</th>
-				         <th style="width: 20%">Địa điểm</th>
-				        <th style="width: 20%">Nhà hàng</th>
-				        <th style="width: 20%">Khách sạn</th>
-				        <th style="width: 20%">Thành tiền</th>
-				      </tr>
-				    </thead>
- <tbody><form method="POST" enctype="multipart/form-data"  action="{{url('dattour')}}">
-				    	@csrf
-				    		@for ($i = 1; $i <= $tour->songay ; $i++)
-    								 
+	 @if(Auth::guard('web')->check())
+        <!-- SIDEBAR-->
+          <div class="col-md-3">
+            <div class="sidebar-wrap">
+              <div class="side animate-box">
+                <div class="row">
+                  <div class="col-md-12">
 
-    								 			<tr>
+                    <h3 class="sidebar-heading">Đánh giá tour này</h3>
+                    @if($rating==null)
 
-    						<td style="font-weight: bold;">Ngày {{ $i }}</td>
-    								 				
-    								 				
-						<td style="font-weight: bold;">
-							<div>			@foreach($diemden as $dd)
-									  	<div><a href="#">{{$dd->tentinh}}</a></div>
-											@endforeach
-							</div>
-								
-						</td>
+                    <form action="{{ route('posts.post')}}" method="POST" class="colorlib-form-2">
+                      {{ csrf_field() }}
+                      <input type="hidden" name="id" required="" value="{{ $tour->id }}">
+                       <div class="form-check">
+                        <input type="radio" class="form-check-input" id="rating"  name="rating" value="5">
+                        <label class="form-check-label" for="rating">
+                          <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+                        </label>
+                       </div>
+                       <div class="form-check">
+                          <input type="radio" class="form-check-input" id="rating" name="rating" value="4">
+                          <label class="form-check-label" for="rating">
+                             <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+                          </label>
+                       </div>
+                       <div class="form-check">
+                          <input type="radio" class="form-check-input" id="rating" name="rating" value="3">
+                          <label class="form-check-label" for="rating">
+                            <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+                         </label>
+                       </div>
+                       <div class="form-check">
+                          <input type="radio" class="form-check-input" id="rating" name="rating" value="2">
+                          <label class="form-check-label" for="rating">
+                            <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+                         </label>
+                       </div>
+                       <div class="form-check">
+                          <input type="radio" class="form-check-input" id="rating" name="rating" value="1">
+                          <label class="form-check-label" for="rating">
+                            <p class="rate"><span><i class="icon-star-full"></i></span></p>
+                         </label>
+                       </div>
+                       <button class="btn btn-success">Bình chọn</button>
+                    </form>
+                    @else
+                    <form  class="colorlib-form-2">
+                      {{ csrf_field() }}
+                      <div class="form-check">
+                          <input type="radio" class="form-check-input colorlib-form-2" id="rating" name="rating" value="2" checked="checked" disabled="disabled">
+                          <label class="form-check-label" for="rating">
+                            Bạn đã đánh giá tour này :<br>
+                            <p class="rate"><span>@for($i =1;$i<=$rating->rating;$i++)<i class="icon-star-full"></i>@endfor</span></p>
+                         </label>
+                       </div>
+                       
+                      
+                    </form>
+                    @endif
+                    </br>
+                  </div>
+          <!--MUA TOUR-->
+          <div class="col-md-12">
+            <div class="sidebar-wrap">
+              <div class="side search-wrap animate-box">
+                <h3 class="sidebar-heading">XÁCH BALO VÀ ĐI</h3>
+                          <a href="{{route('getmuatour')}}">MUA DI CHO CHI</a>
+                         <!--  <input type="button" name="submit" id="submit" value="Mua tour" class="btn btn-primary btn-block"> -->
+            
+              </div>
+         
+          
+            </div>
+          </div>
+          <!--END MUA TOUR -->
+                </div>
+              </div>
+            
+              </div>
+            </div>
+            @endif
+          </div>
 
-						<td>
-							
-								@foreach($diemden as $dd)
-								<div><b>{{$dd->tentinh}}</b></div>
-								@foreach($thamquan as $tq)
-									@if($tq->tinh==$dd->id)
-								<div>
 
-									<input type="checkbox" name="diadiem_ngay_{{$tq->id}}" value="{{$tq->gia}}" class="{{ $i }}" >
-									  <span data-toggle="tooltip" data-html="true">
-									  	<a href="{{route('ctdiadanh',$tq->id)}}" target="_thamquan" title="{{$tq->gia}} VND">{{$tq->tendiadanh}}</a>
+ <!-- START Bảng tính giá tour-->
+          <div class="row animate-box">
+             
+            <div class="col-sm-12 col-md-12 thumbnail " id="tinhgiatour">
+                <table class="table table-bordered">
+          <thead>
+              <tr>
 
-									</span>
+               <th >Ngày</th>
+                <th >Tỉnh</th>
+                 <th>Địa điểm</th>
+                <th >Nhà hàng</th>
+                <th >Khách sạn</th>
+                <th>Thành tiền</th>
+              </tr>
+            </thead>
+ <tbody><form id="contactForm1" method="POST" enctype="multipart/form-data"  >
+              @csrf
+              <input type="hidden" name ="tour_id " value="{{$tour->id}}">
+                @for ($i = 1; $i <= $tour->songay ; $i++)
 
-									</div>@endif
-									@endforeach
-								@endforeach
-							</td>
 
-							<td>
-										@foreach($diemden as $dd)
-								<div><b>{{$dd->tentinh}}</b></div>
-									<div><small> Ăn sáng</small></div>
-									@foreach($noianuong as $pl)
-									@if($pl->tinh==$dd->id)
-								<div>
-								<input type="checkbox" name="nhahang_ngay_{{$pl->id}}" value="{{$pl->gia}}" class="{{ $i }}" >
-								  <span data-toggle="tooltip" data-html="true">
-								  	<a href="{{route('ctnhahang',$pl->id)}}" target="_nhahang" title="{{$pl->gia}} VND">{{$pl->tennhahang}}
-								</a>
+                          <tr>
 
-								</span>
-								</div>
-								@endif
-								@endforeach
+                <td style="font-weight: bold;">Ngày {{ $i }}</td>
+
+
+            <td style="font-weight: bold;">
+              <div>     @foreach($diemden as $dd)
+                   
+                         <input type="radio" name="tinh_ngay_{{ $i}}" title="{{$dd->id}}" value="{{$dd->tentinh}}" class="{{$i}}" />{{$dd->tentinh}}<br />
+                </span><br>
+                      @endforeach
+
+
+
+              </div>
+
+              <input type="hidden" name ="diadanh_ngay_{{$i}} " id="diadanh_{{$i}}" class="{{ $i }}">
+              <input type="hidden" name ="nhahang_ngay_{{$i}} " id="nhahang_{{$i}}" class="{{ $i }}">
+              <input type="hidden" name ="khachsan_ngay_{{$i}} " id="khachsan_{{$i}}" class="{{ $i }}">
+            </td>
+
+            <td class="diadanh_{{$i}}" >
+                
+            </td>
+
+            <td class="nhahang_{{$i}}"   >
+              
+                  
+            
+            </td>
+
+
+            <td class="khachsan_{{$i}}">
+                
+                
+                
+
+            </td>
+            <td width="100">
+              <span style=" float: right;"  id="tongdukienngay_{{ $i }}"> 0.0 VND</span>
+                    <input type="hidden" name ="tongdukienngay_{{ $i }} " id="tongngay_{{ $i }}" class="{{ $i }}">
+            </td>
+
+
+        </tr>
+
+
+            @endfor
+
+
+
+
+                <tr> <td colspan="6">
+        <div class=" alert alert-info" role="alert">
+          Tổng dự kiến tour đã chọn: &nbsp;
+          <span style=" float: right;" id="tongdukien"> 0.0 VND</span>
+          <input type="hidden" name ="tongtien " id="tongtien">
+        </div>
+         @if(Auth::guard('web')->check())
+          <div class=" animate-box text-center">
+                      <p><button type="Submit" class="btn btn-primary">Đặt ngay!</button></p>
+                    </div>
+            @else <div  class="alert alert-warning animate-box text-center" style=" text-align: center;">
+      <h4>Để lưu thông tin vừa chọn và nhận kết quả lưu trong hộp thư email bạn cần phải <a id="dangnhapbinhluan"><b>đăng nhập</b></a></h4> 
+    </div>
+    @endif
+      </td>
+
+      </tr>
+      </form>
+    </tbody>
+    </table>
+  </div>
+ 
+
+          </div>
+   <!-- END Bảng tính giá tour-->
+
+
+  <!-- Comment-->
+   
+          <div id="app" class="animate-box">
+    <h3>Bình luận:</h3>
+    <div style="margin-bottom:50px;"  v-if="user"  >
+      <textarea  class="form-control" rows="3" name="body" placeholder="Để lại bình luận...." v-model="commentBox"></textarea>
+      <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment">Đăng</button>
+    </div>
+   
+  <div class="alert alert-warning animate-box " style="width: 800px;" v-else>
+      <h4>Bạn cần <a id="dangnhapbinhluan"><b>đăng nhập</b></a> để bình luận </h4> 
+    </div>
+
+<div style="overflow-y:scroll;width: 850px; height:300px;"  class="animate-box  panel panel-default" >
+    <div class="media panel panel-default " style="margin-top:20px;width: 800px;" v-for="comment in comments">
+     <div v-if="(comment.id % 2)== 0" style="background: #bce8f1">
+      <div class="media-left"style="width: 850px;background: #bce8f1">
+                 
+          <img class="media-object "   src="images/user.png"  alt="...">
+     
+      </div>
+      <div class="media-body"  style="background: #bce8f1"  >
+        <h4 class="media-heading"><b> @{{comment.user.name}} : </b></h4>
+        @{{comment.body}}<br>
+        <span style="color: #aaa; font-size: 9px"> @{{comment.created_at}}</span>
+      </div>
+      </div>
+
+         <div v-else>
+      <div class="media-left"style="width: 850px;">
+        <a href="#">            
+          <img class="media-object "  src="images/user.png"  alt="...">
+        </a>
+      </div>
+      <div class="media-body"    >
+        <h4 class="media-heading"><b> @{{comment.user.name}} : </b></h4>
+        @{{comment.body}}<br>
+        <span style="color: #aaa; font-size: 9px"> @{{comment.created_at}}</span>
+      </div>
+      </div>
+    </div>
+</div>
+
+  </div>
+
+  <!--End Comment -->
+</div>
+
+
 	
-
-
-							<div><small> Ăn trưa</small></div>
-								@foreach($noianuong as $pl)
-									@if($pl->tinh==$dd->id)
-								<div>
-								<input type="checkbox" name="nhahang_ngay_{{$pl->id}}" value="{{$pl->gia}}" class="{{ $i }}" >
-								  <span data-toggle="tooltip" data-html="true">
-								  	<a href="{{route('ctnhahang',$pl->id)}}" target="_nhahang" title="{{$pl->gia}} VND">{{$pl->tennhahang}}
-								</a>
-
-								</span>
-								</div>
-								@endif
-								@endforeach
-
-
-
-
-							<div><small> Ăn tối</small></div>
-					@foreach($noianuong as $pl)
-									@if($pl->tinh==$dd->id)
-								<div>
-								<input type="checkbox" name="nhahang_ngay_{{$pl->id}}" value="{{$pl->gia}}" class="{{ $i }}" >
-								  <span data-toggle="tooltip" data-html="true">
-								  	<a href="{{route('ctnhahang',$pl->id)}}" target="_nhahang" title="{{$pl->gia}} VND">{{$pl->tennhahang}}
-								</a>
-
-								</span>
-								</div>
-								@endif
-								@endforeach
-
-								@endforeach
-						</td>
-						<td>
-								@foreach($diemden as $dd)
-								<div><b>{{$dd->tentinh}}</b></div>
-
-									@foreach($noinghi as $pl)
-									@if($pl->tinh==$dd->id)
-								<div>
-								<input type="checkbox" name="khachsan_ngay_{{$pl->id}}" value="{{$pl->gia}}" class="{{ $i }}" >
-								  <span data-toggle="tooltip" data-html="true">
-								  	<a href="{{route('ctkhachsan',$pl->id)}}" target="_khachsan" title="{{$pl->gia}} VND">{{$pl->tenkhachsan}}
-								</a>
-
-								</span>
-								</div>
-								@endif
-								@endforeach
-	@endforeach
-
-
-
-									
-						</td>
-						<td width="100">
-							<span style=" float: right;" id="tongdukienngay_{{ $i }}"> 0.0 VND</span>
-										<input type="hidden" id="tongngay_{{ $i }}" class="c{{ $i }}">
-						</td>
-
-
-				</tr>
-
-					
-						@endfor
-
-
-			
-
-								<tr> <td colspan="6">
-				<div class=" alert alert-info" role="alert">
-					Tổng dự kiến tour đã chọn: &nbsp;
-					<span style=" float: right;" id="tongdukien"> 0.0 VND</span>
-				</div>
-					<div class=" animate-box text-center">
-											<p><button  type="submit" class="btn btn-primary">Đặt ngay!</button></p>
-										</div>
-			</td>
-
-			</tr>
-			</form>
-		</tbody>
-		</table>
-	</div>
-	<!-- END Bảng tính giá tour-->
-					</div>
 				</div>
 			</div>
 		</div>
+
+            
+
+
+
 	</div>
 
 <script type="text/javascript">
@@ -268,53 +313,217 @@
 //);​
 $(document).ready( function()
 {
- 
-$("#tinhgiatour input").click(function(){
+$("#tinhgiatour input[type='radio']").click(function(){
+	id=this.title;	
 	c=this.className;
-	tongngay =0;
-$.each($("#tinhgiatour input[class="+c+"]:checked"), function(k, v){
-	//alert(v.value);
-	tongngay += parseInt(v.value);
-})
+	tour=$('#idtour').val();
+
+	/////Địa danh
+			$('.diadanh_'+c+'').empty();
+	       
+              var option1 = '';
+          
+              $.ajax({
+                url: 'getDiadanhs/'+id+'/'+tour,
+                type: 'GET',
+                dataType : 'json',
+                success: function(data){
+
+                $.each(data,function(i, item){
+       				
+                  option1 += '<input id="diadiem_'+item.id+'_ngay_'+c+'" type="checkbox" name="diadiem_ngay_'+c+'" value="'+item.tendiadanh+'"title="'+item.gia+'" class="'+c+'"><span data-toggle="tooltip" data-html="true"><a href="ctdiadanh/'+item.id+'" target="_thamquan" title="'+item.gia+' VND">'+item.tendiadanh+'</a> </br>';
+                });
+          
+                 $('.diadanh_'+c+'').append(option1);
+                }
+              });
+    /////Nhà hàng 	
+			
+	       $('.nhahang_'+c+'').empty();
+              var option2 = '';
+          
+              $.ajax({
+                url: 'getNhahangs/'+id+'/'+tour,
+                type: 'GET',
+                dataType : 'json',
+                success: function(data){
+                		
+                $.each(data,function(i, item){
+       				option2 += '<input type="checkbox" name="nhahang_ngay_'+c+'" value="'+item.tennhahang+'"title="'+item.gia+'" class="'+c+'" ><span data-toggle="tooltip" data-html="true"><a href="ctnhahang/'+item.id+'" target="_nhahang" title="'+item.gia+' VND">'+item.tennhahang+'</a> </span></br>';
+ 
+            
+                });
+          	$('.nhahang_'+c+'').append(option2);
+                
+                }
+              });
+    /////Khách sạn
+    
+			$('.khachsan_'+c+'').empty();
+	       
+              var option3 = '';
+          
+              $.ajax({
+                url: 'getKhachsans/'+id+'/'+tour,
+                type: 'GET',
+                dataType : 'json',
+                success: function(data){
+
+                $.each(data,function(i, item){
+       
+                  option3 += '<input type="checkbox" name="khachsan_ngay_'+c+'" value="'+item.tenkhachsan+'"title="'+item.gia+'" class="'+c+'"><span data-toggle="tooltip" data-html="true"><a href="ctkhachsan/'+item.id+'" target="_khachsan" title="'+item.gia+' VND">'+item.tenkhachsan+'</a> </br>';
+                });
+          
+                 $('.khachsan_'+c+'').append(option3);
+                }
+              });
+								
+
+
+});
+
+
+
+
+
+$("#tinhgiatour").on('click',"input[type='checkbox']",function(){
+var valuedd=[];
+var valuenh=[];
+var valueks=[];
+c=this.className;
+
+
+
+
+	
+
+	tongngay =0;	
+$.each($("#tinhgiatour  input."+c+":checkbox:checked"), function(k, v){
+	//alert(v.value);	
+if(this.name == "diadiem_ngay_"+c )	valuedd.push(this.value);
+if(this.name == "khachsan_ngay_"+c ) valueks.push(this.value);
+if(this.name == "nhahang_ngay_"+c ) valuenh.push(this.value);
+	tongngay += parseInt(v.title);
+});
+$("#tinhgiatour #diadanh_"+c).attr('value',valuedd);
+$("#tinhgiatour #khachsan_"+c).attr('value',valueks);
+$("#tinhgiatour #nhahang_"+c).attr('value',valuenh);
 $("#tinhgiatour #tongdukienngay_"+c).html(numberWithCommas(tongngay) +" VND");
+$("#tinhgiatour #tongngay_"+c).attr('value',numberWithCommas(tongngay));
 
 //--------------------------------------
 
 	tong =0;
-$.each($("#tinhgiatour input:checked"), function(k, v){
+$.each($("#tinhgiatour input[type='checkbox']:checked"), function(k, v){
 	//alert(v.value);
-	tong += parseInt(v.value);
+	tong += parseInt(v.title);
 })
 
 $("#tongdukien").html(numberWithCommas(tong) +" VND");
+$("#tongtien").attr('value',numberWithCommas(tong));
 });
 
 
-//============ Khach lẻ ====
-$("#tinhgiatour2 input").click(function(){
-	c=this.className;
-	tongngay =0;
-$.each($("#tinhgiatour2 input[class="+c+"]:checked"), function(k, v){
-	//alert(v.value);
-	tongngay += parseInt(v.value);
-})
-$("#tinhgiatour2 #tongdukienngay_"+c).html(numberWithCommas(tongngay) +" VND");
+var frm = $('#contactForm1');
 
-//--------------------------------------
+    frm.submit(function (e) {
 
-tong2 =0;
-$.each($("#tinhgiatour2 input:checked"), function(k, v){
-	//alert(v.value);
-	tong2 += parseInt(v.value);
-})
+        e.preventDefault();
 
-$("#tongdukien2").html(numberWithCommas(tong2) +" VND");
-});
+        $.ajax({
+            type: 'POST',
+            url: "{{route('dattour')}}",
+            data: frm.serialize(),
+            success: function (data) {
+
+            		if(data.errors){
+            			    Swal.fire({     
+                            type: 'error',
+                text: 'Mỗi trường phải chọn ít nhất 1',
+                showConfirmButton: false,
+                  timer: 1500
+              })
+            		}
+            		if(data.success){
+            			                 Swal.fire({     
+                            type: 'success',
+                text: 'Đã lưu lại thông tin và gửi tới email của bạn',
+                showConfirmButton: false,
+                  timer: 3000
+              })
+            			  setTimeout(function(){
+                        location.reload();
+                                }, 3500);                 
+            		}
+               
+            }
+        });
+    });
 
 });
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+      $(document).on('click', '#dangnhapbinhluan', function(){
+           
+                    $('#loginModal').modal('show');
+                
+                
+            });
+
+
+</script>
+  <script src="js/app.js"></script>
+
+
+  <script>
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        comments: {},
+     	commentBox: '',
+        post: {!! $tour->toJson() !!},
+        user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
+      },
+      mounted() {
+        this.getComments();
+        this.listen();
+      },
+      methods: {
+        getComments() {
+          axios.get('/api/posts/'+this.post.id+'/comments')
+                .then((response) => {
+                  this.comments = response.data
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+        },
+        postComment() {
+
+          axios.post('/api/posts/'+this.post.id+'/comment', {
+            api_token: this.user.api_token,
+            body: this.commentBox
+          })
+          .then((response) => {
+            this.comments.unshift(response.data);
+            this.commentBox = '';
+          })
+          .catch(function(error){
+           console.log(error);
+       	});
+
+        },
+        listen() {
+          Echo.channel('post.'+this.post.id)
+              .listen('NewComment', (comment) => {
+                this.comments.unshift(comment);
+              })
+        }
+      }
+    })
 </script>
 @endsection

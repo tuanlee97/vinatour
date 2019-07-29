@@ -10,7 +10,8 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-				   					<h2>by colorlib.com</h2>
+				   					<h2>VINATOUR</h2>
+				   			
 				   					<h1>Danh lam thắng cảnh</h1>
 				   				</div>
 				   			</div>
@@ -54,7 +55,7 @@
 					<div class="col-md-4">
 						<div class="sidebar-wrap">
 							<div class="side animate-box">
-								<h3 class="sidebar-heading">Recent Post</h3>
+								<h3 class="sidebar-heading">Bài viết mới :</h3>
 								<div class="blog-entry-side">
 									<a href="blog.html" class="blog-post">
 										<span class="img" style="background-image: url(images/blog-3.jpg);"></span>
@@ -86,19 +87,7 @@
 									</a>
 								</div>
 							</div>
-							<div class="side animate-box">
-								<div class="sidebar-heading">Categories</div>
-								<ul class="category">
-									<li><a href="#"><i class="icon-check"></i> Car rental<span>(2)</span></a></li>
-									<li><a href="#"><i class="icon-check"></i> Flight<span>(2)</span></a></li>
-									<li><a href="#"><i class="icon-check"></i> Activities<span>(3)</span></a></li>
-									<li><a href="#"><i class="icon-check"></i> Hotel<span>(5)</span></a></li>
-									<li><a href="#"><i class="icon-check"></i> Tour<span>(2)</span></a></li>
-									<li><a href="#"><i class="icon-check"></i> Travel<span>(3)</span></a></li>
-									<li><a href="#"><i class="icon-check"></i> Night<span>(2)</span></a></li>
-									<li><a href="#"><i class="icon-check"></i> Cruises<span>(2)</span></a></li>
-								</ul>
-							</div>
+						
 						</div>
 					</div>
 				</div>

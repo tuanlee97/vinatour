@@ -4,23 +4,96 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Tour;
+use App\Models\Tinh;
+use App\Models\TuChon;
+use App\Models\ChiTietTuChon;
 use App\Models\Notification;
 use Validator;
 use Hash;
+use Mail;
+use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 class KhachHangController extends Controller
 {
+     public function postsave_ykien(Request $request ){
+ $validator = \Validator::make($request->all(), [
+             'content'=>'required',       
+       ],
+         [
+        'content.required'=>'Bạn chưa nhập nội dung',
+          ]);
+
+          if ($validator->fails()){
+              return response()->json(['errors'=>'Bạn chưa nhập nội dung']);
+            }
+          else{
+                 $form_data = array(
+            'post'         =>  $request->content,
+            
+        );
+                   Post::whereId($request->hidden_id)->update($form_data);
+
+        return response()->json(['success' => 'Data is successfully updated']);
+            }
+      }
+ 
+  public function postsave_phanhoi(Request $request){
+    $validator = \Validator::make($request->all(), [
+             'content'=>'required',       
+       ],
+         [
+        'content.required'=>'Bạn chưa nhập nội dung',
+          ]);
+
+          if ($validator->fails()){
+              return response()->json(['errors'=>'Bạn chưa nhập nội dung']);
+            }
+          else{
+                 $form_data = array(
+            'comment'         =>  $request->content,
+            
+        );
+                   Comment::whereId($request->hidden_id)->update($form_data);
+
+        return response()->json(['success' => 'Data is successfully updated']);
+            }
+      }
+ 
+     public function getsua_phanhoi($id){
+            $item = Comment::find($id);
+     return response()->json(['item'=>$item]);
+    
+ }
+  public function getsua_ykien($id){
+    $item = Post::find($id);
+     return response()->json(['item'=>$item]);
+ }
+ public function postxoa_ykien($id){
+    $item = Post::find($id);
+    $item->delete();
+     return response()->json(['success'=>' successfully']);
+ }
+  public function postxoa_phanhoi($id){
+     $item = Comment::find($id);
+    $item->delete();
+     return response()->json(['success'=>'successfully ']);
+  }
+
+
     public function postdangkihdv(Request $request){
+
             $user = Auth::user();
        
      $validator = \Validator::make($request->all(), [
      'lydo' => 'required|min:20',
-     
+      'cv' => 'required',
    ],
     [
      'lydo.required'=>'Bạn chưa nhập lý do',
      'lydo.min'=>'Lý do phải có ít nhất 20 kí tự',
-     
+     'cv.required'=>'Bạn chưa gửi CV',
 
       ]);
 
@@ -30,10 +103,15 @@ class KhachHangController extends Controller
 
     
       else{
-                
+                 $file = $request->file('cv');
+
+        $new_name = rand() . '.' . $file->getClientOriginalExtension();
+
+        $file->move(public_path('admin/download/'), $new_name);
                 $form_data = array(
             'user_id'         =>  $user->id,
             'noidung'        =>  $request->lydo,
+            'file_name'             =>  $new_name,
             'status'        => 0
                 );
 
@@ -223,7 +301,56 @@ $validator = \Validator::make($request->all(), [
     {
         //
     }
+public function postDattour(Request $request)
+    {   $tour = Tour::find($request->tour_id_);
+        $rules;
+        for ($i=1; $i<=$tour->songay ; $i++){
+            $rules[]=array(
+                    $request['tinh_ngay_'.$i],
+                    $request['diadanh_ngay_'.$i.'_'],
+                    $request['nhahang_ngay_'.$i.'_'],
+                    $request['khachsan_ngay_'.$i.'_'],
+                    
+            );
+            foreach ($rules as  $value) {
+               foreach ($value as $v) {
+                  if($v==null) return response()->json(['errors'=>'Error']);
+               }
+            }
+        }
+      $tuchon = new TuChon;
+             $tuchon->tour_id = $request->tour_id_;
+             $tuchon->user_id = Auth::user()->id;
+             $tuchon->tongtien = $request->tongtien_;
+             $tuchon->status = 0;
+             $tuchon->save();
+           
+    
+  for ($i=1; $i<=$tour->songay ; $i++) { 
 
+     $chitiettuchon = new ChiTietTuChon;
+ 
+             $chitiettuchon->tuchon_id = $tuchon->id;
+             $chitiettuchon->lichtrinhngay =$i;
+             $chitiettuchon->tinh = $request['tinh_ngay_'.$i];
+             $chitiettuchon->diadanh = $request['diadanh_ngay_'.$i.'_'];
+             $chitiettuchon->nhahang = $request['nhahang_ngay_'.$i.'_'];
+             $chitiettuchon->khachsan = $request['khachsan_ngay_'.$i.'_'];
+             $chitiettuchon->tongtienngay = $request['tongdukienngay_'.$i.'_'];
+             $chitiettuchon->save();
+
+  }    
+            $email = Auth::user()->email;      
+        
+           $arr_chitiet = ChiTietTuChon::where('tuchon_id',$tuchon->id)->get();
+        
+           
+            Mail::send('thongtintuchon.sendmail',['tuchon'=>$tuchon,'arr_chitiet'=>$arr_chitiet],function($message) use ($email){
+            $message->to($email,'Thông tin tour bạn đã chọn')->subject('Thông tin tour bạn đã chọn');
+        });
+        return response()->json(['success'=>'Data is successfully added']);
+             
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -307,6 +434,11 @@ $validator = \Validator::make($request->all(), [
              'role'    =>  $request->quyen,
 
         );
+
+                $check = Notification::where('user_id',$request->hidden_id)->first();
+                if($request->quyen==0 && $check!=null )
+                     $check->delete();
+                 
         User::whereId($request->hidden_id)->update($form_data);
 
         return response()->json(['success' => 'Data is successfully updated']);
@@ -323,4 +455,7 @@ $validator = \Validator::make($request->all(), [
         $data = User::find($id);
         $data->delete();
     }
+      public function getmuatour(){
+  return view('page.checkout');
+ }
 }

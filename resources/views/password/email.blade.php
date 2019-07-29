@@ -9,7 +9,7 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-				   					<h2>by vinatour.tk</h2>
+				   				 <h2>VINATOUR</h2>
 				   					<h1>Lấy lại mật khẩu</h1>
 				   				</div>
 				   			</div>
@@ -37,12 +37,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card"><span id="form_result"></span>
+            <div class="card"><span id="form_result_reset"></span>
                 <div class="card-header">{{ __('Vui lòng nhập địa chỉ email để lấy lại mật khẩu') }}</div>
 
                 <div class="card-body">
                    
-                    <form id="sample_form" method="POST" enctype="multipart/form-data">
+                    <form id="sample_form_reset" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -80,11 +80,11 @@
 
 <script>
 	$(document).ready(function(){
- $('#sample_form').on('submit', function(event){
+ $('#sample_form_reset').on('submit', function(event){
   event.preventDefault();
 
   			
-  
+
                $.ajaxSetup({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -111,7 +111,7 @@
      {
       html = '<div class="alert alert-success"><p><strong>THÀNH CÔNG : </strong>' + data.success + '</p></div>';
      }
-     $('#form_result').html(html);
+     $('#form_result_reset').html(html);
     }});
       
 

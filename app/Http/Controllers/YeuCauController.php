@@ -21,12 +21,17 @@ class YeuCauController extends Controller
                     ->addColumn('action', function($data){
                     	if($data->status==0){
                         $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Phê duyệt</button>';
-                        $button .= '&nbsp;&nbsp;';
+                        $button .= '&nbsp;';
+                        
                         $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Xóa</button>';
+                        $button .= '&nbsp';
+                        $button .= '<a  title="Tải về" class="btn btn-info btn-sm" href="download/'.$data->file_name.'" download="'.$data->file_name.'"><i class ="fa fa-download"></i</a>';
+                        
                         return $button;}
                         else{
                         $button = '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Xóa</button>';
-                      
+                        $button .= '&nbsp';
+                        $button .= '<a style="width: 50px;height: 31px" title="Tải về" class="btn btn-info" href="download/'.$data->file_name.'" download="'.$data->file_name.'"><i class ="fa fa-download"></i</a>';
                         return $button;}
                     })
                     ->rawColumns(['action'])

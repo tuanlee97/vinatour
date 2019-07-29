@@ -48,6 +48,7 @@ class QuocGiaController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $error = Validator::make($request->all(), 	[
           'country_name'    =>  'required|unique:quocgia,tenquocgia',
           'image'    =>  'required|image|max:2048',

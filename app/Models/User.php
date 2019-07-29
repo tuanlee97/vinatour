@@ -16,10 +16,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','role','request'
+        'name', 'email', 'password','role','api_token'
     ];
 
 
-
+public function comments(){
+      return $this->hasMany('App\Models\BinhLuan');
+    }
+    
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Tinh;
-use App\Models\Quocgia;
+use App\Models\QuocGia;
 use App\Models\NhaHang;
 use App\Models\DiaDanh;
 use App\Models\KhachSan;
@@ -54,7 +54,7 @@ class TinhController extends Controller
         $rules = array(
 
             'tentinh'    =>  'required',
-            'quocgia'    =>  'required'
+            'country_name'    =>  'required'
         );
 
         $error = Validator::make($request->all(), $rules);

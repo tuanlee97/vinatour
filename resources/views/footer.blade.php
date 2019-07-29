@@ -3,89 +3,55 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-						<h2>Đăng kí để nhận chương trình mới nhất</h2>
-						<p>Đăng kí để được cung cấp email về chương trình tour cũng như những ưu đãi mới nhất của chúng tôi.</p>
-						<form class="form-inline qbstp-header-subscribe">
-							<div class="row">
-								<div class="col-md-12 col-md-offset-0">
-									<div class="form-group">
-										<input type="text" class="form-control" id="email" placeholder="Nhập email của bạn ...">
-										<button type="submit" class="btn btn-primary">Đăng kí</button>
-									</div>
-								</div>
-							</div>
-						</form>
+						<h2 class="animate-box">VinaTour luôn đặt mục tiêu phấn đấu trở thành một công ty dịch vụ du lịch lữ hành có chất lượng và uy tín hàng đầu Việt Nam.</h2>
+						<p class="animate-box">Đảm bảo những giá trị lợi ích của khách hàng cũng như thỏa mãn nhu cầu về an toàn trong ngành dịch vụ du lịch khi khách hàng sử dụng sản phẩm của VinaTour.</p>
+					
 					</div>
 				</div>
 			</div>
 		</div>
 	<footer id="colorlib-footer" role="contentinfo">
-			<div class="container">
+			<div class="container ">
 				<div class="row row-pb-md">
-					<div class="col-md-3 colorlib-widget">
-						<h4>Tour Agency</h4>
-						<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
+					<div class="col-md-4 colorlib-widget animate-box">
+						<h4>Kết nối với chúng tôi</h4>
+						<p>Chúng tôi luôn có mặt trên mọi phương tiện mạng xã hội, để bạn có thể dễ dàng tìm kiếm và kết nối nhất.</p>
 						<p>
 							<ul class="colorlib-social-icons">
-								<li><a href="#"><i class="icon-twitter"></i></a></li>
-								<li><a href="#"><i class="icon-facebook"></i></a></li>
-								<li><a href="#"><i class="icon-linkedin"></i></a></li>
-								<li><a href="#"><i class="icon-dribbble"></i></a></li>
+								<li><a target="_blank" href="https://twitter.com/VinaTour2"><i class="icon-twitter"></i></a></li>
+								<li><a target="_blank" href="https://www.facebook.com/Du-L%E1%BB%8Bch-VinaTour-470606160369984/"><i class="icon-facebook"></i></a></li>
+								<li><a target="_blank" href="https://www.youtube.com/channel/UC_ZOfxAEUvq9dfu0ypA_yhw"><i class="fa fa-youtube-play"></i></a></li>
+								<li><a target="_blank" href="https://www.instagram.com/vinatour.corp/"><i class="fa fa-instagram"></i></a></li>
 							</ul>
 						</p>
 					</div>
-					<div class="col-md-2 colorlib-widget">
-						<h4>Book Now</h4>
+					<div class="col-md-4 colorlib-widget animate-box">
+						<h4>Tìm xem ngay bây giờ</h4>
 						<p>
 							<ul class="colorlib-footer-links">
-								<li><a href="#">Flight</a></li>
-								<li><a href="#">Hotels</a></li>
-								<li><a href="#">Tour</a></li>
-								<li><a href="#">Car Rent</a></li>
-								<li><a href="#">Beach &amp; Resorts</a></li>
-								<li><a href="#">Cruises</a></li>
+								<li><a href="tours">Tour</a></li>
+								<li><a href="hotels">Khách Sạn</a></li>
+								<li><a href="nhahang">Nhà Hàng</a></li>
+								<li><a href="diadanh">Địa danh</a></li>
+							
 							</ul>
 						</p>
 					</div>
-					<div class="col-md-2 colorlib-widget">
-						<h4>Top Deals</h4>
-						<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="#">Edina Hotel</a></li>
-								<li><a href="#">Quality Suites</a></li>
-								<li><a href="#">The Hotel Zephyr</a></li>
-								<li><a href="#">Da Vinci Villa</a></li>
-								<li><a href="#">Hotel Epikk</a></li>
-							</ul>
-						</p>
-					</div>
-					<div class="col-md-2">
-						<h4>Blog Post</h4>
-						<ul class="colorlib-footer-links">
-							<li><a href="#">The Ultimate Packing List For Female Travelers</a></li>
-							<li><a href="#">How These 5 People Found The Path to Their Dream Trip</a></li>
-							<li><a href="#">A Definitive Guide to the Best Dining and Drinking Venues in the City</a></li>
-						</ul>
-					</div>
+					
 
-					<div class="col-md-3 col-md-push-1">
-						<h4>Contact Information</h4>
+					<div class="col-md-4 col-md-push-1 animate-box">
+						<h4>Thông tin liên hệ</h4>
 						<ul class="colorlib-footer-links">
-							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-							<li><a href="#">yoursite.com</a></li>
+							<li>180 Cao Lỗ, <br> Phường 4, Quận 8 , Tp. HCM</li>
+							<li><a href="tel://1234567920">+ 84 395 563 446</a></li>
+							<li><a href="mailto:vinatourcorp@gmail.com">vinatourcorp@gmail.com</a></li>
+							<li><a href="https://vinatour.tk">Website : vinatour.tk</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 text-center">
-						<p>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart2" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
-							<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
-						</p>
+						
 					</div>
 				</div>
 			</div>
@@ -118,9 +84,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="js/jquery.stellar.min.js"></script>
 	
   <script src="admin/vendor/datatables/jquery.dataTables.js"></script>
+
 	<!-- Main -->
 	<script src="js/main.js"></script>
 
+	
 
 <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: '0f99d446-db49-4a6f-9846-8ad4770d5ccb', f: true }); done = true; } }; })();</script>
 

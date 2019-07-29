@@ -76,7 +76,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
 
             <a class="collapse-item" href="{{route('tour.index')}}">Tour</a>
-          
+          <a class="collapse-item" href="{{route('tuchon.index')}}">Tự chọn Tour</a>
           </div>
         </div>
       </li>

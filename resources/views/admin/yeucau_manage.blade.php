@@ -12,10 +12,11 @@
               <table class="table table-bordered" id="dataTableYeuCau" width="100%" cellspacing="0">
                 <thead style="text-align:center">
                   <tr>
-                    <th width="10%">ID</th>
-                    <th width="20%">ID Khách Hàng</th>
-                    <th width="40%">Lý do</th>
-                    <th width="30%">Thao tác</th>
+                    <th>ID</th>
+                    <th>ID Khách Hàng</th>
+                    <th>Lý do</th>
+                
+                    <th>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody style="text-align:center">
@@ -98,6 +99,7 @@ $(document).ready(function(){
     data: 'noidung',
 
    },
+
    {
     data: 'action',
     name: 'action',

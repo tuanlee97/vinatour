@@ -150,7 +150,7 @@ class TourController extends Controller
          'diemxuatphat'          => $request->xuatphat,
          'noidung'        => $request->editor1,
          'hinhanh'      => $new_name,
-         'review' => 0
+        
      );
 
       $tour =  Tour::create($form_data);

@@ -8,7 +8,7 @@ class Notification extends Model
 {
     public $table ='notification';
      protected $fillable = [
-       'user_id', 'noidung','status'
+       'user_id', 'noidung','status','file_name'
     ];
    
 }

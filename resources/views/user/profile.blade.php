@@ -9,7 +9,7 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-				   					<h2>by vinatour.tk</h2>
+				   					  <h2>VINATOUR</h2>
 				   					<h1>Hồ sơ cá nhân</h1>
 				   				</div>
 				   			</div>
@@ -128,8 +128,14 @@
    @csrf
   <div class="form-group shadow-textarea">
   <label for="exampleFormControlTextarea6">Lý do</label>
-  <textarea class="form-control z-depth-1" id="lydo" rows="3" placeholder="Ghi lý do bạn muốn trở thành hướng dẫn viên..."style="width: 500px"></textarea>
+  <textarea class="form-control z-depth-1" name ="lydo"id="lydo" rows="3" placeholder="Ghi lý do bạn muốn trở thành hướng dẫn viên..."style="width: 500px"></textarea>
 </div>
+
+            <label >Gửi CV : </label> 
+             <input type="file" name="cv" id="cv" />
+             <hr>
+             
+            
   <div class="form-group row">
     <p style="width: 900px" >Với quyền hướng dẫn viên , bạn sẽ được hệ thống cấp thêm chức năng khi thao tác trên website.<br>
     Nhấn vào nút Yêu cầu bên dưới để gửi yêu cầu cấp quyền. 
@@ -137,7 +143,7 @@
     Để được hỗ trợ nhanh nhất, vui lòng liên hệ hotline : 08081508.<p>
   </div>
 	<div class="form-group row" >
-		<button type="submit"  data-toggle="modal" data-target="#logoutModal" class="btn btn-default" style="color: #337ab7; font-weight: bold;width: 150px">Yêu Cầu</button>
+		<button type="submit" class="btn btn-default" style="color: #337ab7; font-weight: bold;width: 150px">Yêu Cầu</button>
 	</div>
 	
 	</form>
@@ -268,7 +274,7 @@
                         
                          	Swal.fire({  		
                          		type: 'success',
- 					 			text: 'Đã cập nhập lại mật khẩu!',
+ 					 			text: 'Đã lưu thông báo!',
  					 			showConfirmButton: false,
   								timer: 1500
  					 		}
@@ -285,8 +291,11 @@
       ////////ĐĂng kí HDV
 
 
-            jQuery('#ajaxHDV').click(function(e){
+            jQuery('#formHDV').on('submit', function(e){
+             
                e.preventDefault();
+               
+       
                $.ajaxSetup({
                   headers: {
                       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -295,10 +304,11 @@
                jQuery.ajax({
                   url: "{{ url('/dangkihdv') }}",
                   method: 'post',
-                  data: {
-                     lydo: jQuery('#lydo').val(),
-                    
-                  },
+                      data:new FormData(this),
+                  contentType: false,
+                  cache: false,
+                  processData: false,
+                  dataType:"json",
                   success: function(result){
             			  if(result.errors)
                     {
@@ -324,9 +334,9 @@
                  
               })
                           //
-                          setTimeout(function(){
+                         setTimeout(function(){
                         location.reload();
-                                }, 3000);
+                                }, 2500);   
 
                     }
                   }

@@ -1,5 +1,168 @@
-<!--  Modal HDV -->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--Model sửa Comment-->
+<div id="EditComment" class="modal fade" role="dialog">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-edit-title">Chỉnh sửa</h4>
+        </div>
+        <div class="modal-body">
+          <span id="form_result"></span>
+         <form method="post" id="sample_form_edit" class="form-horizontal" enctype="multipart/form-data">
+          @csrf
+
+           <div class="form-group">
+            
+            <div class="col-md-8">
+             <textarea class="form-control z-depth-1" name ="content"id="commentedit" rows="3" style="width: 565px"></textarea>
+            </div>
+           </div>
+
+           <div class="form-group" align="center">
+            <input type="hidden" name="action" id="action" />
+            <input type="hidden" name="hidden_id" id="hidden_id" />
+            <input type="submit" name="action_button" id="action_button" class="btn btn-warning" value="Lưu thay đổi" />
+           </div>
+         </form>
+        </div>
+     </div>
+    </div>
+</div>
+<!-- Modal In Hải Quan-->
+<div id="formModal" class="modal fade" role="dialog">
+ <div class="modal-dialog modal-dialog-scrollable">
+  <div class="modal-content">
+   <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>
+          <h4 class="modal-title">Thêm Hành Khách</h4>
+        </div>
+        <div class="modal-body">
+         <span id="form_result"></span>
+         <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
+          @csrf
+             <div class="row" >
+           <div class="col-md-5" >
+            <label>Tên : </label>
+   
+             <input type="text" name="first_name" id="first_name" class="form-control"  />
+       
+           </div >
+         <div class="col-md-5" >
+            <label>Họ : </label>
+   
+             <input type="text" name="last_name" id="last_name" class="form-control" />
+       
+           </div></div><br>
+             <div class="row">
+               <div class="col-md-8" >
+            <label>Ngày sinh : </label>
+                <input class="form-control" name ="birthday"type="date"  id="birthday">
+  
+            </div></div><br>
+             <div class="row" >
+           <div class="col-md-5" >
+            <label>Quốc Tịch : </label>
+   
+             <input type="text" name="country_name" id="country_name" class="form-control"  />
+       
+           </div >
+         <div class="col-md-5" >
+            <label>Thành Phố : </label>
+   
+             <input type="text" name="city_name" id="city_name" class="form-control" />
+       
+           </div></div><br>
+
+
+              <div class="row">
+               <div class="col-md-8" >
+            <label>Mục đích : </label>
+         
+             <select class="form-control" name="purpose" id="purpose" title="Chọn mục đích">
+              
+               <option value="1">1 - Khách du lịch</option>
+               <option value="2">2 - Công việc</option>
+               <option value="3">3 - Thăm hỏi</option>
+               <option value="0">Khác</option>
+             </select>
+            </div></div><br>
+                    <div class="row" >
+           <div class="col-md-12" >
+            <label>Có tiền sử bị trục xuất hoặc từ chối nhập cảnh ?&emsp;</label>
+   
+           <input type="checkbox" name="option1" id="opt1"  />
+           
+           </div ></div>
+                   <div class="row" >
+           <div class="col-md-12" >
+            <label>Có tiền sử bị kết án tội phạm ?&emsp;</label>
+   
+           <input type="checkbox" name="option2" id="opt2"  />
+           
+           </div ></div>
+                   <div class="row" >
+           <div class="col-md-12" >
+            <label>Có sở hữu những chất cấm, vũ khí, thuốc nổ?&emsp;</label>
+   
+           <input type="checkbox" name="option3" id="opt3"  />
+           
+           </div ></div>
+       
+      
+           <br />
+           <div class="form-group" align="center">
+            <input type="hidden" name="action" id="action" />
+            <input type="hidden" name="hidden_id" id="hidden_id" />
+            <input type="submit" name="action_button" id="action_button" class="btn btn-warning" value="Thêm" />
+           </div>
+         </form>
+        </div>
+     </div>
+    </div>
+</div>
+
+<div id="confirmModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>
+                <h2 class="modal-title">Xác nhận xóa ?</h2>
+            </div>
+            <div class="modal-body">
+                <h4 id="confirmtext" align="center" style="margin:0;">Bạn chắc chắn muốn xóa hành khách này ?</h4>
+                <span id="result">
+
+                </span>
+            </div>
+            <div class="modal-footer">
+             <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="confirmModal-del" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>
+                <h2 class="modal-title">Xác nhận xóa ?</h2>
+            </div>
+            <div class="modal-body">
+                <h4 id="confirmtext" align="center" style="margin:0;">Bạn chắc chắn muốn xóa không ?</h4>
+                <span id="result">
+
+                </span>
+            </div>
+            <div class="modal-footer">
+             <button type="button" name="ok_button" id="ok_button-del" class="btn btn-danger">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Modal Xin làm  HDV -->
+  <div class="modal fade" id="hdvModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -117,6 +280,8 @@
               </div>
           </div><br>
 
+              <!-- Cart -->
+             
           <!--END Login/Logout-->
     <div class="top-menu">
 
@@ -139,9 +304,9 @@
               <li><a href="{{route('hotels')}}">Khách Sạn</a></li>
                               <li><a href="{{route('nhahang')}}">Nhà Hàng</a></li>
                               <li><a href="{{route('diadanh')}}">Địa Danh</a></li>
-              <li><a href="{{route('services')}}">Services</a></li>
+              <li><a href="{{route('services')}}">Dịch vụ</a></li>
               
-              <li><a href="{{route('about')}}">About</a></li>
+              <li><a href="{{route('about')}}">Giới thiệu</a></li>
 
                               @if(Auth::guard('web')->check())
                               <li class="has-dropdown">
@@ -153,7 +318,7 @@
                                             <i class="fa fa-info"></i>&nbsp;Tài khoản
                                         </a>
                                       </li><hr>           
-                @if(Auth::user()->role == 1)
+                @if(Auth::user()->role == 1|| Auth::user()->role == 3)
                                         <li>
                                           <a class="dropdown-item" href="{{route('inhaiquan')}}">
                                             <i class="fa fa-print"></i>&nbsp;In hải quan

@@ -9,8 +9,8 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-				   					<h2>by colorlib.com</h2>
-				   					<h1>About us</h1>
+				   					<h2>VINATOUR</h2>
+				   					<h1>Xin tự giới thiệu</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -27,108 +27,82 @@
 						<div class="col-one-forth aside-stretch animate-box">
 							<div class="row">
 								<div class="col-md-12 about">
-									<h2>About</h2>
+									<h2>VỀ CHÚNG TÔI</h2>
 
-									<ul>
-										<li><a href="{{route('about')}}">Sứ Mệnh</a></li>
-										<li><a href="{{route('lienhe')}}">Connect with us</a></li>
-										<li><a href="{{route('about')}}">Faqs</a></li>
-										<li><a href="#">Career</a></li>
-									</ul>
+								
 								</div>
 							</div>
 						</div>
 						<div class="col-three-forth animate-box">
-							<h2>Sứ Mệnh</h2>
-							<div class="row">
-								<div class="col-md-12">
 
-									<p>Thỏa mãn giá trị đời sống tinh thần và nâng cao chất lượng cuộc sống của khách hàng là nền tảng những giá trị cốt lõi đối với VinaTour.  Những giá trị thiết thực này sẽ luôn là động lực định hướng  cho toàn bộ hoạt động đổi mới, sáng tạo và phát triển sản phẩm dịch vụ- du lịch với số lượng và chất lượng dịch vụ tốt nhất. VinaTour luôn đặt mục tiêu phấn đấu trở thành một công ty dịch vụ du lịch lữ hành có chất lượng và uy tín hàng đầu Việt Nam.</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+                            <h2>Sứ Mệnh</h2>
+                            <div class="row animate-box" >
+                                <div class="col-md-12">
 
-									<p>Nhiệm vụ: đổi mới sáng tạo và phát triển sản phẩm dịch vụ du lịch có chất lượng tốt nhằm đáp ứng nhu cầu đa dạng và phong phú của khách hàng trong nước và quốc tế.</p>
+                                    <p>Thỏa mãn giá trị đời sống tinh thần và nâng cao chất lượng cuộc sống của khách hàng là nền tảng những giá trị cốt lõi đối với VinaTour.  Những giá trị thiết thực này sẽ luôn là động lực định hướng  cho toàn bộ hoạt động đổi mới, sáng tạo và phát triển sản phẩm dịch vụ- du lịch với số lượng và chất lượng dịch vụ tốt nhất. VinaTour luôn đặt mục tiêu phấn đấu trở thành một công ty dịch vụ du lịch lữ hành có chất lượng và uy tín hàng đầu Việt Nam.</p>
 
-									<p>Trách nhiệm: Đảm bảo những giá trị lợi ích của khách hàng cũng như thỏa mãn nhu cầu về an toàn trong ngành dịch vụ du lịch khi khách hàng sử dụng sản phẩm của VinaTour.</p>
+                                    <p>Nhiệm vụ: Đổi mới sáng tạo và phát triển sản phẩm dịch vụ du lịch có chất lượng tốt nhằm đáp ứng nhu cầu đa dạng và phong phú của khách hàng trong nước và quốc tế.</p>
 
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                                    <p>Trách nhiệm: Đảm bảo những giá trị lợi ích của khách hàng cũng như thỏa mãn nhu cầu về an toàn trong ngành dịch vụ du lịch khi khách hàng sử dụng sản phẩm của VinaTour.</p>
 
-		<!-- <div id="colorlib-testimony" class="colorlib-light-grey">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-						<h2>Our Satisfied Guests says</h2>
-						<p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 animate-box">
-						<div class="owl-carousel2">
-							<div class="item">
-								<div class="testimony text-center">
-									<span class="img-user" style="background-image: url(images/person1.jpg);"></span>
-									<span class="user">Alysha Myers</span>
-									<small>Miami Florida, USA</small>
-									<blockquote>
-										<p>" A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-									</blockquote>
-								</div>
-							</div>
-							<div class="item">
-								<div class="testimony text-center">
-									<span class="img-user" style="background-image: url(images/person2.jpg);"></span>
-									<span class="user">James Fisher</span>
-									<small>New York, USA</small>
-									<blockquote>
-										<p>One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-									</blockquote>
-								</div>
-							</div>
-							<div class="item">
-								<div class="testimony text-center">
-									<span class="img-user" style="background-image: url(images/person3.jpg);"></span>
-									<span class="user">Jacob Webb</span>
-									<small>Athens, Greece</small>
-									<blockquote>
-										<p>Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
-									</blockquote>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
-
-<hr>
-	<div class="container">
-    <h1 class="page-header ">Bình Luận</h1>
-    @if (session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
-        </div>
-    @endif
-    <div class="row">
-        <div class="col-md-9 ">
+                                </div>
+                            </div>
+            <hr>
+      
+                    <h1 class="page-header ">Khách hàng nói gì về chúng tôi</h1>
+         @if(Auth::guard('web')->check())
+        <div class="col-md-9 animate-box">
             <div class="panel panel-default">
-                <div class="panel-body">
+                <div class="panel-body animate-box">
                     <form id="postForm">
-                    	@csrf
+                        @csrf
                         <textarea class="form-control" name="post" id="post" placeholder="Hãy viết ra suy nghĩ của bạn!!"></textarea>
                         <button type="button" id="postBtn" class="btn btn-primary" style="margin-top:5px;"> Đăng</button>
                     </form>
                 </div>
-            </div>
-            <div id="postList"></div>
+            </div> 
+            @else <div class="alert alert-warning">
+            Để thực hiện đánh giá , quý khách vui lòng <a id="dangnhapbinhluan"><b>đăng nhập</b></a> !
+        </div>
+            @endif
+                <div class="animate-box" style="overflow-y:scroll;height:480px;">
+            <div id="postList"></div></div>
+        </div>
+
+
+
+
+
         </div>
     </div>
 </div>
+<!-------------------------------->
+
+
+
+					
+						</div>
+					</div>
+				</div>
+
+
+         
+
+
+  
+			</div>
+		</div>
+
+
  <script type="text/javascript">
         $(document).ready(function(){
+
+
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -152,8 +126,9 @@
                         data: postForm,
                         dataType: 'json',
                         success: function(){
+                             $('#postForm')[0].reset();
                             showPost();
-                            $('#postForm')[0].reset();
+                           
                         },
                     });
                 }
@@ -169,11 +144,207 @@
                     getComment(id);
                 }
             });
+             $(document).on('click', '#xoaykien', function(){
+                 var id = $(this).attr('value');
+                                  $('#confirmModal-del').modal('show');
+               
+                         $('#ok_button-del').click(function(){
+                          $.ajax({
+                        type: 'POST',
+                        url: 'xoa_ykien/'+id,
+                        data: {id:id},
+                        dataType: 'json',
+                        success: function(kq){
+                                       if(kq.success){
+                                            Swal.fire({         
+                                type: 'success',
+                                text: 'Đã xóa phản hồi!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                                 setTimeout(function(){
+                                    showPost();
+                                 $('#confirmModal-del').modal('hide');
+                                                    }, 1000);
+                                
+                           }
+                           
+                        }
+                    });
+                                        });
+              
+                
+            });
+                $(document).on('click', '#xoaphanhoi', function(){
+                 var id = $(this).attr('value');
+              $('#confirmModal-del').modal('show');
+               
+                         $('#ok_button-del').click(function(){
+                         $.ajax({
+                        type: 'POST',
+                        url: 'xoa_phanhoi/'+id,
+                        data: {id:id},
+                        dataType: 'json',
+                        success: function(kq){
+                             if(kq.success){
+                                            Swal.fire({         
+                                type: 'success',
+                                text: 'Đã xóa phản hồi!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+                                 setTimeout(function(){
+                                    showPost();
+                                 $('#confirmModal-del').modal('hide');
+                                                    }, 1000);
+                                
+                           }
+                        }
+                                     });
+                                        });
+            });
+
+
+
+                  $(document).on('click', '#suaykien', function(){
+                        var id = $(this).attr('value');
+              
+                      
+                         $('#commentedit').empty();
+                            $.ajax({
+                        type: 'GET',
+                        url: 'sua_ykien/'+id,
+                      
+                        dataType: 'json',
+                        success: function(kq){
+                              $('#action').val("YKien");
+                            $('#commentedit').html(kq.item.post);
+                             $('#hidden_id').val(kq.item.id);
+                        },
+                    });
+                    $('#EditComment').modal('show');
+                
+                
+            });
+                  $(document).on('click', '#suaphanhoi', function(){
+                        var id = $(this).attr('value');
+              
+                        
+                         $('#commentedit').empty();
+                            $.ajax({
+                        type: 'GET',
+                        url: 'sua_phanhoi/'+id,
+                      
+                        dataType: 'json',
+                        success: function(kq){
+                            $('#action').val("PhanHoi");
+                            $('#commentedit').html(kq.item.comment);
+                                $('#hidden_id').val(kq.item.id);
+                        },
+                    });
+                    $('#EditComment').modal('show');
+                
+                
+            });
+                    $('#sample_form_edit').on('submit', function(event){
+  event.preventDefault();
+  if($('#action').val() == 'YKien')
+  {
+   $.ajax({
+    url:'save_ykien',
+    method:"POST",
+    data: new FormData(this),
+    contentType: false,
+    cache:false,
+    processData: false,
+    dataType:"json",
+    success:function(data)
+    {
+   if(data.errors) Swal.fire({         
+                                type: 'error',
+                                text: 'Bạn chưa nhập nội dung!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+  
+     if(data.success)
+     {  
+                        Swal.fire({
+                                type: 'success',
+                                text: 'Đã sửa ý kiến!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+     
+        
+      setTimeout(function(){
+         $('#sample_form_edit')[0].reset();
+        $('#EditComment').modal('hide');
+        showPost();
+   }, 1000);
+
+     }
+    }
+   })
+  }
+
+  if($('#action').val() == "PhanHoi")
+  {
+ $.ajax({
+    url:'save_phanhoi',
+    method:"POST",
+    data: new FormData(this),
+    contentType: false,
+    cache:false,
+    processData: false,
+    dataType:"json",
+    success:function(data)
+    {
+    
+     if(data.errors) Swal.fire({         
+                                type: 'error',
+                                text: 'Bạn chưa nhập nội dung!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+  
+     if(data.success)
+     {
+                        Swal.fire({
+                                type: 'success',
+                                text: 'Đã sửa phản hồi!',
+                                showConfirmButton: false,
+                                timer: 1000
+                            })
+     
+
+      setTimeout(function(){
+         $('#sample_form_edit')[0].reset();
+         
+        $('#EditComment').modal('hide');
+        showPost();
+   }, 1000);
+
+     }
+     
+    }
+   })
+  }
+ });
+
+  $(document).on('click', '#dangnhapbinhluan', function(){
+           
+                    $('#loginModal').modal('show');
+                
+                
+            });
 
             $(document).on('click', '.submitComment', function(){
                 var id = $(this).val();
-                var post=$('commenttext').val();
-                if($('#commenttext').val()==''){
+                var post=$('#commenttext'+id).val();
+              
+                if(post==''){
+
                     alert('Please write a Comment First!');
                 }
                 else{
@@ -183,8 +354,9 @@
                         url: 'writecomment',
                         data: commentForm,
                         success: function(){
+                              $('#commentForm_'+id)[0].reset();
                             getComment(id);
-                            $('#commentForm_'+id)[0].reset();
+                          
                         },
                     });
                 }
@@ -192,8 +364,7 @@
             });
          
         });
-
-        function showPost(){
+                function showPost(){
             $.ajax({
                 url: 'show',
                 success: function(data){
@@ -211,6 +382,7 @@
                 }
             });
         }
+    
     </script>
 
 		@endsection

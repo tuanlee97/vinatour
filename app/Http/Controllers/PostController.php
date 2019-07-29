@@ -13,7 +13,7 @@ class PostController extends Controller
     public function getPost(){
         $posts = DB::table('posts')
                 ->join('users', 'users.id', '=', 'posts.userid')
-                ->select('posts.id as postid', 'posts.*', 'users.id as userid', 'users.*')
+                ->select('posts.id as postid', 'posts.*', 'users.id as userid', 'users.role','users.name')
                 ->orderBy('posts.created_at', 'desc')
                 ->get();
   
@@ -45,7 +45,7 @@ class PostController extends Controller
         if ($request->ajax()){
            $comments = DB::table('comments')
                     ->join('users', 'users.id', '=', 'comments.userid')
-                    ->select('comments.id as commentid', 'comments.*', 'users.id as userid', 'users.*')
+                    ->select('comments.id as commentid', 'comments.*', 'users.id as userid', 'users.role','users.name')
                     ->where('postid', '=', $request->id)
                     ->get();
             
@@ -60,7 +60,7 @@ class PostController extends Controller
 
             $comment->userid = $user->id;
             $comment->postid = $request->postid;
-            $comment->comment = $request->commenttext;
+            $comment->comment = $request['commenttext'.$request->postid];
 
             $comment->save();
 
