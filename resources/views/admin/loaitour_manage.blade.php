@@ -14,9 +14,10 @@
               <table class="table table-bordered" id="dataTableLT" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th width="10%">Mã loại tour</th>
-                    <th width="20%">Tênloại tour</th>
-                    <th width="20%">Thao tác</th>
+                    <th >Tên loại tour</th>
+                    <th>Số ngày</th>
+                    <th>Số đêm</th>
+                    <th >Thao tác</th>
                   </tr>
                 </thead>
 
@@ -51,6 +52,18 @@
             <label class="control-label col-md-4">Tên Loại tour : </label>
             <div class="col-md-8">
              <input type="text" name="tenloai" id="tenloai"class="form-control" />
+            </div>
+           </div>
+           <div class="form-group">
+            <label class="control-label col-md-4">Số ngày : </label>
+            <div class="col-md-8">
+             <input type="text" name="songay" id="songay"class="form-control" />
+            </div>
+           </div>
+           <div class="form-group">
+            <label class="control-label col-md-4">Số đêm : </label>
+            <div class="col-md-8">
+             <input type="text" name="sodem" id="sodem"class="form-control" />
             </div>
            </div>
            <br />
@@ -94,8 +107,9 @@ $(document).ready(function(){
    url: "{{ route('loaitour.index') }}",
   },
   columns:[
-   { data: 'maloai'},
    { data: 'tenloai'},
+   { data: 'songay'},
+   { data: 'sodem'},
    {
     data: 'action',
     name: 'action',
@@ -108,6 +122,8 @@ $(document).ready(function(){
 
    $('.modal-title').text("Add New Record");
    $('#tenloai').val('');
+   $('#songay').val('');
+   $('#sodem').val('');
       $('#action_button').val("Add");
       $('#action').val("Add");
        $('#form_result').html('');
@@ -127,7 +143,7 @@ $(document).ready(function(){
     processData: false,
     dataType:"json",
     success:function(data)
-    {
+    { 
      var html = '';
      if(data.errors)
      {
@@ -137,6 +153,11 @@ $(document).ready(function(){
        html += '<p>' + data.errors[count] + '</p>';
       }
       html += '</div>';
+     }
+         if(data.ngay)
+     {
+      html = '<div class="alert alert-danger">'+ data.ngay + '</div>';
+ 
      }
      if(data.success)
      {
@@ -166,6 +187,7 @@ $(document).ready(function(){
     dataType:"json",
     success:function(data)
     {
+      
      var html = '';
      if(data.errors)
      {
@@ -176,17 +198,29 @@ $(document).ready(function(){
       }
       html += '</div>';
      }
+      if(data.ngay)
+     {
+      html = '<div class="alert alert-danger">'+ data.ngay + '</div>';
+ 
+     }
+      if(data.ten)
+     {
+      html = '<div class="alert alert-danger">'+ data.ten + '</div>';
+ 
+     }
      if(data.success)
      {
       html = '<div class="alert alert-success">' + data.success + '</div>';
       $('#sample_form')[0].reset();
 
       $('#dataTableLT').DataTable().ajax.reload();
-     }$('#form_result').html(html);
-     setTimeout(function(){
+           setTimeout(function(){
 
        $('#formModal').modal('hide');
   }, 1000);
+     }
+     $('#form_result').html(html);
+
 
     }
    });
@@ -201,8 +235,9 @@ $(document).ready(function(){
    dataType:"json",
    success:function(html){
     $('#tenloai').val(html.data.tenloai);
-
-    $('#hidden_id').val(html.data.maloai);
+    $('#songay').val(html.data.songay);
+    $('#sodem').val(html.data.sodem);
+    $('#hidden_id').val(html.data.id);
       $('.modal-title').text("Edit New Record");
     $('#action_button').val("Sửa");
     $('#action').val("Edit");

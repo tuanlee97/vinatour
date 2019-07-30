@@ -70,23 +70,31 @@
          <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
           @csrf
 
-          <div class="row"><div class="col-md-8">
+          <div class="row"><div class="col-md-4">
            <label>Tên Tour : </label>
              <input type="text" name="tentour" id="tentour" placeholder="Nhập tên tour..." class="form-control" />
             </div>
-
             <div class="col-md-2">
-              <label>Số ngày ( <code>tối đa:10</code> )</label>
-              <input type="number" name="songay"  id="songay" value="1" min="0" max="10" step="1"/>
-
+           <label>Loại Tour : </label>
+                  <select class="form-control" name="loaitour" id="loaitour" title="Chọn điểm xuất phát">
+                 <option value="">-Chọn loại tour-</option>
+               @foreach($loaitour as $lt)
+                   <option value="{{$lt->id}}">{{$lt->tenloai}}</option>
+               @endforeach
+             </select>
             </div>
-
-            <div class="col-md-2">
-              <label>Số đêm ( <code>tối đa:10</code> )</label>
-              <input type="number" name="sodem"  id="sodem" value="1" min="0" max="10" step="1"/>
-
+       <div class="col-md-2">
+           <label>Giá người lớn : </label>
+             <input type="text" name="gianguoilon" id="gianguoilon" placeholder="Giá người lớn..." class="form-control" />
             </div>
-
+ <div class="col-md-2">
+           <label>Giá trẻ em : </label>
+             <input type="text" name="giatreem" id="giatreem" placeholder="Giá trẻ em..." class="form-control" />
+            </div>
+           <div class="col-md-2">
+           <label>Giá em bé : </label>
+             <input type="text" name="giaembe" id="giaembe" placeholder="Giá em bé..." class="form-control" />
+            </div>  
            </div>
   <br>
             <div class="row">
@@ -240,8 +248,9 @@ $(document).ready(function(){
   $('#action').val("Add");
   $('#tentour').val("");
   $('#loaitour').val("");
-  $('#songay').val("1");
-  $('#sodem').val("1");
+  $('#gianguoilon').val("");
+  $('#giaembe').val("");
+  $('#giatreem').val("");
   $('#xuatphat').val("");
   $('#store_image').val("");
   $('#editor1').val('');
@@ -343,9 +352,12 @@ $(document).ready(function(){
       $('#sample_form')[0].reset();
 
       $('#tentour').val(html.data.tentour);
-      $('#songay').val(html.data.songay);
-      $('#sodem').val(html.data.sodem);
+     
       $('#khuvuc').val(html.data.in_out);
+      $('#gianguoilon').val(html.data.gianguoilon);
+       $('#giaembe').val(html.data.giaembe);
+        $('#giatreem').val(html.data.giatreem);
+      $('#loaitour').val(html.data.loaitour_id);
       $('#xuatphat').val(html.data.diemxuatphat);
     for (var i = 0; i < 4; i++) {
       var idtaget = '#taget'+i;
@@ -369,7 +381,7 @@ $('#diemden').append('<option selected="selected" value="'+value.id+'">'+value.t
     });
         CKEDITOR.instances['editor1'].setData(html.data.noidung);//////////////
     $('#editor1').val(html.data.noidung);/////
-    $('#loaitour').val(html.data.loaitour);
+   
     $('#store_image').html("<img src={{ URL::to('/') }}/admin/images/tour/" + html.data.hinhanh + " width='300' class='img-thumbnail' />");
     $('#store_image').append("<input type='hidden' name='hidden_image' value='"+html.data.hinhanh+"' />");
     $('#hidden_id').val(html.data.id);
@@ -405,13 +417,6 @@ $('#diemden').append('<option selected="selected" value="'+value.id+'">'+value.t
    })
   });
 
-$('#songay').on('change',function(){
-  var ngay = $('#songay').val();
-  var dem = $('#sodem').val();
-  var chenhlech = ngay - dem ;
-if(chenhlech>1) $('#sodem').val(ngay-1);
-if(chenhlech<0) $('#sodem').val(1);
-});
 
 
 
@@ -424,7 +429,7 @@ if(chenhlech<0) $('#sodem').val(1);
    $('select[name="diadanh[]"]').empty();
    $('select[name="khachsan[]"]').empty();
    $('select[name="nhahang[]"]').empty();
-   var khuvuc = $(this).val();
+   var khuvuc = this.value;
 
    if(khuvuc){
      $.ajax({

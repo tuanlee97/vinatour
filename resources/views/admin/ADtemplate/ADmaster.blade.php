@@ -77,6 +77,7 @@
 
             <a class="collapse-item" href="{{route('tour.index')}}">Tour</a>
           <a class="collapse-item" href="{{route('tuchon.index')}}">Tự chọn Tour</a>
+          <a class="collapse-item" href="{{route('loaitour.index')}}">Loại Tour</a>
           </div>
         </div>
       </li>

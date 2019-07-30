@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tinh;
 use App\Models\QuocGia;
 use Validator;
-// use App\Models\LoaiTour;
+use App\Models\LoaiTour;
 use App\Models\DiaDanh;
 use App\Models\NhaHang;
 use App\Models\KhachSan;
@@ -23,7 +23,7 @@ class TourController extends Controller
 
     {       $quocgia=QuocGia::all();
             $tinh=Tinh::all();
-            // $loaitour=LoaiTour::all();
+            $loaitour=LoaiTour::all();
             $diadanh=DiaDanh::all();
             $nhahang=NhaHang::all();
             $khachsan=KhachSan::all();
@@ -40,7 +40,7 @@ class TourController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('admin.tour_manage',['quocgia'=>$quocgia,'tinh'=>$tinh,'diadanh'=>$diadanh,'nhahang'=>$nhahang,'khachsan'=>$khachsan]);
+        return view('admin.tour_manage',['quocgia'=>$quocgia,'tinh'=>$tinh,'diadanh'=>$diadanh,'nhahang'=>$nhahang,'khachsan'=>$khachsan,'loaitour'=>$loaitour]);
     }
 
     /**
@@ -111,8 +111,7 @@ class TourController extends Controller
      'nhahang' => 'required',
      'nhahang' => 'required',
      'khachsan' => 'required',
-     'sodem' => 'required',
-     'songay' => 'required',
+      'loaitour' => 'required',
      'editor1' => 'required',
      'khuvuc' => 'required',
      'image' => 'required|image|max:2048'],
@@ -125,8 +124,7 @@ class TourController extends Controller
       'diadanh.required'=>'Bạn chưa chọn địa danh',
       'nhahang.required'=>'Bạn chưa chọn nhà hàng',
       'khachsan.required'=>'Bạn chưa chọn khách sạn',
-      'sodem.required'=>'Bạn chưa chọn số đêm',
-      'songay.required'=>'Bạn chưa chọn số ngày',
+      'loaitour.required'=>'Bạn chưa chọn loại tour',
       'editor1.required'=>'Bạn chưa nhập nội dung',
       'image.required'=>'Bạn chưa chọn hình ảnh',
       'image.image'=>'Sai định dạng ảnh',
@@ -145,14 +143,17 @@ class TourController extends Controller
      $form_data = array(
           'in_out'  => $request->khuvuc,
          'tentour'        =>  $request->tentour,
-         'songay'             =>  $request->songay,
-         'sodem'             =>  $request->sodem,
+          'loaitour_id'        =>  $request->loaitour,
          'diemxuatphat'          => $request->xuatphat,
          'noidung'        => $request->editor1,
          'hinhanh'      => $new_name,
+         'gianguoilon'      => $request->gianguoilon,
+         'giatreem'      => $request->giatreem,
+         'giaembe'      => $request->giaembe,
+
         
      );
-
+     
       $tour =  Tour::create($form_data);
         foreach ($request->diemden as $diemden) {
           $tinh_tour_data = array(
@@ -246,8 +247,7 @@ class TourController extends Controller
           'diadanh' => 'required',
           'nhahang' => 'required',
           'khachsan' => 'required',
-          'sodem' => 'required',
-          'songay' => 'required',
+          'loaitour' => 'required',
           'editor1' => 'required',
           'image' => 'required|image|max:2048'],
 
@@ -258,8 +258,7 @@ class TourController extends Controller
            'diadanh.required'=>'Bạn chưa chọn địa danh',
            'nhahang.required'=>'Bạn chưa chọn nhà hàng',
            'khachsan.required'=>'Bạn chưa chọn khách sạn',
-           'sodem.required'=>'Bạn chưa chọn số đêm',
-           'songay.required'=>'Bạn chưa chọn số ngày',
+            'loaitour.required'=>'Bạn chưa chọn loại tour',
            'editor1.required'=>'Bạn chưa nhập nội dung',
            'image.required'=>'Bạn chưa chọn hình ảnh',
            'image.image'=>'Sai định dạng ảnh',
@@ -275,11 +274,13 @@ class TourController extends Controller
           $form_data = array(
             'in_out'  => $request->khuvuc,
            'tentour'        =>  $request->tentour,
-           'songay'             =>  $request->songay,
-           'sodem'             =>  $request->sodem,
+            'loaitour_id'        =>  $request->loaitour,
            'diemxuatphat'          => $request->xuatphat,
            'noidung'        => $request->editor1,
-            'hinhanh'            =>   $image_name
+            'hinhanh'            =>   $image_name,
+             'gianguoilon'      => $request->gianguoilon,
+         'giatreem'      => $request->giatreem,
+         'giaembe'      => $request->giaembe,
           );
           Tour::whereId($request->hidden_id)->update($form_data);
           $tour=Tour::findOrFail($request->hidden_id)->id;
@@ -333,8 +334,7 @@ class TourController extends Controller
           'diadanh' => 'required',
           'nhahang' => 'required',
           'khachsan' => 'required',
-          'sodem' => 'required',
-          'songay' => 'required',
+          'loaitour' => 'required',
           'editor1' => 'required',
           ],
 
@@ -345,8 +345,7 @@ class TourController extends Controller
            'diadanh.required'=>'Bạn chưa chọn địa danh',
            'nhahang.required'=>'Bạn chưa chọn nhà hàng',
            'khachsan.required'=>'Bạn chưa chọn khách sạn',
-           'sodem.required'=>'Bạn chưa chọn số đêm',
-           'songay.required'=>'Bạn chưa chọn số ngày',
+           'loaitour.required'=>'Bạn chưa chọn loại tour',
 
            'editor1.required'=>'Bạn chưa nhập nội dung',
 
@@ -359,11 +358,12 @@ class TourController extends Controller
           $form_data = array(
             'in_out'  => $request->khuvuc,
            'tentour'        =>  $request->tentour,
-           'songay'             =>  $request->songay,
-           'sodem'             =>  $request->sodem,
+            'loaitour_id'        =>  $request->loaitour,
            'diemxuatphat'          => $request->xuatphat,
            'noidung'        => $request->editor1,
-
+            'gianguoilon'      => $request->gianguoilon,
+         'giatreem'      => $request->giatreem,
+         'giaembe'      => $request->giaembe,
 
           );
           Tour::whereId($request->hidden_id)->update($form_data);

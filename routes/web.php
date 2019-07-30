@@ -21,6 +21,8 @@ Route::post('writecomment', 'PostController@makeComment');
 
 //
 Route::post('posts', 'PageController@postPost')->name('posts.post');
+Route::post('postCheckout', 'DatTourController@postCheckout')->name('postCheckout');
+
 Route::get('tours',[
 'as'=>'tours',
 'uses'=>'PageController@gettours'
@@ -76,6 +78,10 @@ Route::get('about',[
 Route::get('chitiettour/{id}',[
 'as'=>'chitiettour',
 'uses'=>'PageController@getchitiettour'
+]);
+Route::get('booking/{id}',[
+'as'=>'booking',
+'uses'=>'PageController@getBooking' 
 ]);
 Route::get('ctnhahang/{id}',[
 'as'=>'ctnhahang',
@@ -270,6 +276,10 @@ Route::get('getKhachsan/{id}','TourController@getKhachsan');
     Route::resource('tour', 'TourController');
     Route::post('tour/update', 'TourController@update')->name('tour.update');
     Route::get('tour/destroy/{id}', 'TourController@destroy');
+
+     Route::resource('loaitour', 'LoaiTourController');
+    Route::post('loaitour/update', 'LoaiTourController@update')->name('loaitour.update');
+    Route::get('loaitour/destroy/{id}', 'LoaiTourController@destroy');
 
     Route::resource('yeucau', 'YeuCauController');
     Route::get('yeucau/update/{id}', 'YeuCauController@update');

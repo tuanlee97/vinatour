@@ -1,4 +1,5 @@
 <!--Model sửa Comment-->
+
 <div id="EditComment" class="modal fade" role="dialog">
  <div class="modal-dialog">
   <div class="modal-content">
@@ -282,6 +283,7 @@
 
               <!-- Cart -->
              
+             <!--endcart-->
           <!--END Login/Logout-->
     <div class="top-menu">
 

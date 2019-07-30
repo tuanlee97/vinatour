@@ -29,6 +29,7 @@
 		<div class="colorlib-wrap">
 <div class="colorlib-wrap">
 			<div class="container">
+        
 				<div class="row">
 					<div class="col-md-9">
 						<div class="row">
@@ -37,6 +38,7 @@
 									<div class="col-md-12 col-md-offset-0 heading2 animate-box">
 										<h2>{{$tour->tentour}}</h2>
 										 <input type="hidden" name="idtour" id="idtour"  value="{{ $tour->id }}">
+                 
 									</div>
 									<div class="row">
 										<div class="col-md-12 animate-box">
@@ -59,6 +61,24 @@
 					</div>
 
 
+          <!-- SIDEBAR-->
+          @if(!Auth::guard('web')->check())
+          <div class="col-md-3">
+            <div class="sidebar-wrap">
+             
+           
+              <div class="side search-wrap animate-box text-center">
+                <h3 class="sidebar-heading">XÁCH BALO VÀ ĐI</h3>
+                        <a href="{{route('booking',$tour->id)}}"  class="btn btn-success btn-sm" >Đặt tour ngay</a>
+                         <!--  <input type="button" name="submit" id="submit" value="Mua tour" class="btn btn-primary btn-block"> -->
+            
+         
+          </div>
+          
+          
+            </div>
+          </div>
+          @endif
 	 @if(Auth::guard('web')->check())
         <!-- SIDEBAR-->
           <div class="col-md-3">
@@ -66,7 +86,16 @@
               <div class="side animate-box">
                 <div class="row">
                   <div class="col-md-12">
-
+                           <div class="sidebar-wrap">
+              <div class="side search-wrap animate-box text-center">
+                <h3 class="sidebar-heading">XÁCH BALO VÀ ĐI</h3>
+                           <a href="{{route('booking',$tour->id)}}"  class="btn btn-success btn-sm" >Đặt tour ngay</a>
+                         <!--  <input type="button" name="submit" id="submit" value="Mua tour" class="btn btn-primary btn-block"> -->
+            
+              </div>
+         
+          
+            </div>
                     <h3 class="sidebar-heading">Đánh giá tour này</h3>
                     @if($rating==null)
 
@@ -121,20 +150,7 @@
                     @endif
                     </br>
                   </div>
-          <!--MUA TOUR-->
-          <div class="col-md-12">
-            <div class="sidebar-wrap">
-              <div class="side search-wrap animate-box">
-                <h3 class="sidebar-heading">XÁCH BALO VÀ ĐI</h3>
-                          <a href="{{route('getmuatour')}}">MUA DI CHO CHI</a>
-                         <!--  <input type="button" name="submit" id="submit" value="Mua tour" class="btn btn-primary btn-block"> -->
-            
-              </div>
-         
-          
-            </div>
-          </div>
-          <!--END MUA TOUR -->
+ 
                 </div>
               </div>
             
@@ -466,14 +482,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-      $(document).on('click', '#dangnhapbinhluan', function(){
-           
-                    $('#loginModal').modal('show');
-                
-                
-            });
-
-
+      
 </script>
   <script src="js/app.js"></script>
 

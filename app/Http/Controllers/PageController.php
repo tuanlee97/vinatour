@@ -180,6 +180,9 @@ class PageController extends Controller
 
         return redirect()->back();
     }
-
+public function getBooking(Request $req){
+  $tour = Tour::Where('id',$req->id)->first();
+  return view('page.dattour',compact('tour'));
+}
 
 }

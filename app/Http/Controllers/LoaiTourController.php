@@ -22,9 +22,9 @@ class LoaiTourController extends Controller
 
             return datatables()->of(LoaiTour::latest()->get())
                     ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->maloai.'" class="edit btn btn-primary btn-sm">Sửa</button>';
+                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Sửa</button>';
                         $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->maloai.'" class="delete btn btn-danger btn-sm">Xóa</button>';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Xóa</button>';
                         return $button;
                     })
                     ->rawColumns(['action'])
@@ -51,28 +51,42 @@ class LoaiTourController extends Controller
      */
     public function store(Request $request)
     {
-      $rules = array(
-          'tenloai'    =>  'required',
+    
+      $error = Validator::make($request->all(), [
+           'tenloai'    =>  'required|unique:loaitour,tenloai',
+            'songay'    =>  'required',
+            'sodem'    =>  'required',
+        ],
+        [
+                'tenloai.required'=>'Bạn chưa nhập tên loại',
+       'tenloai.unique'=>'Tên đã tồn tại',
+          'songay.required'=>'Bạn chưa nhập số ngày',
+          'sodem.required'=>'Bạn chưa nhập số đêm',
+        
 
-      );
 
-      $error = Validator::make($request->all(), $rules);
+        ]);
 
       if($error->fails())
       {
           return response()->json(['errors' => $error->errors()->all()]);
       }
-
-
-
-      $form_data = array(
+      if( $request->songay < 1 ) return response()->json(['ngay' => 'Số ngày thấp nhất là 1']);
+    if( $request->sodem < 0 ) return response()->json(['ngay' => 'Số đêm thấp nhất là 0']);
+else{
+            
+     $form_data = array(
           'tenloai'        =>  $request->tenloai,
-
+          'songay'    =>  $request->songay,
+            'sodem'    =>  $request->sodem,
       );
 
       LoaiTour::create($form_data);
 
       return response()->json(['success' => 'Data Added successfully.']);
+}
+
+     
     }
 
     /**
@@ -96,7 +110,7 @@ class LoaiTourController extends Controller
     {
      if(request()->ajax())
         {
-            $data = LoaiTour::where('maloai', $id)->firstOrFail();
+            $data = LoaiTour::findOrFail($id);
             return response()->json(['data' => $data]);
         }
     }
@@ -109,26 +123,49 @@ class LoaiTourController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id="")
-    {
-        $rules = array(
-                 'tenloai'    =>  'required',
-            );
+    {   $other = LoaiTour::where('id','<>',$request->hidden_id)->get();
+    foreach ($other as $key => $value) {
+       if($request->tenloai == $value->tenloai )
+        return response()->json(['ten' => 'Tên đã tồn tại']);
+    }
+        
+      
 
-            $error = Validator::make($request->all(), $rules);
+            $error = Validator::make($request->all(), [
+           'tenloai'    =>  'required',
+            'songay'    =>  'required',
+            'sodem'    =>  'required',
+        ],
+        [
+                'tenloai.required'=>'Bạn chưa nhập tên loại',
+       
+          'songay.required'=>'Bạn chưa nhập số ngày',
+          'sodem.required'=>'Bạn chưa nhập số đêm',
+      
+
+
+        ]);
 
             if($error->fails())
             {
                 return response()->json(['errors' => $error->errors()->all()]);
             }
+             if( $request->songay < 1 ) return response()->json(['ngay' => 'Số ngày thấp nhất là 1']);
+    if( $request->sodem < 0 ) return response()->json(['ngay' => 'Số đêm thấp nhất là 0']);
 
+else{
 
-        $form_data = array(
-            'tenloai'        =>  $request->tenloai
+    $form_data = array(
+            'tenloai'        =>  $request->tenloai,
+              'songay'    =>  $request->songay,
+            'sodem'    =>  $request->sodem,
 
         );
-        LoaiTour::where('maloai', $request->hidden_id)->update($form_data);
+        LoaiTour::whereId($request->hidden_id)->update($form_data);
 
         return response()->json(['success' => 'Data is successfully updated']);
+}
+        
     }
 
     /**
@@ -138,8 +175,8 @@ class LoaiTourController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-      $tour = Tour::where('loaitour',$id);
+    { 
+      $tour = Tour::where('loaitour_id',$id)->first();
       if($tour)
       return response()->json(['errors' => 'LỖI : Loại tour này đang được khai thác']);
       else {

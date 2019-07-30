@@ -9,7 +9,7 @@ class Tour extends Model
    public $table ='tour';
      use Rateable;
      protected $fillable = [
-       'in_out', 'tentour','songay','sodem','diemxuatphat','noidung','hinhanh',
+       'in_out','loaitour_id', 'tentour','diemxuatphat','noidung','hinhanh','gianguoilon','giatreem','giaembe'
     ];
        public function comments(){
       return $this->hasMany('App\Models\BinhLuan');

@@ -2,197 +2,92 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\Tinh;
-use App\Models\QuocGia;
+use Mail;
+use App\Models\Tour;
+use App\Models\DonDatTour;
+use App\Models\ChiTietDatTour;
 use Validator;
-use App\Models\DiaDanh;
+
+use Illuminate\Support\Facades\Auth;
 class DatTourController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-          $tinh=Tinh::all();
-            $quocgia=QuocGia::all();
-        if(request()->ajax())
-        {
-
-            return datatables()->of(DiaDanh::latest()->get())
-                    ->addColumn('action', function($data){
-                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Sửa</button>';
-                        $button .= '&nbsp;&nbsp;';
-                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Xóa</button>';
-                        return $button;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
-        return view('admin.diadanh_manage',['tinh'=>$tinh,'quocgia'=>$quocgia]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
- public function postorder(Request $request)
-    {
-        dd($request);
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-         $rules = array(
-
-            'tendiadanh'    =>  'required',
-            'tentinh' => 'required',
-            'gia' => 'required',
-            'editor1' => 'required',
-            'image' => 'required|image|max:2048'
+    public function postCheckout (Request $request){ 
+            $tour = Tour::find($request->tour_id);
+       $form_data = array(
+            'tour_id'        =>  $request->tour_id,
+            'user_id'             =>  Auth()->user()->id,
+            'songuoilon'        => $request->nguoilonsl,
+            'sotreem'          => $request->treemsl,
+            'soembe'      => $request->embesl,
+            'tongtien'          => $request->tongtien,
+            'status'          => 0,
+            'thanhtoan'          => $request->thanhtoan
         );
 
-        $error = Validator::make($request->all(), $rules);
-
-        if($error->fails())
-        {
-            return response()->json(['errors' => $error->errors()->all()]);
-        }
-         $image = $request->file('image');
-
-        $new_name = rand() . '.' . $image->getClientOriginalExtension();
-
-        $image->move(public_path('admin/images/diadanh'), $new_name);
-
-        $form_data = array(
-            'tendiadanh'        =>  $request->tendiadanh,
-            'gia'             =>  $request->gia,
-            'noidung'        => $request->editor1,
-            'tinh'          => $request->tentinh,
-            'hinhanh'      => $new_name
+        $dondattour=DonDatTour::create($form_data);
+            foreach ($request->nguoilon as $key => $value) {
+            
+            $form_nguoilon_data = array(
+            'dondattour_id'        =>  $dondattour->id,
+            'giatien'             =>  $tour->gianguoilon,
+            'loai'        => "Người lớn",
+            'ten'          => $value['name'],
+            'sdt'      => $value['phone'],
+            'diachi'          => $value['address'],
+            'gioitinh'          => $value['sex'],
+            'quocgia'          => $value['country'],
+             'passport'          => $value['passport']
         );
 
-        DiaDanh::create($form_data);
+        $chitietdattour_nguoilon=ChiTietDatTour::create($form_nguoilon_data);
 
-        return response()->json(['success' => 'Data Added successfully.']);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        if(request()->ajax())
-        {
-            $data = DiaDanh::findOrFail($id);
-
-            return response()->json(['data' => $data]);
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id="")
-    {
-        $image_name = $request->hidden_image;
-        $image = $request->file('image');
-        if($image != '')
-        {
-            $rules = array(
-                'tendiadanh'    =>  'required',
-            'gia' => 'required',
-            'tentinh' => 'required',
-            'editor1' => 'required',
-            'hinhanh' => 'image|max:2048'
-            );
-            $error = Validator::make($request->all(), $rules);
-            if($error->fails())
-            {
-                return response()->json(['errors' => $error->errors()->all()]);
             }
+            if($request->treemsl != null){
+            foreach ($request->treem as $key => $value) {
+            $form_treem_data = array(
+            'dondattour_id'        =>  $dondattour->id,
+            'giatien'             =>  $tour->giatreem,
+            'loai'        => "Trẻ em",
+            'ten'          => $value['name'],
+            'sdt'      => $value['phone'],
+            'diachi'          => $value['address'],
+            'gioitinh'          => $value['sex'],
+            'quocgia'          => $value['country'],
+             'passport'          => $value['passport']
+        );
 
-            $image_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('admin/images/diadanh'), $image_name);
-            $form_data = array(
-                'tendiadanh'        =>  $request->tendiadanh,
-                'gia'             =>  $request->gia,
-                'noidung'        => $request->editor1,
-                'tinh'          => $request->tentinh,
-                'hinhanh'            =>   $image_name
-            );
+        $chitietdattour_nguoilon=ChiTietDatTour::create($form_treem_data);
 
-            DiaDanh::whereId($request->hidden_id)->update($form_data);
-            return response()->json(['success' => 'Data is successfully updated']);
-        }
-        else
-        {
-            $rules = array(
-            'tendiadanh'    =>  'required',
-            'gia' => 'required',
-            'tentinh' => 'required',
-            'editor1' => 'required',
-            );
-
-            $error = Validator::make($request->all(), $rules);
-
-            if($error->fails())
-            {
-                return response()->json(['errors' => $error->errors()->all()]);
             }
-            $form_data = array(
-                'tendiadanh'        =>  $request->tendiadanh,
-                'gia'             =>  $request->gia,
-                'noidung'        => $request->editor1,
-                'tinh'          => $request->tentinh,
+}
+ if($request->embesl != null){
+ foreach ($request->embe as $key => $value) {
+            $form_embe_data = array(
+            'dondattour_id'        =>  $dondattour->id,
+            'giatien'             =>  $tour->giaembe,
+            'loai'        => "Em bé",
+            'ten'          => $value['name'],
+            'sdt'      => $value['phone'],
+            'diachi'          => $value['address'],
+            'gioitinh'          => $value['sex'],
+            'quocgia'          => $value['country'],
+             'passport'          => $value['passport']
+        );
 
-            );
+        $chitietdattour_nguoilon=ChiTietDatTour::create($form_embe_data);
 
-            DiaDanh::whereId($request->hidden_id)->update($form_data);
-            return response()->json(['success' => 'Data is successfully updated']);
+            }
         }
+                $email = Auth::user()->email;    
+                $arr_chitietdattour = ChiTietDatTour::where('dondattour_id',$dondattour->id)->get();
+            Mail::send('dondattour.sendmail',['arr_chitietdattour'=>$arr_chitietdattour,'dondattour'=>$dondattour,'tour'=>$tour],function($message) use ($email){
+            $message->to($email,'Thông tin đơn đặt tour của bạn')->subject('Thông tin đơn đặt tour');
+});
+
+    
+
+return response()->json(['success'=>'Data is successfully added']);
 
 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-         $data = DiaDanh::find($id);
-        $data->delete();
-    }
+}
 }
