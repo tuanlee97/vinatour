@@ -15,6 +15,8 @@ use App\Models\ThongTinChung;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Rating;
+use App\Models\LoaiTour;
+use DB;
 class PageController extends Controller
 {
 
@@ -53,8 +55,10 @@ class PageController extends Controller
 		return view('page.index',compact('diadanh','tour','khachsan','tinh','quocgia'));
 	}
    public function gettours(){
-
-      $tour = Tour::paginate(8);
+      $tour =   Tour::join('loaitour', 'loaitour.id', '=', 'tour.loaitour_id')
+                ->select( 'tour.*', 'loaitour.songay as songay', 'loaitour.sodem as sodem')
+                ->paginate(10);
+      
    	return view('page.tours',compact('tour'));
    }
    public function getProfile(){
@@ -139,6 +143,7 @@ class PageController extends Controller
     public function getchitiettour(Request $req){
           
          $tour = Tour::Where('id',$req->id)->first();
+         $loaitour = LoaiTour::Where('id',$tour->loaitour_id)->first();
          $diemden = Tour::find($tour->id)->tinhs;
          $thamquan=Tour::find($tour->id)->diadanhs;
          $noianuong=Tour::find($tour->id)->nhahangs;
@@ -146,9 +151,9 @@ class PageController extends Controller
          if(Auth::guard('web')->check()){
 
             $rating = Rating::where([['rateable_id','=',$req->id],['user_id','=',Auth::user()->id]])->select('rating')->first();
-   	            return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','rating'));
+   	            return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','rating','loaitour'));
           }
-          else  return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi'));
+          else  return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','loaitour'));
  }
    public function getctkhachsan(Request $req){
 

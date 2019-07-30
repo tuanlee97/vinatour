@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Tour;
 use App\Models\Tinh;
+use App\Models\LoaiTour;
 use App\Models\TuChon;
 use App\Models\ChiTietTuChon;
 use App\Models\Notification;
@@ -303,8 +304,9 @@ $validator = \Validator::make($request->all(), [
     }
 public function postDattour(Request $request)
     {   $tour = Tour::find($request->tour_id_);
+        $loaitour = LoaiTour::Where('id',$tour->loaitour_id)->first();
         $rules;
-        for ($i=1; $i<=$tour->songay ; $i++){
+        for ($i=1; $i<=$loaitour->songay ; $i++){
             $rules[]=array(
                     $request['tinh_ngay_'.$i],
                     $request['diadanh_ngay_'.$i.'_'],
@@ -326,7 +328,7 @@ public function postDattour(Request $request)
              $tuchon->save();
            
     
-  for ($i=1; $i<=$tour->songay ; $i++) { 
+  for ($i=1; $i<=$loaitour->songay ; $i++) { 
 
      $chitiettuchon = new ChiTietTuChon;
  

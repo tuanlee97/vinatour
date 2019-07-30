@@ -179,7 +179,7 @@
  <tbody><form id="contactForm1" method="POST" enctype="multipart/form-data"  >
               @csrf
               <input type="hidden" name ="tour_id " value="{{$tour->id}}">
-                @for ($i = 1; $i <= $tour->songay ; $i++)
+                @for ($i = 1; $i <= $loaitour->songay ; $i++)
 
 
                           <tr>

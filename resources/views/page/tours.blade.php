@@ -36,7 +36,7 @@
 											<label class="form-check-label" for="">
 										      	<p class="star"><span>{{number_format($chuongtrinh->averageRating,1)}}</i>/5<i class="icon-star-full"></i></span></p>
 										      </label>
-											<h2><a href="{{route('chitiettour',$chuongtrinh->id)}}">{{$chuongtrinh->tentour}}</a></h2>
+											<a href="{{route('chitiettour',$chuongtrinh->id)}}"><h4 style="font-weight: bold;">{{$chuongtrinh->tentour}}</h4>
 											<span class="city">Xuất phát: {{$chuongtrinh->diemxuatphat}}</span>
 											
 										</span>
