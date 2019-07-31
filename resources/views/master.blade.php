@@ -22,9 +22,9 @@
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
-  <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
 
+	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha256-xykLhwtLN4WyS7cpam2yiUOwr709tvF3N/r7+gOMxJw=" crossorigin="anonymous" />
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -110,7 +110,7 @@
                     }
 
                    else{
-
+                 
                     jQuery('.alert-danger').hide();
                         jQuery('.alert-success').html('');
                         jQuery('.alert-success').show();
@@ -182,6 +182,8 @@
 
     @include('header')
 		@yield('content')
-      @include('sweetalert::alert')
-     
+    <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+@include('sweetalert::alert')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
+    {!! toastr()->render() !!}
 		@include('footer')

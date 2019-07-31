@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Session;
+Use Alert;
 class UserLoginMiddleware
 {
     /**
@@ -22,8 +23,10 @@ class UserLoginMiddleware
         }
         else
         {
-            if(!(Auth::check()))
-              return redirect()->back();
+            if(!(Auth::check())){
+              
+               return redirect()->back()->with('thongbao','Chưa đăng nhập');
+            }
         }        
     }
 }

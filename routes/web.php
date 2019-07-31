@@ -20,13 +20,15 @@ Route::get('getcomment', 'PostController@getComment');
 Route::post('writecomment', 'PostController@makeComment');
 
 //
-Route::post('posts', 'PageController@postPost')->name('posts.post');
+Route::post('posts', 'PageController@postPost')->name('posts.post')->middleware('userLogin');
 Route::post('postCheckout', 'DatTourController@postCheckout')->name('postCheckout');
-
+Route::post('postCheckoutVNPAY', 'DatTourController@postCheckoutVNPAY')->name('postCheckoutVNPAY');
+Route::get('return-vnpay', 'DatTourController@return')->name('return');
 Route::get('tours',[
 'as'=>'tours',
 'uses'=>'PageController@gettours'
 ]);
+
 Route::get('quocnoi/{id}',[
 'as'=>'quocnoi',
 'uses'=>'PageController@gettoursTN'
@@ -82,7 +84,7 @@ Route::get('chitiettour/{id}',[
 Route::get('booking/{id}',[
 'as'=>'booking',
 'uses'=>'PageController@getBooking' 
-]);
+])->middleware('userLogin');
 Route::get('ctnhahang/{id}',[
 'as'=>'ctnhahang',
 'uses'=>'PageController@getctnhahang'

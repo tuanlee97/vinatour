@@ -17,6 +17,8 @@ use App\Models\User;
 use App\Models\Rating;
 use App\Models\LoaiTour;
 use DB;
+use TJGazel\Toastr\Facades\Toastr;
+use Session;
 class PageController extends Controller
 {
 
@@ -55,12 +57,19 @@ class PageController extends Controller
 		return view('page.index',compact('diadanh','tour','khachsan','tinh','quocgia'));
 	}
    public function gettours(){
+    
       $tour =   Tour::join('loaitour', 'loaitour.id', '=', 'tour.loaitour_id')
                 ->select( 'tour.*', 'loaitour.songay as songay', 'loaitour.sodem as sodem')
                 ->paginate(10);
-      
+                if(session::has('success'))
+      Toastr::success("Thông tin đơn đặt tour đã được chuyển tới email của bạn", "THANH TOÁN THÀNH CÔNG !");
+
+             if(session::has('errors'))
+                   
+              Toastr::error("Đã có lỗi trong quá trình thanh toán !", "THANH TOÁN THẤT BẠI !");
    	return view('page.tours',compact('tour'));
    }
+
    public function getProfile(){
 
      $user = Auth::user();
@@ -148,12 +157,14 @@ class PageController extends Controller
          $thamquan=Tour::find($tour->id)->diadanhs;
          $noianuong=Tour::find($tour->id)->nhahangs;
          $noinghi=Tour::find($tour->id)->khachsans;
+         $rating=null;
+
          if(Auth::guard('web')->check()){
 
             $rating = Rating::where([['rateable_id','=',$req->id],['user_id','=',Auth::user()->id]])->select('rating')->first();
    	            return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','rating','loaitour'));
           }
-          else  return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','loaitour'));
+          else  return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','loaitour','rating'));
  }
    public function getctkhachsan(Request $req){
 

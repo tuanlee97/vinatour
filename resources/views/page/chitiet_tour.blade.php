@@ -29,7 +29,14 @@
 		<div class="colorlib-wrap">
 <div class="colorlib-wrap">
 			<div class="container">
-        
+          @if(session('thongbao'))
+                    <script type="text/javascript">
+                        jQuery('.alert-danger').html('');
+              jQuery('.alert-danger').show();
+                           jQuery('.alert-danger').append('Bạn cần đăng nhập để xét duyệt quyền thực hiện chức năng này');
+                       $('#loginModal').modal('show');
+                    </script>
+                        @endif 
 				<div class="row">
 					<div class="col-md-9">
 						<div class="row">
@@ -61,25 +68,8 @@
 					</div>
 
 
-          <!-- SIDEBAR-->
-          @if(!Auth::guard('web')->check())
-          <div class="col-md-3">
-            <div class="sidebar-wrap">
-             
-           
-              <div class="side search-wrap animate-box text-center">
-                <h3 class="sidebar-heading">XÁCH BALO VÀ ĐI</h3>
-                        <a href="{{route('booking',$tour->id)}}"  class="btn btn-success btn-sm" >Đặt tour ngay</a>
-                         <!--  <input type="button" name="submit" id="submit" value="Mua tour" class="btn btn-primary btn-block"> -->
-            
-         
-          </div>
-          
-          
-            </div>
-          </div>
-          @endif
-	 @if(Auth::guard('web')->check())
+  
+
         <!-- SIDEBAR-->
           <div class="col-md-3">
             <div class="sidebar-wrap">
@@ -156,7 +146,7 @@
             
               </div>
             </div>
-            @endif
+      
           </div>
 
 
@@ -245,7 +235,7 @@
                       <p><button type="Submit" class="btn btn-primary">Đặt ngay!</button></p>
                     </div>
             @else <div  class="alert alert-warning animate-box text-center" style=" text-align: center;">
-      <h4>Để lưu thông tin vừa chọn và nhận kết quả lưu trong hộp thư email bạn cần phải <a id="dangnhapbinhluan"><b>đăng nhập</b></a></h4> 
+      <h4>Để lưu thông tin vừa chọn và nhận kết quả lưu trong hộp thư email bạn cần phải <a id="dangnhapbinhluan"><i class="fa fa-sign-in"></i><b> Đăng nhập</b></a></h4> 
     </div>
     @endif
       </td>
@@ -270,8 +260,8 @@
       <button class="btn btn-success" style="margin-top:10px" @click.prevent="postComment">Đăng</button>
     </div>
    
-  <div class="alert alert-warning animate-box " style="width: 800px;" v-else>
-      <h4>Bạn cần <a id="dangnhapbinhluan"><b>đăng nhập</b></a> để bình luận </h4> 
+  <div class="alert alert-warning animate-box " style="width: 280px;" v-else>
+      <h4><a id="dangnhapbinhluan"><i class="fa fa-sign-in"></i><b> Đăng nhập</b></a> để bình luận </h4> 
     </div>
 
 <div style="overflow-y:scroll;width: 850px; height:300px;"  class="animate-box  panel panel-default" >
@@ -439,7 +429,12 @@ $("#tongdukien").html(numberWithCommas(tong) +" VND");
 $("#tongtien").attr('value',numberWithCommas(tong));
 });
 
-
+  $(document).on('click', '#dangnhapbinhluan', function(){
+           
+                    $('#loginModal').modal('show');
+                
+                
+            });
 var frm = $('#contactForm1');
 
     frm.submit(function (e) {

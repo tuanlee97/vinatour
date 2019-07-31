@@ -22,6 +22,14 @@
 
 	<div class="colorlib-wrap">
 			<div class="container">
+				  @if(session('thongbao'))
+                    <script type="text/javascript">
+                    	  jQuery('.alert-danger').html('');
+							jQuery('.alert-danger').show();
+                      jQuery('.alert-danger').append('Bạn cần đăng nhập để xét duyệt quyền thực hiện chức năng này');
+                    	 $('#loginModal').modal('show');
+                    </script>
+                        @endif 
 				<div class="row">
 					<div class="col-md-9">
 						<div class="row">

@@ -21,6 +21,7 @@
 		</aside>
 <div class="colorlib-wrap">
 	<div class="container">
+		
 				<div class="row">
 					<div class="col-md-9" style=" border-style: ridge;border-radius: 10px; padding: 50px">
 						<div class="row">
@@ -193,23 +194,121 @@
         </div>
 
           <div id="3" style="display: none">
-            <form>
+            
               
 
-               <div class="form-group col-md-12 "> <input type="radio" name="thanhtoan" value="Thanh toán tại công ty"/>
-                 <label >Thanh toán tại công ty</label>
-              <br>  <input type="radio" name="thanhtoan" value="Thanh toán online" >
-               <label>Thanh toán online</label>
+               <div class="form-group col-md-12 text-center"> <button type="submit" class="btn btn-warning">Thanh toán tại công ty</button>
+                <button type="button" class="btn btn-success" id="next-3">Thanh toán trực tuyến với <span  style="color: red ; font-size: 14px;font-weight: bold;" title="Thanh toán VNPAY">VN</span><span  style="color: blue ; font-size: 14px;font-weight: bold;" title="Thanh toán VNPAY">PAY</span></button>
               
               </div>
 <div class="form-group">
 	<input type="hidden" id="tongtien" name="tongtien" >
 	<input type="hidden" name="tour_id" id="tour_id" value="{{$tour->id}}">
     <button type="button" class="btn btn-danger" id="pre-2">Quay lại</button>
-    <button type="submit" class="btn btn-success" >Thanh toán</button>
+    
 </div>
-            </form>
+            
           </div>
+   <div id="4" style="display: none">
+                 <div class="container">
+            <div class="header clearfix">
+                <h3 class="text-muted">VNPAY - THÔNG TIN ĐƠN ĐẶT TOUR</h3>
+            </div>
+           
+      
+                      
+					    <div class="row">
+            <div class="form-group col-md-4  " style="margin-right: 20px">
+            <label for="language">Loại hàng hóa </label>
+                        <select name="order_type" id="order_type" class="form-control">
+                
+                            <option value="billpayment">Thanh toán hóa đơn</option>
+                         
+                            <option value="other">Khác - Xem thêm tại VNPAY</option>
+                        </select>
+           
+           </div>
+           <div class="form-group col-md-4  " style="margin-right: 20px">
+             <label for="amount">Số tiền</label>
+                        <input class="form-control" id="amount" name="amount" type="number" value="12" disabled="disabled" >
+           
+           </div>
+         
+            </div>
+    
+					    <div class="row">
+            
+
+           <div class="form-group col-md-8" >
+            <label for="order_desc">Nội dung thanh toán</label>
+                        <textarea class="form-control" cols="20" id="order_desc" name="order_desc" rows="2">Nội dung thanh toán...</textarea>
+          
+           </div>
+            </div>
+            			    <div class="row">
+            <div class="form-group col-md-4  " style="margin-right: 20px">
+            <label for="bank_code">Ngân hàng</label>
+                        <select name="bank_code" id="bank_code" class="form-control">
+                            <option value="">Không chọn</option>
+                            <option value="NCB"> Ngan hang NCB</option>
+                            <option value="AGRIBANK"> Ngan hang Agribank</option>
+                            <option value="SCB"> Ngan hang SCB</option>
+                            <option value="SACOMBANK">Ngan hang SacomBank</option>
+                            <option value="EXIMBANK"> Ngan hang EximBank</option>
+                            <option value="MSBANK"> Ngan hang MSBANK</option>
+                            <option value="NAMABANK"> Ngan hang NamABank</option>
+                            <option value="VNMART"> Vi dien tu VnMart</option>
+                            <option value="VIETINBANK">Ngan hang Vietinbank</option>
+                            <option value="VIETCOMBANK"> Ngan hang VCB</option>
+                            <option value="HDBANK">Ngan hang HDBank</option>
+                            <option value="DONGABANK"> Ngan hang Dong A</option>
+                            <option value="TPBANK"> Ngân hàng TPBank</option>
+                            <option value="OJB"> Ngân hàng OceanBank</option>
+                            <option value="BIDV"> Ngân hàng BIDV</option>
+                            <option value="TECHCOMBANK"> Ngân hàng Techcombank</option>
+                            <option value="VPBANK"> Ngan hang VPBank</option>
+                            <option value="MBBANK"> Ngan hang MBBank</option>
+                            <option value="ACB"> Ngan hang ACB</option>
+                            <option value="OCB"> Ngan hang OCB</option>
+                            <option value="IVB"> Ngan hang IVB</option>
+                            <option value="VISA"> Thanh toan qua VISA/MASTER</option>
+                        </select>
+           
+           </div>
+
+           <div class="form-group col-md-4" style="margin-right: 20px">
+            <label for="language">Ngôn ngữ</label>
+                        <select name="language" id="language" class="form-control">
+                            <option value="vn">Tiếng Việt</option>
+                            <option value="en">English</option>
+                        </select>
+          
+           </div>
+            </div>       
+                    
+             
+
+             
+            
+            <p>
+                &nbsp;
+            </p>
+            <footer class="footer">
+                <p>&copy; VNPAY 2019</p>
+            </footer>
+        </div> 
+<div class="form-group col-md-12">
+  <button type="button" class="btn btn-danger" id="pre-3">Quay lại</button>
+   <button type="button" class="btn btn-primary" id="thanhtoanvnpay">Tiến hành thanh toán</button>
+</div>
+          
+        </div>
+<!---->
+
+
+
+
+
          </form> 
 								</div>
 							</div>
@@ -308,7 +407,9 @@ $("#embe").on('change', function () {
             
 });
     var sumgiatien =$('#tiennl').val() * $("#slnguoilon").attr('title') ; 
-    $("#tongtien").attr('value',sumgiatien);  
+    $("#tongtien").attr('value',sumgiatien); 
+     $("#amount").attr('value',sumgiatien); 
+     
    $("#sumgiatien").html('<i class="fa fa-money"></i> TỔNG : ' + sumgiatien+' VND');
 $("input[type='number']").on('change', function () {
  sumgiatien =0;
@@ -333,7 +434,8 @@ $("input[type='number']").on('change', function () {
  	 }
 
  $("#sumgiatien").html('<i class="fa fa-money"></i> TỔNG : ' + sumgiatien+' VND');
-$("#tongtien").attr('value',sumgiatien);  
+$("#tongtien").attr('value',sumgiatien);
+$("#amount").attr('value',sumgiatien);  
 });
  
 $('#dieukhoan').empty();
@@ -356,7 +458,7 @@ $('#passport').val("");
 $('#1').show();
  $('#2').hide();
  $('#3').hide();
-
+ $('#4').hide();
 
    $('#next-1').click(function(){
 	   var soluong_adult = parseInt($("#nguoilon").val() )  ;
@@ -422,7 +524,19 @@ $('#thongtin').empty();
       $('#2').show();
       $('#3').hide();
      });
+ $('#next-3').click(function(){
+       	   
+   $('#progressText').html("Thanh toán VN PAY");
 
+      $('#4').show();
+      $('#3').hide();
+     });
+$('#pre-3').click(function(){
+       	   $('#progressBar').css("width",'100%');
+   $('#progressText').html("Hình thức thanh toán");
+      $('#3').show();
+      $('#4').hide();
+     });
  $('#checkout_form').on('submit', function(event){
   event.preventDefault();
   
@@ -456,6 +570,33 @@ $('#thongtin').empty();
   
   
  });
+ $('#thanhtoanvnpay').on('click', function(event){
+  event.preventDefault();
+  $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                  }
+              });
 
+   myForm = document.getElementById('checkout_form');
+	formData = new FormData(myForm);
+   $.ajax({
+    url:"{{ route('postCheckoutVNPAY') }}",
+    method:"POST",
+    data:formData,
+    contentType: false,
+    cache:false,
+    processData: false,
+    dataType:"json",
+    success:function(data)
+    {
+    	if(data.success)
+    		console.log(data.success);
+    		window.location.href = data.success;
+    }
+   });
+  
+  
+ });
 </script>
 @endsection

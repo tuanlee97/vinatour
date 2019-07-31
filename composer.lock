@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8aa71a498e7f7768a3f5455967ac51ec",
+    "content-hash": "903eeec986180aeaf6404d4aca0702e5",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -3663,6 +3663,67 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "tjgazel/laravel-toastr",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tjgazel/laravel-toastr.git",
+                "reference": "9e5014cc8ae8e1b4cd22507e4b2ab64b87f1623e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tjgazel/laravel-toastr/zipball/9e5014cc8ae8e1b4cd22507e4b2ab64b87f1623e",
+                "reference": "9e5014cc8ae8e1b4cd22507e4b2ab64b87f1623e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/session": ">=5.0.0",
+                "illuminate/support": ">=5.0.0",
+                "php": ">=5.4.0"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TJGazel\\Toastr\\ToastrServiceProvider"
+                    ],
+                    "aliases": {
+                        "Toastr": "TJGazel\\Toastr\\Facades\\Toastr"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "helpers/helpers.php"
+                ],
+                "psr-4": {
+                    "TJGazel\\Toastr\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Talles Gazel",
+                    "email": "tjgazel@gmail.com"
+                }
+            ],
+            "description": "Toastr notifications for laravel 5.*",
+            "homepage": "https://github.com/tjgazel/laravel-toastr",
+            "keywords": [
+                "auto discover",
+                "facade",
+                "helper",
+                "laravel",
+                "notification",
+                "php",
+                "toastr"
+            ],
+            "time": "2019-06-25T17:06:56+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

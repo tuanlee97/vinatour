@@ -16,7 +16,7 @@ Chúng tôi gửi bạn những thông tin đã được chọn  .<br>  </p>
                                             
                                  <td>
                                  	<h3 style="text-align: center; font-weight: bold"> ĐƠN ĐẶT TOUR #{{$dondattour->id}}</h3>
-                                 	Chương trình chi tiết : <a href="https://vinatour.tk/chitiettour/{{$tour->id}}">{{$tour->tentour}}</a>
+                                 	Chương trình chi tiết : <a href="{{$get['get']}}">{{$tour->tentour}}</a>
                                     <table width="100%" align="center" cellpadding="0" cellspacing="0" border="1" class="">
                                     		<thead>
 										      <tr>

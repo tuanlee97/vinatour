@@ -1,6 +1,14 @@
 @extends('master')
 @section('content')
 <aside id="colorlib-hero">
+      @if(session('thongbao'))
+                    <script type="text/javascript">
+                          jQuery('.alert-danger').html('');
+                            jQuery('.alert-danger').show();
+                            jQuery('.alert-danger').append('Bạn cần đăng nhập để xét duyệt quyền thực hiện chức năng này');
+                         $('#loginModal').modal('show');
+                    </script>
+                        @endif 
 			<div class="flexslider">
 				<ul class="slides">
 			   	<li style="background-image: url(images/cover-img-5.jpg);">
@@ -65,7 +73,7 @@
                 </div>
             </div> 
             @else <div class="alert alert-warning">
-            Để thực hiện đánh giá , quý khách vui lòng <a id="dangnhapbinhluan"><b>đăng nhập</b></a> !
+            Để thực hiện đánh giá , quý khách vui lòng <a id="dangnhapbinhluan"><i class="fa fa-sign-in"></i><b> Đăng nhập</b></a> !
         </div>
             @endif
                 <div class="animate-box" style="overflow-y:scroll;height:480px;">

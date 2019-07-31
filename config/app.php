@@ -177,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
          willvincent\Rateable\RateableServiceProvider::class,
+         TJGazel\Toastr\ToastrServiceProvider::class
     ],
 
     /*
@@ -230,6 +231,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'Toastr' => TJGazel\Toastr\Facades\Toastr::class
     ],
 
 ];
