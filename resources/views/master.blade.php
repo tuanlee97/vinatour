@@ -62,9 +62,12 @@
 	<script src="js/bootstrap.js" type="text/javascript"></script>
 	<script src="js/login-register.js" type="text/javascript"></script>
 	   <!-- Script Modal -->
-            <script src="js/jquery-3.3.1.min.js"
+            <!-- <script src="js/jquery-3.3.1.min.js"
                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-               crossorigin="anonymous">
+               crossorigin="anonymous"> -->
+                      <script src="https://code.jquery.com/jquery-3.3.1.js"
+              >
+      </script>
       </script>
 
       <link href="admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">

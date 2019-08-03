@@ -140,7 +140,7 @@ class LiveSearchController extends Controller
 	}
 
 	public function searchnh(Request $request){
-		dd( $request);
+	
 		$quocgia = QuocGia::all();
 		$tinh = Tinh::all();
 		if($request->searchnh!=null)
