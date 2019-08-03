@@ -237,7 +237,7 @@ public function postchangepass(Request $request){
              $khachhang->email = $request->emailReg;
              $khachhang->password = bcrypt($request->passwordReg);
              $khachhang->role = 0;
-             
+             $khachhang->api_token = md5(rand(1,10000));
              $khachhang->save();
              return response()->json(['success'=>'Data is successfully added']);
         }

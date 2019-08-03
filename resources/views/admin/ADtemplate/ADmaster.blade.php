@@ -76,7 +76,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
 
             <a class="collapse-item" href="{{route('tour.index')}}">Tour</a>
-          <a class="collapse-item" href="{{route('tuchon.index')}}">Tự chọn Tour</a>
+          
           <a class="collapse-item" href="{{route('loaitour.index')}}">Loại Tour</a>
           </div>
         </div>
@@ -105,15 +105,15 @@
 
             <a class="collapse-item" href="{{route('khachhang.index')}}">Khách hàng</a>
             <a class="collapse-item" href="{{route('quantrivien.index')}}">Quản lí</a>
-            <a class="collapse-item" href="{{route('donhang.index')}}">Đơn đặt tour chưa xử lý<span id ="unread4" ></span></a>
-            <a class="collapse-item" href="{{route('donhang_done.index')}}">Đơn đã xử lý</a>
+            
+            
           </div>
         </div>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseothers" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Dịch vụ khác:</span>
+          <span>Dịch vụ :</span>
         </a>
         <div id="collapseothers" class="collapse" aria-labelledby="headingothers" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -125,7 +125,7 @@
       </li>
         <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseyc" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-fw fa-reply-all"></i>
           <span>Yêu cầu và ý kiến : </span><span id ="unreadtotal" ></span>
         </a>
         <div id="collapseyc" class="collapse" aria-labelledby="headingothers" data-parent="#accordionSidebar">
@@ -134,6 +134,20 @@
             <a class="collapse-item" href="{{route('yeucau.index')}}">Yêu cầu <span id ="unread1" ></span></a>
             <a class="collapse-item" href="{{route('ykien.index')}}">Ý kiến khách hàng <span id ="unread2" ></span></a>
              <a class="collapse-item" href="{{route('comment_tour.index')}}">Bình luận <span id ="unread3" ></span></a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsexlt" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-list-alt"></i>
+          <span>Xử lý đơn đặt tour : </span><span id ="unreadtotal" ></span>
+        </a>
+        <div id="collapsexlt" class="collapse" aria-labelledby="headingothers" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+
+            <a class="collapse-item" href="{{route('donhang.index')}}">Đơn đặt tour chưa xử lý<span id ="unread4" ></span></a>
+            <a class="collapse-item" href="{{route('donhang_done.index')}}">Đơn đã xử lý</a>
+            <a class="collapse-item" href="{{route('tuchon.index')}}">Tự chọn Tour</a>
           </div>
         </div>
       </li>

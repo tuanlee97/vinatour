@@ -13,10 +13,13 @@
 Route::get('/search', 'LiveSearchController@search')->name('tour.search');
 Route::get('/searchks', 'LiveSearchController@searchks')->name('khachsan.search');
 Route::get('/searchks2', 'LiveSearchController@searchks2')->name('khachsan.search2');
+Route::get('/searchks3', 'LiveSearchController@searchks3')->name('khachsan.search3');
 Route::get('/searchnh', 'LiveSearchController@searchnh')->name('nhahang.search');
 Route::get('/searchnh2', 'LiveSearchController@searchnh2')->name('nhahang.search2');
+Route::get('/searchnh3', 'LiveSearchController@searchnh3')->name('nhahang.search3');
 Route::get('/searchdd', 'LiveSearchController@searchdd')->name('diadanh.search');
 Route::get('/searchdd2', 'LiveSearchController@searchdd2')->name('diadanh.search2');
+
 //Comment
 Route::post('post', 'PostController@post');
 

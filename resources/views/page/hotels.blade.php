@@ -78,7 +78,7 @@
 				                    <label for="name">Tên khách sạn :</label>
 				                    <div class="form-field">
 				                      <i class="icon icon-calendar2"></i>
-				                      <input type="text" id="searchks" name="searchks" class="form-control " placeholder="Tên khách sạn">
+				                      <input type="text" id="searchks_name" name="searchks_name" class="form-control " placeholder="Tên khách sạn">
 				                    </div>
 				                  </div>
 				                </div>
@@ -86,7 +86,7 @@
 				                  <div class="form-group">
            							 <label class="control-label col-md-12">Tên Tỉnh : </label>
            							 <div class="col-md-12">
-             							<select class="form-control col-md-12" name="searchks" id="searchks" title="Chọn Tỉnh">
+             							<select class="form-control col-md-12" name="searchks_tinh" id="searchks_tinh" title="Chọn Tỉnh">
                							@foreach($quocgia as $qg)
                							<optgroup label="{{$qg->tenquocgia}}">
                 							 @foreach($tinh as $t)
@@ -95,7 +95,7 @@
                   							 @endif
                  							@endforeach
                							</optgroup>
-              							 @endforeach
+              							@endforeach
            							 </select></div>
            							</div>
 				                </div>
@@ -109,47 +109,48 @@
 					            </div>
 								</div>
 							</div>
-							<div class="side animate-box">
-								<div class="row">
-									<div class="col-md-12">
+							<div class="col-md-12">
 										<h3 class="sidebar-heading">Mức giá</h3>
-										<form method="post" class="colorlib-form-2">
+										<form action="{{route('khachsan.search3')}}" method="get" class="colorlib-form-2">
 						              	<div class="row">
-						                <div class="col-md-6">
+						                <div class="col-md-10">
 						                  <div class="form-group">
 						                    <label for="guests">TỪ:</label>
 						                    <div class="form-field">
 						                      <i class="icon icon-arrow-down3"></i>
-						                      <select name="people" id="people" class="form-control">
-						                        <option value="#">1</option>
-						                        <option value="#">200</option>
-						                        <option value="#">300</option>
-						                        <option value="#">400</option>
-						                        <option value="#">1000</option>
+						                      <select name="searchks_gia1" id="searchks_gia1" class="form-control">
+						                      	<option value=""></option>
+						                         <option value="0">0</option>
+						                        <option value="200000">200.000</option>
+						                        <option value="300000">300.000</option>
+						                        <option value="400000">400.000</option>
+						                        <option value="1000000">1.000.000</option>
 						                      </select>
 						                    </div>
 						                  </div>
 						                </div>
-						                <div class="col-md-6">
+						                <div class="col-md-10">
 						                  <div class="form-group">
 						                    <label for="guests">ĐẾN:</label>
 						                    <div class="form-field">
 						                      <i class="icon icon-arrow-down3"></i>
-						                      <select name="people" id="people" class="form-control">
-						                        <option value="#">2000</option>
-						                        <option value="#">4000</option>
-						                        <option value="#">6000</option>
-						                        <option value="#">8000</option>
-						                        <option value="#">10000</option>
+						                      <select name="searchks_gia2" id="searchks_gia2" class="form-control">
+						                      	<option value=""></option>
+						                        <option value="2000000">2.000.000</option>
+						                        <option value="4000000">4.000.000</option>
+						                        <option value="6000000">6.000.000</option>
+						                        <option value="8000000">8.000.000</option>
+						                        <option value="10000000">10.000.000</option>
 						                      </select>
 						                    </div>
 						                  </div>
 						                </div>
 						              </div>
+						               <div class="col-md-12">
+				                  <input type="submit" name="submit" id="submit" value="Tìm kiếm" class="btn btn-primary btn-block">
+				                </div>
 						            </form>
 					            </div>
-								</div>
-							</div>
 					
 					
 						</div>
@@ -158,4 +159,11 @@
 			</div>
 		</div>
 
+<script >
+			var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+      alert(msg);
+    }
+		</script>
 @endsection
