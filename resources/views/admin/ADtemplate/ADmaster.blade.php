@@ -98,7 +98,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseuser" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-user"></i>
-          <span>Người dùng:</span><span id ="unreadtotal2" ></span>
+          <span>Người dùng:</span>
         </a>
         <div id="collapseuser" class="collapse" aria-labelledby="headinguser" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -140,7 +140,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsexlt" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-list-alt"></i>
-          <span>Xử lý đơn đặt tour : </span><span id ="unreadtotal" ></span>
+          <span>Xử lý đơn đặt tour : </span><span id ="unreadtotal2" ></span>
         </a>
         <div id="collapsexlt" class="collapse" aria-labelledby="headingothers" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -226,7 +226,7 @@
                 <h6 class="dropdown-header">
                  Đơn đặt tour
                 </h6>
-          <div id="thongbao4" style="overflow-y:scroll; height:150px;">
+          <div id="thongbao4" style="overflow-y:scroll; height:250px;">
                   <!--Thông báo ở đẩy-->
                   
                 </div>
@@ -396,10 +396,15 @@
   <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
   <!-- Page level custom scripts -->
 <script src="js/select2.min.js"></script>
+  <script src="vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
 
 <script>
 $(document).ready(function(){
- 
+
  function load_unseen_notification()
  {     $('#unreadtotal').empty(); $('#unreadtotal2').empty();
  $('#unread1').empty();
@@ -469,6 +474,28 @@ $(document).ready(function(){
  load_unseen_notification();
  
 
+
+  $(document).on('click', '#sold', function(){
+    id_sold= parseInt($(this).prop('title'));
+      $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                  }
+              });
+  $.ajax({
+   url:"markasread/"+id_sold,
+  type: 'GET',
+    dataType : 'json',
+   success:function(data)
+   {
+    if(data.success)
+      load_unseen_notification();
+   }
+ });
+
+ 
+ });
+
  $(document).on('click', '#messagesDropdown', function(){
   $('.count').html('');
  
@@ -489,7 +516,202 @@ $(document).ready(function(){
   load_unseen_notification();
  }, 5000);
 });
-</script>
+
+         
+ var year = new Date();
+
+   year=year.getFullYear();
+var months = ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"];
+ 
+   getDataChart(year);
+  function getDataChart(year)
+  {
+      $.ajax({
+ url:'getDataChart/'+year,
+      type: 'GET', //Lấy về thống kê doanh thu, số đơn đặt tour đã xử lí
+      dataType:'json',
+   success:function(data)
+   {            
+    var arr_cost= [];
+      var arr_date= [];
+
+            //array doanh thu tháng
+     $.each(data.data, function(key, value) {
+      arr_cost.push(value.cost);
+      arr_date.push('Tháng '+value.month);
+ 
+});
+        var ctx = $('#myAreaChart');
+         load_AreaChart(arr_date,ctx,arr_cost);
+     ;
+   }
+ });
+
+
+
+
+  }
+  function load_AreaChart(arr_date,ctx,arr_cost)
+  {
+   var myLineChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels:arr_date,
+    datasets: [{
+      label: "Doanh thu",
+      lineTension: 0.3,
+      backgroundColor: "rgba(78, 115, 223, 0.05)",
+      borderColor: "rgba(78, 115, 223, 1)",
+      pointRadius: 5,
+      pointBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointBorderColor: "rgba(78, 115, 223, 1)",
+      pointHoverRadius: 3,
+      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+      pointHitRadius: 10,
+      pointBorderWidth: 2,
+      data: arr_cost,
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 25,
+        top: 25,
+        bottom: 0
+      }
+    },
+    scales: {
+      xAxes: [{
+        time: {
+          unit: 'date'
+        },
+        gridLines: {
+          display: false,
+          drawBorder: false
+        },
+        ticks: {
+          maxTicksLimit: 7
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          maxTicksLimit: 5,
+          padding: 10,
+          // Include a dollar sign in the ticks
+          callback: function(value, index, values) {
+            return  number_format(value)+ ' VND';
+          }
+        },
+        gridLines: {
+          color: "rgb(234, 236, 244)",
+          zeroLineColor: "rgb(234, 236, 244)",
+          drawBorder: false,
+          borderDash: [2],
+          zeroLineBorderDash: [2]
+        }
+      }],
+    },
+    legend: {
+      display: false
+    },
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      titleMarginBottom: 10,
+      titleFontColor: '#6e707e',
+      titleFontSize: 14,
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      intersect: false,
+      mode: 'index',
+      caretPadding: 10,
+      callbacks: {
+        label: function(tooltipItem, chart) {
+          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+          return datasetLabel + ': ' + number_format(tooltipItem.yLabel)+ ' VND ' ;
+        }
+      }
+    }
+  }
+});
+getPieChart();
+function getPieChart()
+  {
+      $.ajax({
+      url:'getPieChart',
+      type:'GET',
+      dataType:'json',
+   success:function(thongke)
+   {   
+
+      
+    var arr_data= [];
+  arr_data.push(thongke.tour.sl_tour);
+    arr_data.push(thongke.nhahang.sl_nhahang);
+    arr_data.push(thongke.khachsan.sl_khachsan);
+    arr_data.push(thongke.diadanh.sl_diadanh);
+;
+        var ctxp = $('#myPieChart');
+         load_PieChart(arr_data,ctxp);
+     ;
+   }
+ });
+
+
+
+
+  }
+  function load_PieChart(arr_data,ctxp)
+  {
+  
+var myPieChart = new Chart(ctxp, {
+  type: 'doughnut',
+  data: {
+    labels: ["Tour", "Nhà hàng", "Khách sạn","Địa danh"],
+    datasets: [{
+      data: arr_data,
+      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc','#f6c23e'],
+      hoverBackgroundColor: ['#4e73df', '#1cc88a', '#36b9cc','#f6c23e'],
+      hoverBorderColor: "rgba(234, 236, 244, 1)",
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: false
+    },
+    cutoutPercentage: 80,
+  },
+});
+
+
+  }
+
+
+}
+
+
+       </script> 
+
+
+
+
 
 
   @yield('ADscript')

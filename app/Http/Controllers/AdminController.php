@@ -10,7 +10,7 @@ use App\Models\Notification;
 use App\Models\DonDatTour;
 use Validator;
 use Illuminate\Support\Facades\Auth;
-
+use DB;
 use Session;
 class AdminController extends Controller
 {
@@ -21,13 +21,15 @@ class AdminController extends Controller
         $unseen_notification= Notification::where('status',0)->get()->count();// Yêu cầu hướng dẫn viên
         $unseen_notification2= Post::where('status',0)->get()->count(); // Ý kiến đánh giá của khách
         $unseen_notification3= BinhLuan::where('status',0)->get()->count();  //Bình luận về tour du lịch
-        $unseen_notification4= DonDatTour::where('status',0)->get()->count();  //Đơn đặt tour du lịch
+        $unseen_notification4= DonDatTour::where('status',0)//Đơn đặt tour du lịch
 
+                                          ->orWhere('seen',0)
+                                          ->get()->count();  
 
 // Yêu cầu hướng dẫn viên
         $all= Notification::join('users', 'notification.user_id', '=', 'users.id')
             ->select('notification.*', 'users.name')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get(); 
 
         $notification= '';
@@ -43,7 +45,7 @@ class AdminController extends Controller
                 $notification .= ' <div class="icon-circle bg-primary"><i class="far fa-envelope text-white"></i></div> </div>'; 
                 $notification .= ' <div class="font-weight-bold">';
                 $notification .= '<div class="text-truncate">'.$value->noidung.'</div>';
-                $notification .= '<div class="small text-gray-500">'.$value->name.' · '.$value->updated_at.'</div></div> </a>';         
+                $notification .= '<div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';         
             }
 
             else{
@@ -51,7 +53,7 @@ class AdminController extends Controller
                 $notification .= '  <div class="dropdown-list-image mr-3">';
                 $notification .= ' <div class="icon-circle bg-secondary"><i class="far fa-envelope-open text-white"></i></div> </div>';
                 $notification .= ' <div><div class="text-truncate">'.$value->noidung.'</div>';
-                $notification .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->updated_at.'</div></div> </a>';         
+                $notification .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';         
                 }
 
             }
@@ -62,7 +64,7 @@ class AdminController extends Controller
 // Ý kiến đánh giá của khách
         $all2= Post::join('users', 'posts.userid', '=', 'users.id')
             ->select('posts.*', 'users.name')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
                     $notification2= '';
@@ -78,7 +80,7 @@ class AdminController extends Controller
                 $notification2 .= ' <div class="icon-circle bg-primary"><i class="fas fa-check-circle text-white"></i></div> </div>'; 
                 $notification2 .= ' <div class="font-weight-bold">';
                 $notification2 .= '<div class="text-truncate">'.$value->post.'</div>';
-                $notification2 .= '<div class="small text-gray-500">'.$value->name.' · '.$value->updated_at.'</div></div> </a>';         
+                $notification2 .= '<div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';         
             }
 
             else{
@@ -86,7 +88,7 @@ class AdminController extends Controller
                 $notification2 .= '  <div class="dropdown-list-image mr-3">';
                 $notification2 .= ' <div class="icon-circle bg-secondary"><i class="far fa-check-circle text-white"></i></div> </div>';
                 $notification2 .= '<div> <div class="text-truncate">'.$value->post.'</div>';
-                $notification2 .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->updated_at.'</div></div> </a>';         
+                $notification2 .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';         
                 }
 
             }
@@ -96,7 +98,7 @@ class AdminController extends Controller
         $all3= BinhLuan::join('users', 'binhluan.user_id', '=', 'users.id')
                         ->join('tour', 'binhluan.tour_id', '=', 'tour.id')
             ->select('binhluan.*', 'users.name', 'tour.tentour')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
    
@@ -114,7 +116,7 @@ class AdminController extends Controller
                 $notification3 .= ' <div class="font-weight-bold">';
                 $notification3 .= '<div class="text-truncate" style="color : blue ;">'.$value->tentour.'</div>';
                 $notification3 .= '<div class="font-truncate">'.$value->body.'</div>';
-                $notification3 .= '<div class="small text-gray-500">'.$value->name.' · '.$value->updated_at.'</div></div> </a>';         
+                $notification3 .= '<div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';         
             }
 
             else{
@@ -123,7 +125,7 @@ class AdminController extends Controller
                 $notification3 .= ' <div class="icon-circle bg-secondary"><i class="fas fa-comment-dots text-white"></i></div> </div>';
                  $notification3 .= '<div><div class="text-truncate" style="font-weight: bold;">'.$value->tentour.'</div>';
                 $notification3 .= ' <div class="font-truncate">'.$value->body.'</div>';
-                $notification3 .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->updated_at.'</div></div> </a>';         
+                $notification3 .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';         
                 }
 
             }
@@ -132,7 +134,7 @@ class AdminController extends Controller
         $all4= DonDatTour::join('users', 'dondattour.user_id', '=', 'users.id')
                         ->join('tour', 'dondattour.tour_id', '=', 'tour.id')
             ->select('dondattour.*', 'users.name', 'tour.tentour')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
    
@@ -143,23 +145,50 @@ class AdminController extends Controller
 
          foreach ($all4 as $value) {
 
-            if($value->status ==0){
+            if($value->seen ==0){
+
+
+              if($value->status ==0){
                 $notification4 .= '<a class="dropdown-item d-flex align-items-center "  href="donhang">';
                 $notification4 .= ' <div class="dropdown-list-image mr-3">';
                 $notification4 .= ' <div class="icon-circle bg-primary"><i class="fas fa-file-invoice text-white"></i></div> </div>'; 
                 $notification4 .= ' <div class="font-weight-bold">';
                 $notification4 .= '<div class="text-truncate" style="color : blue ;">'.$value->tentour.'</div>';
                 $notification4 .= '<div class="font-truncate">'.$value->tongtien.' VNĐ</div>';
-                $notification4 .= '<div class="small text-gray-500">'.$value->name.' · '.$value->updated_at.'</div></div> </a>';         
+                $notification4 .= '<div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';
+                }
+
+                if($value->status ==1){
+                $notification4 .= '<a class="dropdown-item d-flex align-items-center " id="sold" title="'.$value->id.'">';
+                $notification4 .= ' <div class="dropdown-list-image mr-3">';
+                $notification4 .= ' <div class="icon-circle bg-success"><i class="fas fa-donate text-white"></i></div> </div>'; 
+                $notification4 .= ' <div class="font-weight-bold">';
+                $notification4 .= '<div class="text-truncate" style="color : #1cc88a!important ;">'.$value->tentour.'</div>';
+                $notification4 .= '<div class="font-truncate" style="color : #1cc88a!important ;">'.$value->tongtien.' VNĐ</div>';
+                $notification4 .= '<div class="small text-gray-500" style="color : #1cc88a!important ;">'.$value->name.' · '.$value->created_at.'</div></div> </a>';
+                }
+
+
             }
 
             else{
+              if($value->thanhtoan=='Thanh toán tại công ty'){
                 $notification4 .= '<a  class="dropdown-item d-flex align-items-center" href="donhang">';
                 $notification4 .= '  <div class="dropdown-list-image mr-3">';
                 $notification4 .= ' <div class="icon-circle bg-secondary"><i class="fas fa-file-invoice text-white"></i></div> </div>';
                  $notification4 .= '<div><div class="text-truncate" style="font-weight: bold;">'.$value->tentour.'</div>';
                 $notification4 .= ' <div class="font-truncate">'.$value->tongtien.' VNĐ </div>';
-                $notification4 .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->updated_at.'</div></div> </a>';         
+                $notification4 .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';
+                }
+                else
+                   {
+                $notification4 .= '<a  class="dropdown-item d-flex align-items-center">';
+                $notification4 .= '  <div class="dropdown-list-image mr-3">';
+                $notification4 .= ' <div class="icon-circle bg-secondary"><i class="fas fa-donate text-white"></i></div> </div>';
+                 $notification4 .= '<div><div class="text-truncate" style="font-weight: bold;">'.$value->tentour.'</div>';
+                $notification4 .= ' <div class="font-truncate">'.$value->tongtien.' VNĐ </div>';
+                $notification4 .= ' <div class="small text-gray-500">'.$value->name.' · '.$value->created_at.'</div></div> </a>';
+                }      
                 }
 
             }
@@ -199,7 +228,10 @@ class AdminController extends Controller
     
 
     public function gettrangchu(){
-       $doanhthu= DonDatTour::all();
+      $year = getdate();
+       $doanhthu= DonDatTour::whereYear('created_at',$year['year'])
+       ->where('status',1)
+       ->get();
 
         
     	return view('admin.trangchu',compact('doanhthu'));
@@ -409,4 +441,39 @@ class AdminController extends Controller
         $data = Admin::find($id);
         $data->delete();
     }
+public function getDataChart($year)
+{
+  
+  $data=DB::table('dondattour')
+->select(DB::raw('MONTH(created_at) as month'), DB::raw('sum(tongtien) as cost'))
+->whereYear('created_at',$year)
+ ->where('status',1) ->groupBy('month')
+->get();
+
+
+  return response()->json(['data'=>$data]);
+}
+
+public function getPieChart()
+{
+  
+  $tour=DB::table('tour')
+->select(DB::raw('count(*) as sl_tour'))
+->first();
+  $nhahang=DB::table('nhahang')
+->select(DB::raw('count(*) as sl_nhahang'))
+->first();
+  $khachsan=DB::table('khachsan')
+->select(DB::raw('count(*) as sl_khachsan'))
+->first();
+  $diadanh=DB::table('diadanh')
+->select(DB::raw('count(*) as sl_diadanh'))
+->first();
+
+  return response()->json(['tour'=>$tour,'diadanh'=>$diadanh,'nhahang'=>$nhahang,'khachsan'=>$khachsan]);
+}
+
+
+
+
   }

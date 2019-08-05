@@ -25,6 +25,7 @@ class DatTourController extends Controller
             'soembe'      => $request->embesl,
             'tongtien'          => $request->tongtien,
             'status'          => 0,
+            'seen'          => 0,
             'thanhtoan'          => "Thanh toán tại công ty"
         );
 
@@ -117,7 +118,8 @@ return response()->json(['success'=>'Data is successfully added']);
             'sotreem'          => $request->treemsl,
             'soembe'      => $request->embesl,
             'tongtien'          => $request->tongtien,
-            'status'          => 1,
+            'status'          => null,
+            'seen'  => null ,
             'thanhtoan'          => null
         );
 
@@ -259,8 +261,17 @@ public function return(Request $request)
         $dondattour = DonDatTour::find($dondattourID);
    
     if($request->vnp_ResponseCode == "00") {
-            $dondattour->thanhtoan="Thanh toán VNPAY";
-            $dondattour->save();
+           
+$form_data = array(
+                'status'        =>  1,
+                'seen'             =>  0,
+                'thanhtoan'        => "Thanh toán VNPAY"
+               
+            );
+            DonDatTour::whereId($dondattourID)->update($form_data);
+
+
+
                 $tour = Tour::find($dondattour->tour_id);
                 $email = Auth::user()->email;   
 
@@ -282,5 +293,20 @@ public function return(Request $request)
    } 
     
 }
+
+public function markasread(Request $request)
+{
+     $dondattourID = $request->id;
+    
+
+   $form_data = array( 
+                'seen'             =>  1
+  
+            );
+            DonDatTour::whereId($dondattourID)->update($form_data);
+         
+    return response()->json(['success'=> 'Đánh dấu đã đọc']);
+}
+
 
 }

@@ -8,7 +8,7 @@ class DonDatTour extends Model
 {
    public $table ='dondattour';
     protected $fillable = [
-     'id', 'tour_id','user_id','songuoilon','sotreem','soembe','tongtien','status','thanhtoan'
+     'id', 'tour_id','user_id','songuoilon','sotreem','soembe','tongtien','status','seen','thanhtoan'
     ];
   
 }

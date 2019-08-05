@@ -54,7 +54,6 @@
 
                           <?php echo ($tour->noidung); ?>
 
-
                         </div>
                       </div>
                     </div>
@@ -76,16 +75,73 @@
               <div class="side animate-box">
                 <div class="row">
                   <div class="col-md-12">
-                           <div class="sidebar-wrap">
-              <div class="side search-wrap animate-box text-center">
-                <h3 class="sidebar-heading">XÁCH BALO VÀ ĐI</h3>
-                           <a href="{{route('booking',$tour->id)}}"  class="btn btn-success btn-sm" >Đặt tour ngay</a>
-                         <!--  <input type="button" name="submit" id="submit" value="Mua tour" class="btn btn-primary btn-block"> -->
-            
+
+
+                    <div class="sidebar-wrap">
+              <div class="side search-wrap animate-box fadeInUp animated-fast">
+                <h3 class="sidebar-heading" style="color: #ffdd00 ; font-weight: bold;">{{$tour->tentour}}</h3>
+                <img src="admin/images/tour/{{$tour->hinhanh}}" width="225" height="225" alt="image">
+                <form method="post" class="colorlib-form">
+                        <div class="row" style="text-align: justify; margin-left: 10px;margin-top: 10px" >
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label >  <i class="fa fa-barcode"></i> Mã tour : </label>
+                              <span  style="color: #ffdd00 ; font-size: 14px;font-weight: bold;" >{{$tour->id}}</span>
+
+                             
+                            
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="form-group">
+                            <label >  <i class="fa fa-calendar"></i> Khởi hành:</label>
+                               <span  style="color: #ffdd00 ; font-weight: bold;" >{{ Carbon\Carbon::parse($tour->ngaykhoihanh)->format('d-m-Y') }}</span>
+                          </div></div>
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label >  <i class="fa fa-clock-o"></i> Thời gian :     <span  style="color: #ffdd00 ; font-size: 14px;font-weight: bold;" >{{$tour->songay}}</span> ngày     <span  style="color: #ffdd00 ; font-size: 14px;font-weight: bold;" >{{$tour->sodem}}</span> đêm</label>
+                          
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                 <div class="form-group">
+                     
+                            <label>  <i class="fa fa-user"></i> Giá người lớn : </label>
+                                <span  style="color: #ffdd00 ; font-size: 14px;font-weight: bold;" >{{$tour->gianguoilon}} VND</span>
+                          </div>
+                        </div>
+                               <div class="col-md-12" >
+                      <div class="form-group">
+                       
+                            <label >  <i class="fa fa-male"></i> Giá trẻ em :</label>
+                              <span style="color: #ffdd00 ; font-size: 14px;font-weight: bold;" > {{$tour->giatreem}} VND </span>
+                             
+                          </div>
+                        </div>
+                               <div  class="col-md-12">
+                      <div class="form-group">
+                        
+                        
+                            <label >  <i class="fa fa-gittip"></i> Giá em bé :</label>
+                              <span  style="color: #ffdd00 ; font-size: 14px;font-weight: bold;" > {{$tour->giaembe}} VND </span>
+
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="form-group " style="margin-left: 10px" >
+                            <a href="{{route('booking',$tour->id)}}"  class="btn btn-success btn-sm" >Đặt tour ngay</a>
+                            
+                          </div>
+                           
+                        </div>
+                      </div>
+                    </form>
               </div>
-         
+        
+          
           
             </div>
+              
                     <h3 class="sidebar-heading">Đánh giá tour này</h3>
                     @if($rating==null)
 
@@ -95,31 +151,31 @@
                        <div class="form-check">
                         <input type="radio" class="form-check-input" id="rating"  name="rating" value="5">
                         <label class="form-check-label" for="rating">
-                          <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+                          <p style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i> </span>( {{$five->sao}}  )</p>
                         </label>
                        </div>
                        <div class="form-check">
                           <input type="radio" class="form-check-input" id="rating" name="rating" value="4">
                           <label class="form-check-label" for="rating">
-                             <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+                             <p style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>( {{$four->sao}}  )</p>
                           </label>
                        </div>
                        <div class="form-check">
                           <input type="radio" class="form-check-input" id="rating" name="rating" value="3">
                           <label class="form-check-label" for="rating">
-                            <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+                            <p  style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>( {{$three->sao}}  )</p>
                          </label>
                        </div>
                        <div class="form-check">
                           <input type="radio" class="form-check-input" id="rating" name="rating" value="2">
                           <label class="form-check-label" for="rating">
-                            <p class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i></span></p>
+                            <p  style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i></span>( {{$two->sao}}  )</p>
                          </label>
                        </div>
                        <div class="form-check">
                           <input type="radio" class="form-check-input" id="rating" name="rating" value="1">
                           <label class="form-check-label" for="rating">
-                            <p class="rate"><span><i class="icon-star-full"></i></span></p>
+                            <p  style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i></span>( {{$one->sao}}  )</p>
                          </label>
                        </div>
                        <button class="btn btn-success">Bình chọn</button>
@@ -128,13 +184,47 @@
                     <form  class="colorlib-form-2">
                       {{ csrf_field() }}
                       <div class="form-check">
-                          <input type="radio" class="form-check-input colorlib-form-2" id="rating" name="rating" value="2" checked="checked" disabled="disabled">
+                          <input type="hidden" class="form-check-input colorlib-form-2" id="rating" name="rating" value="2" checked="checked" disabled="disabled">
                           <label class="form-check-label" for="rating">
                             Bạn đã đánh giá tour này :<br>
-                            <p class="rate"><span>@for($i =1;$i<=$rating->rating;$i++)<i class="icon-star-full"></i>@endfor</span></p>
+                            <p class="rate"><span>{{$rating->rating}}<i class="icon-star-full"></i></span></p>
                          </label>
                        </div>
-                       
+                       <label class="form-check-label" for="rating">
+                        Số điểm của tour này là:<p style="font-weight: bold;" class="rate"><i class="icon-star-full"><span>{{number_format($tour->averageRating,1)}}</span></i></p></label><br>
+                        <input type="hidden" name="id" required="" value="{{ $tour->id }}">
+
+                       <div class="form-check">
+                        <input type="hidden" class="form-check-input" id="rating"  name="rating" value="5">
+                        <label class="form-check-label" for="rating">
+                          <p style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i> </span>( {{$five->sao}}  )</p>
+                        </label>
+                       </div>
+                       <div class="form-check">
+                          <input type="hidden" class="form-check-input" id="rating" name="rating" value="4">
+                          <label class="form-check-label" for="rating">
+                             <p style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>( {{$four->sao}}  )</p>
+                          </label>
+                       </div>
+                       <div class="form-check">
+                          <input type="hidden" class="form-check-input" id="rating" name="rating" value="3">
+                          <label class="form-check-label" for="rating">
+                            <p  style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>( {{$three->sao}}  )</p>
+                         </label>
+                       </div>
+                       <div class="form-check">
+                          <input type="hidden" class="form-check-input" id="rating" name="rating" value="2">
+                          <label class="form-check-label" for="rating">
+                            <p  style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i><i class="icon-star-full"></i></span>( {{$two->sao}}  )</p>
+                         </label>
+                       </div>
+                       <div class="form-check">
+                          <input type="hidden" class="form-check-input" id="rating" name="rating" value="1">
+                          <label class="form-check-label" for="rating">
+                            <p  style="font-weight: bold;" class="rate"><span><i class="icon-star-full"></i></span>( {{$one->sao}}  )</p>
+                         </label>
+                       </div>
+
                       
                     </form>
                     @endif

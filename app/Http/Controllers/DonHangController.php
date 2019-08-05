@@ -46,6 +46,7 @@ public function XuLy(Request $request)
             foreach ($request->id as $value) {
                $data = DonDatTour::find($value);
                $data->status = 1;
+                $data->seen = 1;
                $data->save();
             }
         

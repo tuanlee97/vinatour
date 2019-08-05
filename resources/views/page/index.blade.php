@@ -354,11 +354,11 @@
 							@if($ks->gia <= 500000)
 							<div class="item">
 								<div class="hotel-entry">
-									<a href="hotels.html" class="hotel-img" style="background-image: url(admin/images/khachsan/{{$ks->hinhanh}});">
-										<p class="price"><span>{{$ks->gia}}</span><small> /night</small></p>
+									<a href="{{route('ctkhachsan',$ks->id)}}" class="hotel-img" style="background-image: url(admin/images/khachsan/{{$ks->hinhanh}});">
+										<p class="price"><span>{{$ks->gia}}</span><small> /phòng</small></p>
 									</a>
 									<div class="desc">
-										<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
+									
 										<h3><a href="{{route('ctkhachsan',$ks->id)}}">{{$ks->tenkhachsan}}</a></h3>
 
 										@foreach($quocgia as $c)
@@ -394,9 +394,9 @@
 						<div class="owl-carousel2">
 							<div class="item">
 								<div class="testimony text-center">
-									<span class="img-user" style="background-image: url(images/person1.jpg);"></span>
-									<span class="user">Hot girl quận Cam</span>
-									<small>Quận  Cam, Sài Gòn</small>
+									<span class="img-user" style="background-image: url(images/tuan.jpg);"></span>
+									<span class="user">Lê Tuân</span>
+									<small>Quận Bình Tân, Thành phố Hồ Chí Minh</small>
 									<blockquote>
 										<p>" Dịch vụ tuyệt vời. Tôi đã có những giây phút thư giãn trong tour vừa rồi."</p>
 									</blockquote>
@@ -404,9 +404,9 @@
 							</div>
 							<div class="item">
 								<div class="testimony text-center">
-									<span class="img-user" style="background-image: url(images/person2.jpg);"></span>
-									<span class="user">Lê Văn Đạt</span>
-									<small>Quận Quýt, Sài Gòn</small>
+									<span class="img-user" style="background-image: url(images/an.jpg);"></span>
+									<span class="user">Huỳnh An</span>
+									<small>Quận 8, Thành phố Hồ Chí Minh</small>
 									<blockquote>
 										<p>"Công ty chuyên nghiệp, chu đáo. Tôi sẽ tiếp tục là khách hàng trong chuyến đi kế tiếp."</p>
 									</blockquote>
@@ -414,9 +414,9 @@
 							</div>
 							<div class="item">
 								<div class="testimony text-center">
-									<span class="img-user" style="background-image: url(images/person3.jpg);"></span>
-									<span class="user">Chị Đẹp</span>
-									<small>Quận 8, Sài Gòn</small>
+									<span class="img-user" style="background-image: url(images/person2.jpg);"></span>
+									<span class="user">Trần Văn Hùng</span>
+									<small>Quận 3, Thành phố Hồ Chí Minh</small>
 									<blockquote>
 										<p>"Chương trình tour hấp dẫn , hoạt động tổ chức sôi nổi. Tôi thực sự thích nó."</p>
 									</blockquote>

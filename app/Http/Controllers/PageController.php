@@ -231,13 +231,44 @@ return view('page.tours',['tour'=>$tour]);
          $noianuong=Tour::find($tour->id)->nhahangs;
          $noinghi=Tour::find($tour->id)->khachsans;
          $rating=null;
-
+      
+         $five = DB::table('ratings')
+                      ->select(DB::raw("COUNT(rating) as sao"))
+                      ->where('rateable_id',$req->id)
+                      ->where('rating',5)
+                      ->first();
+                  
+          $four = DB::table('ratings')
+                      ->select(DB::raw("COUNT(rating) as sao"))
+                      ->where('rateable_id',$req->id)
+                      ->where('rating',4)
+                      ->first();
+                
+          $three = DB::table('ratings')
+                      ->select(DB::raw("COUNT(rating) as sao"))
+                      ->where('rateable_id',$req->id)
+                      ->where('rating',3)
+                      ->first();
+            
+          $two = DB::table('ratings')
+                      ->select(DB::raw("COUNT(rating) as sao"))
+                      ->where('rateable_id',$req->id)
+                      ->where('rating',2)
+                      ->first();
+              
+          $one = DB::table('ratings')
+                      ->select(DB::raw("COUNT(rating) as sao"))
+                      ->where('rateable_id',$req->id)
+                      ->where('rating',1)
+                      ->first();
+         
+         
          if(Auth::guard('web')->check()){
 
             $rating = Rating::where([['rateable_id','=',$req->id],['user_id','=',Auth::user()->id]])->select('rating')->first();
-                return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','rating'));
+                return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','rating','five','four','three','two','one'));
           }
-          else  return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','rating'));
+          else  return view('page.chitiet_tour',compact('tour','diemden','thamquan','noianuong','noinghi','rating','five','four','three','two','one'));
  }
    public function getctkhachsan(Request $req){
 
@@ -267,6 +298,7 @@ return view('page.tours',['tour'=>$tour]);
 
         $tour->ratings()->save($rating);
 
+        
         return redirect()->back();
     }
 public function getBooking(Request $req){

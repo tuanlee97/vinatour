@@ -102,6 +102,7 @@ Route::get('chitiettour/{id}',[
 'as'=>'chitiettour',
 'uses'=>'PageController@getchitiettour'
 ]);
+
 Route::get('booking/{id}',[
 'as'=>'booking',
 'uses'=>'PageController@getBooking' 
@@ -256,6 +257,12 @@ Route::get('getDiadanh/{id}','TourController@getDiadanh');
 Route::get('getNhahang/{id}','TourController@getNhahang');
 Route::get('getKhachsan/{id}','TourController@getKhachsan');
 Route::get('getCustome/{id}','LoaiTourController@getCustome');
+Route::get('getDataChart/{id}','AdminController@getDataChart');
+Route::get('getPieChart','AdminController@getPieChart');
+Route::get('markasread/{id}',[
+'as'=>'markasread',
+'uses'=>'DatTourController@markasread'
+]);
     Route::group(['prefix'=>'tour'],function(){
 
         Route::get('/','TourController@getDanhSach');
